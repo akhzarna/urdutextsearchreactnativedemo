@@ -66,7 +66,7 @@ _sectionHeader = (info) => {
     return <Text
       style={{ height: 60, textAlignVertical: 'center', backgroundColor: "#ffffff", color: '#5C5C5C', fontSize: 15 }}>{txt}</Text>
   }
-  
+
 render() {
 
 
@@ -75,6 +75,8 @@ render() {
       { key: "ہمارے کھیل", data: [{ title: "ہاکی" }, { title: "کرکٹ" }, { title: "کبڈی" }, { title: "گلی ڈنڈہ" }, { title: "کوئی اور" }] },
       { key: "ہمارے تعلیمی ادارے", data: [{ title: "پنجاب یونیورسٹی" }, { title: "افرو ایشین" }] },
       { key: "ہمارے مدرسے", data: [{ title: "جامعہ نعیمیہ" }, { title: "جامعہ اشرفیہ" }, { title: "جامعہ دارالعلوم" },{ title: "جامعہ بنوری" }, { title: "جامعہ ہندسیہ" }, { title: "جامعہ کراچی" }] },
+      { key: "Students", data: [{ title: "جامعہ نعیمیہ" }, { title: "جامعہ اشرفیہ" }, { title: "جامعہ دارالعلوم" },{ title: "جامعہ بنوری" }, { title: "جامعہ ہندسیہ" }, { title: "جامعہ کراچی" }] },
+
     ];
 
   return (
