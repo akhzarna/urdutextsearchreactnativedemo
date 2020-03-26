@@ -1,0 +1,96 @@
+ Fun(){
+       var maintitle=[];
+      var mainArray=[];
+      Alert.alert('Helloo');
+      for(var i=0; i<10; i++){ 
+        var tempArray=[]; 
+           
+        for( var j=0; j<5; j++) {
+         
+          if(j==0){
+          tempArray.push(this.state.bookArray[i].data[j].subbestheading);
+        //  Alert.alert("when 0"+tempArray);
+          } else
+        if(this.state.bookArray[i].data[j].subheading == this.state.bookArray[i].data[j+1].subheading)
+        {
+         // Alert.alert('Hello');
+          tempArray.push(this.state.bookArray[i].data[j+1].subbestheading);
+       // var objj= [{subbestHeading:this.state.bookArray[i].data[j].subheading}]; 
+           console.log("detail",tempArray.length,tempArray[j]);
+        
+      }else {
+
+          var obj = {title:this.state.bookArray[i].title,
+          mainheading:this.state.bookArray[i].data[j].mainheading, 
+          subheading:this.state.bookArray[i].data[j].subheading,
+          subbestheading:tempArray} ;
+          // Alert.alert("0"+obj.subbestheading[0]);
+           console.log("1",tempArray.length);
+          tempArray=[];
+          mainArray.push(obj);
+        
+      }
+        } this.setState({fineArray:mainArray});
+       console.log("0",mainArray.length);
+      } 
+     
+      
+
+
+
+
+
+
+
+
+
+       for(var i=0; i<this.state.bookArray.length; i++){ 
+        var tempArray=[]; 
+      
+        for( var j=0; j<this.state.bookArray[i].data.length; j++) {
+                   
+
+         console.log("data length",+this.state.bookArray[1].data.length);
+             
+            for( var l=0; l<this.state.bookArray[i].data[j].subheading.length; l++) {
+
+
+              if(l==0){
+                tempArray.push(this.state.bookArray[i].data[j].subbestheading[l]);
+              //  Alert.alert("when 0"+tempArray);
+                } else
+              if(this.state.bookArray[i].data[j].subheading[l] == this.state.bookArray[i].data[j].subheading[l+1])
+              {
+               // Alert.alert('Hello');
+                tempArray.push(this.state.bookArray[i].data[j].subbestheading[l+1]);
+             // var objj= [{subbestHeading:this.state.bookArray[i].data[j].subheading}]; 
+                 console.log("detail",tempArray.length,tempArray[j]);
+              
+            }else {
+              mainArray.push(tempArray);
+                // var obj = {title:this.state.bookArray[i].title,
+                // mainheading:this.state.bookArray[i].data[j].mainheading, 
+                // subheading:this.state.bookArray[i].data[j].subheading,
+                // subbestheading:tempArray} ;
+                // // Alert.alert("0"+obj.subbestheading[0]);
+                //  console.log("1",tempArray.length);
+                // tempArray=[];
+                // mainArray.push(obj);
+              
+            }
+
+          
+
+        }
+          
+        }  
+          var obj = {title:this.state.bookArray[i].title,
+      //  mainheading:this.state.bookArray[i].data[j].mainheading, 
+      //  subheading:this.state.bookArray[i].data[j].subheading,
+        subbestheading:mainArray} ;
+        // Alert.alert("0"+obj.subbestheading[0]);
+         console.log("1",tempArray.length);
+        tempArray=[];
+        mainArray.push(obj);
+      }
+       
