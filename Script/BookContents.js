@@ -48,13 +48,19 @@ class BookContents extends Component{
 
 rowSelected(selectedItem){
   var selectedItem=this.state.orignalArray[selectedItem.key];
-  this.props.navigator.push({
-    screen:'ReadingScreen',
-    passProps:{selectedItem},
-    navigatorStyle:{
-      navBarHidden:true,
-    },
-  })
+
+  this.props.navigation.navigate('ReadingScreen',{
+    selectedItem:selectedItem,
+  });
+
+  // this.props.navigator.push({
+  //   screen:'ReadingScreen',
+  //   passProps:{selectedItem},
+  //   navigatorStyle:{
+  //     navBarHidden:true,
+  //   },
+  // })
+
 }
 
 
@@ -185,7 +191,7 @@ filterData(txtSearch){
   render(){
     return(
       <View style={styles.outerContainer}>
-      <Header title='ادارہ سیلمانی' navigator={this.props.navigator} />
+      <Header title='ادارہ سیلمانی' navigator={this.props.navigator} navigation={this.props.navigation}/>
       <View style={styles.listView}>
 
           <View style={styles.inputView}>

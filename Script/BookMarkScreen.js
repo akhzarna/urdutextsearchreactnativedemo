@@ -21,7 +21,7 @@ class BookMarkScreen extends Component{
 
   constructor(props){
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
     this.state={
       dataArray:[],
       orignalData:[],
@@ -29,19 +29,19 @@ class BookMarkScreen extends Component{
   }
 
 
-  onNavigationEvent(event) {
-  // handle a deep link
-    if (event.type == 'DeepLink') {
-      const parts = event.link;
-            this.props.navigator.resetTo({
-            screen: parts,
-            navigatorStyle: {
-              navBarHidden:true,
-            },
-          });
-
-    }
-  }
+  // onNavigationEvent(event) {
+  // // handle a deep link
+  //   if (event.type == 'DeepLink') {
+  //     const parts = event.link;
+  //           this.props.navigator.resetTo({
+  //           screen: parts,
+  //           navigatorStyle: {
+  //             navBarHidden:true,
+  //           },
+  //         });
+  //
+  //   }
+  // }
 
 
 
@@ -51,7 +51,7 @@ class BookMarkScreen extends Component{
 
 
   componentDidMount() {
-   
+
   this.loadBookMarks();
 
    }
@@ -86,15 +86,18 @@ loadBookMarks(){
 
 rowSelected(selectedItem){
 
+    this.props.navigation.navigate('BookMarkReading',{
+      //   passProps:{callBackFunction:(data)=>this.callBackFunction(data),selectedItem },
+    });
 
 
-    this.props.navigator.push({
-      screen:'BookMarkReading',
-      passProps:{callBackFunction:(data)=>this.callBackFunction(data),selectedItem },
-      navigatorStyle:{
-        navBarHidden:true,
-      },
-    })
+    // this.props.navigator.push({
+    //   screen:'BookMarkReading',
+    //   passProps:{callBackFunction:(data)=>this.callBackFunction(data),selectedItem },
+    //   navigatorStyle:{
+    //     navBarHidden:true,
+    //   },
+    // })
 
     //   this.props.navigator.push({
     //   screen:'DescriptionScreen',
@@ -120,7 +123,7 @@ callBackFunction(data){
 
     return(
       <View style={styles.outerContainer}>
-      <Header navigator={this.props.navigator} showMenu={true} title='بک مارکس'/>
+      <Header navigator={this.props.navigator} navigation={this.props.navigation} showMenu={true} title='بک مارکس'/>
       <View style={styles.listView}>
       <FlatList
             data={this.state.dataArray}

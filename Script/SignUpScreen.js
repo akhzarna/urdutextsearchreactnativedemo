@@ -23,36 +23,30 @@ const DEVICE_WIDTH=window.width;
 const DEVICE_HEIGHT=window.height;
 var backArrow=require('./Icons/backArrow_2.png')
 
-
 class SignUpScreen extends Component{
-
 
   constructor(props){
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
-
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
 }
 
-
-onNavigationEvent(event) {
-// handle a deep link
-  if (event.type == 'DeepLink') {
-    const parts = event.link;
-    if (parts=='Home') {
-      // console.log(parts);
-      return;
-    }else{
-          this.props.navigator.resetTo({
-          screen: parts,
-          navigatorStyle: {
-            navBarHidden:true,
-          },
-        });
-      }
-  }
-}
-
-
+// onNavigationEvent(event) {
+// // handle a deep link
+//   if (event.type == 'DeepLink') {
+//     const parts = event.link;
+//     if (parts=='Home') {
+//       // console.log(parts);
+//       return;
+//     }else{
+//           this.props.navigator.resetTo({
+//           screen: parts,
+//           navigatorStyle: {
+//             navBarHidden:true,
+//           },
+//         });
+//       }
+//   }
+// }
 
   render(){
     return (
@@ -96,7 +90,7 @@ onNavigationEvent(event) {
       placeholder="Name"
       underlineColorAndroid='transparent'
       style={{
-    
+
         backgroundColor:'white',
             height:45,
              borderWidth:1.75,

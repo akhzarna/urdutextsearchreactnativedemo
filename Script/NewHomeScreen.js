@@ -33,7 +33,7 @@ class NewHomeScreen extends Component{
 
     constructor(props){
       super(props);
-      this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
+      // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
       this.state={
             dataArray:[
               {fileName:require('./Banner/Matab_Banner_1.jpg'),key:5},
@@ -53,33 +53,27 @@ class NewHomeScreen extends Component{
             {fileName:require('./Icons/ExpandMenu_5y.png'),key:0},
             {fileName:require('./Icons/ExpandMenu_6y.png'),key:0},
             {fileName:require('./Icons/ExpandMenu_7y.png'),key:0},
-
           ],
       }
-
     }
 
-
-
-    onNavigationEvent(event) {
-  	// handle a deep link
-  		if (event.type == 'DeepLink') {
-  			const parts = event.link;
-  			if (parts=='Home') {
-  				// console.log(parts);
-  				return;
-  			}else{
-      				this.props.navigator.resetTo({
-      			  screen: parts,
-      				navigatorStyle: {
-      					navBarHidden:true,
-      				},
-      			});
-  			  }
-  		}
-  }
-
-
+  //   onNavigationEvent(event) {
+  // 	// handle a deep link
+  // 		if (event.type == 'DeepLink') {
+  // 			const parts = event.link;
+  // 			if (parts=='Home') {
+  // 				// console.log(parts);
+  // 				return;
+  // 			}else{
+  //     				this.props.navigator.resetTo({
+  //     			  screen: parts,
+  //     				navigatorStyle: {
+  //     					navBarHidden:true,
+  //     				},
+  //     			});
+  // 			  }
+  // 		}
+  // }
 
   _renderItem ({item, index}) {
           var image=item.fileName
@@ -111,13 +105,17 @@ class NewHomeScreen extends Component{
         screenName='HomeScreen';
       }
 
-      this.props.navigator.push({
-        screen:screenName,
-        passProps:{finalArray},
-        navigatorStyle:{
-          navBarHidden:true,
-        },
-      })
+      this.props.navigation.navigate(screenName,{
+        finalArray:finalArray,
+      });
+
+      // this.props.navigator.push({
+      //   screen:screenName,
+      //   passProps:{finalArray},
+      //   navigatorStyle:{
+      //     navBarHidden:true,
+      //   },
+      // })
 
     }
 
@@ -129,7 +127,7 @@ class NewHomeScreen extends Component{
     return(
       <View style={styles.outerContainer}>
         <ImageBackground resizeMode='stretch' source={backgroundImage} style={{width:DEVICE_WIDTH+10,height:DEVICE_HEIGHT+10}}>
-        <Header isHome={true} title="ادارہ سیلمانی" navigator={this.props.navigator} showMenu={true}/>
+        <Header isHome={true} title="ادارہ سیلمانی" navigator={this.props.navigator} navigation={this.props.navigation} showMenu={true}/>
               <View style={{flex:1,marginBottom:15}}>
 
               <View style={{flex:1,justifyContent:'center',alignItems:'center',

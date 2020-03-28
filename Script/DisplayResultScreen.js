@@ -23,11 +23,11 @@ class DisplayResultScreen extends Component{
     super(props);
 
           var finalArray=[];
-          for (var x = 0; x < this.props.finalArray.length; x++) {
+          for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
           var arrayList=[];
-          for (var i = 0; i < this.props.finalArray[x].searchedArray.length; i++) {
-            var paragraph=''+this.props.finalArray[x].searchedArray[i].data.data;
-            var searchWord=this.props.finalArray[x].word;
+          for (var i = 0; i < this.props.navigation.state.params.finalArray[x].searchedArray.length; i++) {
+            var paragraph=''+this.props.navigation.state.params.finalArray[x].searchedArray[i].data.data;
+            var searchWord=this.props.navigation.state.params.finalArray[x].word;
             var index=paragraph.indexOf(searchWord);
             // // console.log('Index to HightLight is = '+index);
             var data='';
@@ -70,7 +70,7 @@ class DisplayResultScreen extends Component{
       var tempNewArray=[];
       for (var i = 0; i < finalArray.length; i++) {
         var data=finalArray[i];
-        var title=this.props.finalArray[i].bookname
+        var title=this.props.navigation.state.params.finalArray[i].bookname
         var key=i;
         var object={data:data,key:key,title:title};
         tempNewArray.push(object);
@@ -82,7 +82,7 @@ class DisplayResultScreen extends Component{
 
 findFrequencyOfSearchWord(paragraph){
 
-    var searchWord=this.props.finalArray[0].word;
+    var searchWord=this.props.navigation.state.params.finalArray[0].word;
     // // console.log('Search Result For Frequency is = ' + searchWord);
     var freqCounter = 0;
     var headingEndIndex = paragraph.indexOf('\r',1);
@@ -111,18 +111,24 @@ rowSelected(item,section){
 // // console.log('Choosed Item is =' + item);
 var bookName= section.title;
 // console.log("book name dispatching===",bookName);
-var dataSelected=this.props.finalArray[section.key].searchedArray[item.key].data;
+var dataSelected=this.props.navigation.state.params.finalArray[section.key].searchedArray[item.key].data;
 
 // // console.log('DataSelected is =' + dataSelected);
-var searchWord=this.props.finalArray[0].word;
+var searchWord=this.props.navigation.state.params.finalArray[0].word;
 var selectedItem={key:item.key,data:dataSelected,searchWord:searchWord,bookName:bookName};
-  this.props.navigator.push({
-    screen:'DescriptionScreen',
-    passProps:{selectedItem},
-    navigatorStyle:{
-      navBarHidden:true,
-    },
-  })
+
+  this.props.navigation.navigate('DescriptionScreen',{
+    selectedItem:selectedItem,
+  });
+
+  // this.props.navigator.push({
+  //   screen:'DescriptionScreen',
+  //   passProps:{selectedItem},
+  //   navigatorStyle:{
+  //     navBarHidden:true,
+  //   },
+  // })
+
 }
 
   render(){
@@ -130,7 +136,7 @@ var selectedItem={key:item.key,data:dataSelected,searchWord:searchWord,bookName:
     return(
 
       <View style={styles.outerContainer}>
-      <Header title='نتائج ' navigator={this.props.navigator}/>
+      <Header title='نتائج ' navigator={this.props.navigator} navigation={this.props.navigation}/>
       <SectionList
       renderItem={({item,section}) => <TouchableOpacity onPress={()=>this.rowSelected(item,section)}>
                     <View style={styles.textView}>
@@ -150,7 +156,7 @@ var selectedItem={key:item.key,data:dataSelected,searchWord:searchWord,bookName:
       fontSize:20,
       fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
         }}>
-        {section.title} 
+        {section.title}
         </Text>
       </View>
       }

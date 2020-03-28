@@ -29,39 +29,36 @@ var backArrow=require('./Icons/backArrow_2.png')
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Navigation } from 'react-native-navigation';
 
-
-
 class Screen4 extends Component{
 
   constructor(props){
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
     this.state={
       showProgress:true,
     }
 }
 
+// onNavigationEvent(event) {
+// 	// handle a deep link
+// 		if (event.type == 'DeepLink') {
+// 			const parts = event.link;
+// 			if (parts=='Home') {
+// 				// // // console.log(parts);
+// 				return;
+// 			}else{
+//     				this.props.navigator.resetTo({
+//     			  screen: 'Screen4',
+//     				navigatorStyle: {
+//     					navBarHidden:false,
+//     				},
+//     			});
+// 			  }
+// 		}
+// }
 
-onNavigationEvent(event) {
-	// handle a deep link
-		if (event.type == 'DeepLink') {
-			const parts = event.link;
-			if (parts=='Home') {
-				// // // console.log(parts);
-				return;
-			}else{
-    				this.props.navigator.resetTo({
-    			  screen: 'Screen4',
-    				navigatorStyle: {
-    					navBarHidden:false,
-    				},
-    			});
-			  }
-		}
-}
+componentDidMount() {
 
-componentDidMount() { 
- 
 
   AsyncStorage.getItem("booksData").then((value) => {
 
@@ -3525,12 +3522,16 @@ NavigateToScreen(ScreenName,flag){
 actButton1(){
 // Alert.alert('1')
 //this.NavigateToScreen('BookCatagoryScreen',false);
-this.props.navigator.push({
-  screen: "BookCatagoryScreen",
-  navigatorStyle: {
-    navBarHidden:true,
-  },
-});
+
+this.props.navigation.navigate('BookCatagoryScreen');
+
+// this.props.navigator.push({
+//   screen: "BookCatagoryScreen",
+//   navigatorStyle: {
+//     navBarHidden:true,
+//   },
+// });
+
 }
 
 actButton2(){
@@ -3587,14 +3588,14 @@ render(){
               width:140,
               height:140,
               borderRadius:50,
-            
+
             }}>
             <Image source={logoImage} resizeMode={'contain'}
                   style={{
                     width:140,
                    height:140,
                    borderRadius:50,
-              
+
                   }}/>
 
 
@@ -3639,7 +3640,7 @@ render(){
             height:40,
             width:150,
             alignItems:'center',
-            justifyContent:'center', 
+            justifyContent:'center',
           }}>
           <Text style={{ color:'white', fontWeight:'bold',
 
@@ -3691,7 +3692,7 @@ render(){
                   {rotate: '180deg'}
                   ]
               }}
-              
+
               />
               <View style={{
                 position:'absolute',
@@ -3735,7 +3736,7 @@ outerContainer:{
   height:DEVICE_HEIGHT,
  // backgroundColor:'#85C226',
  // backgroundColor:'transparent',
- 
+
 },
 inputStyle:{
   backgroundColor:'#B4B4B4',

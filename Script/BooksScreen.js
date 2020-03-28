@@ -17,7 +17,7 @@ class BooksScreen extends Component{
 
   constructor(props){
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
     this.state={
         bookList:[],
         booksArray:[],
@@ -25,21 +25,19 @@ class BooksScreen extends Component{
 
   }
 
-  onNavigationEvent(event) {
-  // handle a deep link
-    if (event.type == 'DeepLink') {
-      const parts = event.link;
-            this.props.navigator.resetTo({
-            screen: parts,
-            navigatorStyle: {
-              navBarHidden:true,
-            },
-          });
-
-    }
-  }
-
-
+  // onNavigationEvent(event) {
+  // // handle a deep link
+  //   if (event.type == 'DeepLink') {
+  //     const parts = event.link;
+  //           this.props.navigator.resetTo({
+  //           screen: parts,
+  //           navigatorStyle: {
+  //             navBarHidden:true,
+  //           },
+  //         });
+  //
+  //   }
+  // }
 
   componentDidMount() {
     if (Platform.OS === 'ios') {
@@ -128,13 +126,18 @@ RNFS.readDir(RNFS.MainBundlePath) // On Android, use "RNFS.DocumentDirectoryPath
 rowSelected(selectedItem){
           var bookName=selectedItem.data.name+'.txt'
           var book={bookName:bookName};
-          this.props.navigator.push({
-              screen:'IndexScreen',
-              passProps:{book},
-              navigatorStyle:{
-                      navBarHidden:true,
-                      },
-          })
+
+          this.props.navigation.navigate('IndexScreen',{
+            book:book,
+          });
+
+          // this.props.navigator.push({
+          //     screen:'IndexScreen',
+          //     passProps:{book},
+          //     navigatorStyle:{
+          //             navBarHidden:true,
+          //             },
+          // })
 }
 
 
@@ -152,7 +155,7 @@ rowSelected(selectedItem){
 
     return(
       <View style={styles.outerContainer}>
-      <Header navigator={this.props.navigator} showMenu={true} title='کتابیں'/>
+      <Header navigator={this.props.navigator} navigation={this.props.navigation} showMenu={true} title='کتابیں'/>
 
 
         <FlatList

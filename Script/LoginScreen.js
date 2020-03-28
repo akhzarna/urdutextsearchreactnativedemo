@@ -26,46 +26,45 @@ var twitterPic=require('./Icons/twitterIcon.png');
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-
-
 class LoginScreen extends Component{
 
   constructor(props){
     super(props);
-      
-    this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
-
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
 }
 
-onNavigationEvent(event) {
-	// handle a deep link
-		if (event.type == 'DeepLink') {
-			const parts = event.link;
-			if (parts=='Home') {
-				// // // console.log(parts);
-				return;
-			}else{
-    				this.props.navigator.resetTo({
-    			  screen: 'Screen4',
-    				navigatorStyle: {
-    					navBarHidden:true,
-    				},
-    			});
-			  }
-		}
-}
+// onNavigationEvent(event) {
+// 	// handle a deep link
+// 		if (event.type == 'DeepLink') {
+// 			const parts = event.link;
+// 			if (parts=='Home') {
+// 				// // // console.log(parts);
+// 				return;
+// 			}else{
+//     				this.props.navigator.resetTo({
+//     			  screen: 'Screen4',
+//     				navigatorStyle: {
+//     					navBarHidden:true,
+//     				},
+//     			});
+// 			  }
+// 		}
+// }
 
 componentDidMount() {
 
 }
 
 NavigateToScreen(){
-  this.props.navigator.push({
-  screen: "Screen4",
-  navigatorStyle: {
-    navBarHidden:true,
-  },
-});
+
+  this.props.navigation.navigate('Screen4');
+
+  // this.props.navigator.push({
+  // screen: "Screen4",
+  // navigatorStyle: {
+  //   navBarHidden:true,
+  // },
+  // });
 
 }
 
@@ -226,7 +225,7 @@ render(){
 
               borderTopColor:'blue',
               // borderBottomWidth:20,
-            
+
               height:DEVICE_HEIGHT/4,
               }}>
               <View style={{

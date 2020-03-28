@@ -26,24 +26,82 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+//  import  HomeScreen  from "./Script/HomeScreen";
+//  import  RelatedWords  from "./Script/RelatedWords";
+//  import  ReadingScreen  from "./Script/ReadingScreen";
+//
+//  import { NavigationContainer } from '@react-navigation/native';
+//  import { createStackNavigator } from '@react-navigation/stack';
+//
+//  const Stack = createStackNavigator();
+//
+// function App({route, navigation}) {
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator initialRouteName="HomeScreen">
+//         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+//         <Stack.Screen name="RelatedWords" component={RelatedWords} />
+//         <Stack.Screen name="ReadingScreen" component={ReadingScreen} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// }
+//
+// export default App;
+
+
 // 1st Step
  import { createStackNavigator } from 'react-navigation-stack';
  // authentication views
 
  import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 
- // import HomeViewController from './HomeViewController';
- // import DetailViewController from './DetailViewController';
-
- // Some More Screens
  import  HomeScreen  from "./Script/HomeScreen";
  import  RelatedWords  from "./Script/RelatedWords";
  import  ReadingScreen  from "./Script/ReadingScreen";
+ import  BooksListScreen  from "./Script/BooksListScreen";
+ import  DisplayResultScreen  from "./Script/DisplayResultScreen";
+ import  DescriptionScreen  from "./Script/DescriptionScreen";
+ import  SideMenu  from "./Script/SideMenu";
+ import  BookCatagoryScreen  from "./Script/BookCatagoryScreen";
+ import  BookMarkScreen  from "./Script/BookMarkScreen";
+ import  ListScreen  from "./Script/ListScreen";
+ import  ForumScreen  from "./Script/ForumScreen";
+ import  BookCatagoryScreen2  from "./Script/BookCatagoryScreen2";
+ import  ArticlesReading  from "./Script/ArticlesReading";
+ import  BookContents  from "./Script/BookContents";
+ import  BookMarkReading  from "./Script/BookMarkReading";
+ import  BooksChapters  from "./Script/BooksChapters";
+ import  BooksScreen  from "./Script/BooksScreen";
+ import  ChaptersListScreen  from "./Script/ChaptersListScreen";
+ // import  DialerScreen  from "./Script/DialerScreen";
+ import  IndexScreen  from "./Script/IndexScreen";
+ import  IntroductionScreen  from "./Script/IntroductionScreen";
+ import  IntroductionScreen2  from "./Script/IntroductionScreen2";
 
  const AuthNavigator = createStackNavigator({
     HomeScreen: { screen: HomeScreen },
     RelatedWords: { screen: RelatedWords },
     ReadingScreen: { screen: ReadingScreen },
+    BooksListScreen: { screen: BooksListScreen },
+    DisplayResultScreen: { screen: DisplayResultScreen },
+    DescriptionScreen: { screen: DescriptionScreen },
+    SideMenu: { screen: SideMenu },
+    BookCatagoryScreen: { screen: BookCatagoryScreen },
+    BookMarkScreen: { screen: BookMarkScreen },
+    ListScreen: { screen: ListScreen },
+    ForumScreen: { screen: ForumScreen },
+    BookCatagoryScreen2: { screen: BookCatagoryScreen2 },
+    ArticlesReading: { screen: ArticlesReading },
+    BookContents: { screen: BookContents },
+    BookMarkReading: { screen: BookMarkReading },
+    BooksChapters: { screen: BooksChapters },
+    BooksScreen: { screen: BooksScreen },
+    ChaptersListScreen: { screen: ChaptersListScreen },
+    // DialerScreen: { screen: DialerScreen },
+    IndexScreen: { screen: IndexScreen },
+    IntroductionScreen: { screen: IntroductionScreen },
+    IntroductionScreen2: { screen: IntroductionScreen2 },
    },
    {
      headerMode: 'none'
@@ -53,6 +111,7 @@ import {
  const App = createAppContainer(AuthNavigator);
 
  export default App;
+
 
 
  // Other Code, Including Drawer and Tabbar etc is written below

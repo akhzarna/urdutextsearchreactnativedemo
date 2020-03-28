@@ -18,49 +18,37 @@ var Header=require('./Header');
 var personImage=require('./Icons/person.png')
 const window = Dimensions.get('window');
 
-
-
-
 class IntroductionScreen extends Component{
 
   constructor(props){
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
-
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
   }
 
-
-
-  onNavigationEvent(event) {
-	// handle a deep link
-		if (event.type == 'DeepLink') {
-			const parts = event.link;
-			if (parts=='Home') {
-				// console.log(parts);
-				return;
-			}else{
-    				this.props.navigator.resetTo({
-    			  screen: parts,
-    				navigatorStyle: {
-    					navBarHidden:true,
-    				},
-    			});
-			  }
-		}
-	}
-
-
-
-
-
-
+  // onNavigationEvent(event) {
+	// // handle a deep link
+	// 	if (event.type == 'DeepLink') {
+	// 		const parts = event.link;
+	// 		if (parts=='Home') {
+	// 			// console.log(parts);
+	// 			return;
+	// 		}else{
+  //   				this.props.navigator.resetTo({
+  //   			  screen: parts,
+  //   				navigatorStyle: {
+  //   					navBarHidden:true,
+  //   				},
+  //   			});
+	// 		  }
+	// 	}
+	// }
 
 
 render(){
 
   return(
     <View style={styles.outerContainer}>
-    <Header navigator={this.props.navigator} showMenu={true} title='ادارہ سلیمانی'/>
+    <Header navigator={this.props.navigator} navigation={this.props.navigation} showMenu={true} title='ادارہ سلیمانی'/>
     <ScrollView style={styles.scrollStyle}>
 
     <Image source={personImage} style={styles.imageStyle}/>

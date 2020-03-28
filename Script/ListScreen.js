@@ -31,7 +31,7 @@ class ListScreen extends Component{
 
       constructor(props){
         super(props);
-        this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
+        // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
         var dataArray=[];
         for (var i = 0; i < ArticlesData.titleArray.length; i++) {
           var title=ArticlesData.titleArray[i];
@@ -54,11 +54,11 @@ class ListScreen extends Component{
       }
 
 componentDidMount(){
-   
+
 
   // For Test Akhzar Nazir
   if(Platform.OS === 'ios'){
-  
+
     var path0='';
   path0=RNFS.MainBundlePath+'/Articles.txt';
   var tempArray=[];
@@ -130,7 +130,7 @@ componentDidMount(){
       })
     }
     else {
-    
+
      var path1='Articles.txt';
 
   RNFS.readDirAssets('') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
@@ -142,7 +142,7 @@ componentDidMount(){
 
   var tempArray=[];
   var mainArray=[];
-  
+
   RNFS.readFileAssets(path1)
       .then((contents) => {
         var contentString = contents.toString();
@@ -158,12 +158,12 @@ componentDidMount(){
               if (secondIndexname==-1 || firstIndexname==-1) {
                 break;
               }
-    
+
               var tempString=contentString.slice(firstIndexname+1,secondIndexname-1);
               articlesNameArray.push(tempString);
               i=secondIndexname;
               }
-    
+
               for (var i = 0; i < contentString.length; i++) {
               // ArticleHeading denoted by @ Sign
               var firstIndexheading=contentString.indexOf('@',i);
@@ -171,12 +171,12 @@ componentDidMount(){
               if (secondIndexheading==-1 || firstIndexheading==-1) {
                 break;
               }
-    
+
               var tempString=contentString.slice(firstIndexheading+1,secondIndexheading-1);
               articlesHeadingArray.push(tempString);
               i=secondIndexheading;
             }
-    
+
             for (var i = 0; i < contentString.length; i++) {
               // ArticleDetail denoted by $ Sign
               var firstIndexdetail=contentString.indexOf('$',i);
@@ -184,18 +184,18 @@ componentDidMount(){
               if (secondIndexdetail==-1 || firstIndexdetail==-1) {
                 break;
               }
-    
+
               var tempString=contentString.slice(firstIndexdetail+1,secondIndexdetail-1);
               articlesDetailArray.push(tempString);
               i=secondIndexdetail;
-    
+
             }
-    
+
             for (var x = 0; x < articlesDetailArray.length; x++) {
               var ObjectToSaveInArray = {key:x,mainheading:articlesNameArray[0],subheading:articlesHeadingArray[x],subbestheading:articlesHeadingArray[x],data:articlesDetailArray[x].trim()};
               tempArray.push(ObjectToSaveInArray);
             }
-    
+
             console.log('YES Man Tahir is =',tempArray);
             AsyncStorage.setItem('articlesData', JSON.stringify(this.state.articlesArray));
             var Object0ToSaveInMainArray = {title:'مضامین',data:tempArray};
@@ -203,33 +203,33 @@ componentDidMount(){
             console.log('main Man Tahir is =',mainArray);
             Constants.BookArray=mainArray;
             Constants.isBookLoaded=true;
-    
+
             this.setState({
               articlesArray:mainArray,
               testArray:tempArray,
             })
-    
+
           })
     }
 }
 
-onNavigationEvent(event) {
-      // handle a deep link
-        if (event.type == 'DeepLink') {
-          const parts = event.link;
-          if (parts=='Home') {
-            // console.log(parts);
-            return;
-          }else{
-                this.props.navigator.resetTo({
-                screen: parts,
-                navigatorStyle: {
-                  navBarHidden:true,
-                },
-              });
-            }
-      }
-}
+// onNavigationEvent(event) {
+//       // handle a deep link
+//         if (event.type == 'DeepLink') {
+//           const parts = event.link;
+//           if (parts=='Home') {
+//             // console.log(parts);
+//             return;
+//           }else{
+//                 this.props.navigator.resetTo({
+//                 screen: parts,
+//                 navigatorStyle: {
+//                   navBarHidden:true,
+//                 },
+//               });
+//             }
+//       }
+// }
 
 actButtonSearch(){
     this.setState({
@@ -250,13 +250,19 @@ actionTextBlur(){
 
 rowSelected(item){
   var selectedItem={ArticlesId:item.key,heading:item.subbestheading,data:item.data};
-  this.props.navigator.push({
-    screen:'ArticlesReading',
-    passProps:{selectedItem},
-    navigatorStyle:{
-      navBarHidden:true,
-    },
-  })
+
+  this.props.navigation.navigate('ArticlesReading',{
+    selectedItem:selectedItem,
+  });
+
+  // this.props.navigator.push({
+  //   screen:'ArticlesReading',
+  //   passProps:{selectedItem},
+  //   navigatorStyle:{
+  //     navBarHidden:true,
+  //   },
+  // })
+
 }
 
 
@@ -271,7 +277,7 @@ actionButtonSearch(){
     Alert.alert('Stop!','Search complete word');
     return;
   }
-  
+
   var finalArray=[];
   var bookArray=[];
   this.setState({showProgress:true})
@@ -289,9 +295,9 @@ actionButtonSearch(){
     var subbestheading=this.state.testArray[i].subbestheading;
     var tempString=this.state.testArray[i].data;
     var tempPara=tempString;
-  
-    var index = -1;   
-  
+
+    var index = -1;
+
    if (index == -1)
     {
       console.log("findingggg");
@@ -305,38 +311,38 @@ actionButtonSearch(){
       if (index==-1) {
         index=tempPara.indexOf(stringToSearch);
       }
-  
+
     }
-  
-    
-  
-  
+
+
+
+
     if (index != -1) {
       var object={key:counter,data:this.state.testArray[i]}
       searchedArray.push(object);
       counter++;
     }
-  
+
   }
-  
+
   var searchResult={'word':stringToSearch,'searchedArray':searchedArray,};
-  
+
   this.setState({showProgress:false})
   if (searchedArray.length!=0) {
     flag++;
   }
-  
+
     finalArray.push(searchResult);
-  
+
  // }
-  
-  // // // console.log('Search Result Word is = ',finalArray[0]); 
-  
+
+  // // // console.log('Search Result Word is = ',finalArray[0]);
+
   if (flag == 0){
     Alert.alert('Stop!','No result found');
     return;
   }
-  
+
   this.setState({showProgress:false});
   this.props.navigator.push({
     screen:'DisplayResultScreen',
@@ -346,7 +352,7 @@ actionButtonSearch(){
       navBarHidden:true,
     },
   })
-  
+
   }
 
   actButtonCross(){
@@ -364,7 +370,7 @@ actionButtonSearch(){
         navBarHidden:true,
       },
     })
-    
+
   }
 
 
@@ -391,7 +397,7 @@ actionButtonSearch(){
                 <View style={{flex:1,marginLeft:10,marginRight:10}}>
                 {
                   this.state.showSearchField?(
-                    
+
                    <View style={{flexDirection:'row'}}>
 
                     <TouchableOpacity onPress={()=>this.actButtonCross()} style={{marginLeft:10,marginRight:8,}}>
@@ -400,8 +406,8 @@ actionButtonSearch(){
                     <TouchableOpacity onPress={()=>this.actionButtonSearch()} style={{marginLeft:1,marginRight:10,}}>
                     <Image style={{width:30,height:27}} source={searchIcon}/>
                   </TouchableOpacity>
-  
-                   
+
+
                     <TextInput
                     autoFocus={true}
                     selectionColor='black'
@@ -422,8 +428,8 @@ actionButtonSearch(){
                       color:'white'
                     }}
                     />
-                       
-                
+
+
                     </View>
                   ):(
                     <Text style={{

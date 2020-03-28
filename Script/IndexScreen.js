@@ -100,13 +100,19 @@ rowSelected(item){
   }
 
   var selectedItem={key:item,urdu:urdu,letterSelected:letterSelected,bookName:this.props.book.bookName,bookArray:this.state.orignalArray};
-  this.props.navigator.push({
-    screen:'BookContents',
-    passProps:{selectedItem},
-    navigatorStyle:{
-      navBarHidden:true,
-    },
-  })
+
+  this.props.navigation.navigate('BookContents',{
+    selectedItem:selectedItem,
+  });
+
+  // this.props.navigator.push({
+  //   screen:'BookContents',
+  //   passProps:{selectedItem},
+  //   navigatorStyle:{
+  //     navBarHidden:true,
+  //   },
+  // })
+
 }
 
   async loadBookFromPhone(){
@@ -289,7 +295,7 @@ actionButtonUrdu(){
   render(){
     return(
       <View style={styles.outerContainer}>
-      <Header title='ادارہ سیلمانی' navigator={this.props.navigator} />
+      <Header title='ادارہ سیلمانی' navigator={this.props.navigator} navigation={this.props.navigation} />
       <View style={styles.listView}>
       <View style={{flex:1}}>
       {this.state.isUrduSelected?

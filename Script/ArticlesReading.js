@@ -43,7 +43,7 @@ componentDidMount(){
   render(){
     return(
       <View style={styles.outerContainer}>
-      <Header title='مضامین ' navigator={this.props.navigator} showMenu={false}/>
+      <Header title='مضامین ' navigator={this.props.navigator} navigation={this.props.navigation} showMenu={false}/>
 
       <ScrollView>
       <View style={{marginBottom:15}}>

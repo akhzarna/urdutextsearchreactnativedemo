@@ -25,15 +25,25 @@ const Header = (props)=>{
 
   function actMenuClick() {
    if (props.showMenu) {
-     props.navigator.toggleDrawer({
-        side: 'right',
-        animated: true
-      });
+    //  Alert.alert('Nothing to Pop');
+     props.navigation.navigate('SideMenu');
+
+    //  props.navigator.toggleDrawer({
+    //     side: 'right',
+    //     animated: true
+    //   });
+
    }else{
-     if (props.callBackFunction!= null) {
-       props.callBackFunction("data passed");
-     }
-     props.navigator.pop();
+
+     props.navigation.pop();
+
+    //  Alert.alert('Else Part');
+
+    //  if (props.callBackFunction!= null) {
+    //    props.callBackFunction("data passed");
+    //  }
+    //  props.navigator.pop();
+
    }
  }
 

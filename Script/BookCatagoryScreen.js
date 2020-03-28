@@ -28,30 +28,30 @@ class BookCatagoryScreen extends Component{
 
   constructor(props){
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
     this.state={
       showProgress:true,
     }
 
     }
 
-    onNavigationEvent(event) {
-          // handle a deep link
-            if (event.type == 'DeepLink') {
-              const parts = event.link;
-              if (parts=='Home') {
-                // console.log(parts);
-                return;
-              }else{
-                    this.props.navigator.resetTo({
-                    screen: parts,
-                    navigatorStyle: {
-                      navBarHidden:true,
-                    },
-                  });
-                }
-          }
-    }
+    // onNavigationEvent(event) {
+    //       // handle a deep link
+    //         if (event.type == 'DeepLink') {
+    //           const parts = event.link;
+    //           if (parts=='Home') {
+    //             // console.log(parts);
+    //             return;
+    //           }else{
+    //                 this.props.navigator.resetTo({
+    //                 screen: parts,
+    //                 navigatorStyle: {
+    //                   navBarHidden:true,
+    //                 },
+    //               });
+    //             }
+    //       }
+    // }
 
 
     componentDidMount() {
@@ -3459,16 +3459,11 @@ class BookCatagoryScreen extends Component{
 
     // readFileAssets
     }
-    }
-
-
-
-
+  }
 
 actionButtonPress(id){
   var screenName='BooksListScreen';
   if (id==4) {
-    // screenName='HomeScreen';
   }
    if (id==1) {
      screenName='BookCatagoryScreen2';
@@ -3479,26 +3474,24 @@ actionButtonPress(id){
   // }else if (id==4) {
   //   screenName='HomeScreen';
    }
-  this.props.navigator.push({
-    screen:screenName,
-    navigatorStyle:{
-      navBarHidden:true,
-    },
-  })
-}
 
+   this.props.navigation.navigate(screenName);
+
+  // this.props.navigator.push({
+  //   screen:screenName,
+  //   navigatorStyle:{
+  //     navBarHidden:true,
+  //   },
+  // })
+}
 
   render(){
 
-
     return(
       <View style={styles.outerContainer}>
-      <Header navigator={this.props.navigator} showMenu={true} title='طبی کتب'/>
-
-
+      <Header navigator={this.props.navigator} navigation={this.props.navigation} showMenu={true} title='طبی کتب'/>
 
       <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-
 
               <View style={[styles.rowView,{flex:0.15,justifyContent:'center',}]}>
                     <TouchableOpacity onPress={()=>this.actionButtonPress(1)} style={styles.buttonStyle}>
@@ -3512,10 +3505,6 @@ actionButtonPress(id){
                     </TouchableOpacity>
               </View>
 
-
-
-
-
               <View style={[styles.rowView,{flex:0.15,justifyContent:'center',alignItems:'center'}]}>
                     <TouchableOpacity onPress={()=>this.actionButtonPress(3)} style={styles.buttonStyle}>
 
@@ -3528,14 +3517,6 @@ actionButtonPress(id){
                     <Text style={styles.titleStyle}>نسخہ جات</Text>
                     </TouchableOpacity>
               </View>
-
-
-
-
-
-
-
-
 
       </View>
 
@@ -3554,8 +3535,6 @@ actionButtonPress(id){
       }
 
       <Loader showProgress={this.state.showProgress}/>
-
-
 
       </View>
     );

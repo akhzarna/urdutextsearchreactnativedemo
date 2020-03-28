@@ -6,7 +6,6 @@ const {
   View,
   Image,
   Text,
-  ListView,
   TouchableOpacity,
   Alert,
   ActivityIndicator,

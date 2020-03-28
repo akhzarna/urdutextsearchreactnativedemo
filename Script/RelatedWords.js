@@ -30,7 +30,8 @@
     constructor(props){
       super(props);
       var finalArray=[];
-        finalArray = this.props.finalArrayToCheckRepitition;
+        // finalArray = this.props.finalArrayToCheckRepitition;
+        finalArray = this.props.navigation.state.params.sectionArray;
         this.state={
           finalArray:finalArray,
           sectionArray:[],
@@ -41,21 +42,28 @@
     this.function();
   }
 
-  rowSelected(item,section){
+  _rowSelected(item,section){
     var selectedRow = item.key;
     console.log("keyyy",selectedRow);
     var sectionArray = [];
     sectionArray = this.state.finalArray;
-   // console.log('Compare Array 2',sectionArray);
+    // console.log('Compare Array 2',sectionArray);
     // var selectedItem = this.state.sectionArray[item.key].read;
     // var selectedTitle = this.state.sectionArray[item.key].title;
-    this.props.navigator.push({
-      screen:'ReadingScreen',
-      passProps:{sectionArray,selectedRow},
-      navigatorStyle:{
-        navBarHidden:true,
-      },
+
+    this.props.navigation.navigate('ReadingScreen',{
+      sectionArray:sectionArray,
+      selectedRow:selectedRow,
     });
+
+    // this.props.navigator.push({
+    //   screen:'ReadingScreen',
+    //   passProps:{sectionArray,selectedRow},
+    //   navigatorStyle:{
+    //     navBarHidden:true,
+    //   },
+    // });
+
   }
 
  function(){
@@ -82,10 +90,10 @@
     return(
 
     <View style={{flex:1}}>
-     <Header title='Related Items' showMenu={false} navigator={this.props.navigator}/>
+     <Header title='مشترکات' showMenu={false} navigator={this.props.navigator} navigation={this.props.navigation} />
      <ScrollView style={{flex:1}}>
       <SectionList
-        renderItem={({item,section}) => <TouchableOpacity onPress={()=>this.rowSelected(item,section)}>
+        renderItem={({item,section}) => <TouchableOpacity onPress={()=>this._rowSelected(item,section)}>
                       <View style={styles.textView}>
                       <View style={{flex:1}}>
                       <Image source={arrow_left} style={styles.iconDimention}/>

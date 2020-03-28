@@ -100,8 +100,10 @@ class HomeScreen extends Component{
         isBook1Selected:true,
         isBook2Selected:true,
         pressStatus: false,
-        isBook3Selected: this.props.isOption1,
-        isBook4Selected: !this.props.isOption1,
+        // isBook3Selected: this.props.isOption1,
+        // isBook4Selected: !this.props.isOption1,
+        isBook3Selected: true,
+        isBook4Selected: true,
         searchResultArray:[],
         bannersArray:[
           {fileName:require('./Banner/Matab_Banner_1.jpg'),key:5},
@@ -3667,27 +3669,274 @@ class HomeScreen extends Component{
 }
 
 actionButtonBooksList(){
-    var screenName='BooksListScreen';
-    this.props.navigator.push({
-      screen:screenName,
-      // passProps:{finalArray},
-      navigatorStyle:{
-        navBarHidden:true,
-      },
-    })
+
+    this.props.navigation.navigate('BooksListScreen',{
+      finalArray:finalArray,
+    });
+
+    // var screenName='BooksListScreen';
+    // this.props.navigator.push({
+    //   screen:screenName,
+    //   // passProps:{finalArray},
+    //   navigatorStyle:{
+    //     navBarHidden:true,
+    //   },
+    // })
 
 }
 
+
 actionButtonSearch(){
+
+// this.searchExactWord();
 var stringToSearch=this.state.txtSearch.trim();
+// // // console.log('String to Search' + stringToSearch);
   stringToSearch=stringToSearch.toLowerCase();
 if (stringToSearch.length <=0) {
   Alert.alert('Stop!','Search complete word');
   return;
-}else{
+}
+
+var finalArray=[];
+
+this.setState({showProgress:true})
+for (var x = 0; x < this.state.bookArray.length; x++) {
+var bookArray=this.state.bookArray[x].data;
+var searchedArray=[];
+var counter = 0;
+var flag = 0;
+
+// Testing Akhzar Nazir
+for (var i = 0; i < bookArray.length; i++) {
+  var mainHeading=bookArray[i].mainheading;
+  var subHeading=bookArray[i].subheading;
+  var subbestheading=bookArray[i].subbestheading;
+  var tempString=bookArray[i].data;
+  var tempPara=tempString.toLowerCase();
+
+  var index = -1;
+
+ if (!this.state.isBook1Selected && !this.state.isBook2Selected && !this.state.isBook3Selected && !this.state.isBook4Selected)
+  {
+
+    index=mainHeading.indexOf(stringToSearch);
+    if (index==-1) {
+      index=subHeading.indexOf(stringToSearch);
+    }
+    if (index==-1) {
+      index=subbestheading.indexOf(stringToSearch);
+    }
+    if (index==-1) {
+      index=tempPara.indexOf(stringToSearch);
+    }
+
+  }
+
+  else if (this.state.isBook1Selected && this.state.isBook2Selected && this.state.isBook3Selected && this.state.isBook4Selected)
+  {
+
+    index=mainHeading.indexOf(stringToSearch);
+    if (index==-1) {
+      index=subHeading.indexOf(stringToSearch);
+    }
+    if (index==-1) {
+      index=subbestheading.indexOf(stringToSearch);
+    }
+    if (index==-1) {
+      index=tempPara.indexOf(stringToSearch);
+    }
+
+  }
+
+  else if (this.state.isBook1Selected && !this.state.isBook2Selected && !this.state.isBook3Selected && !this.state.isBook4Selected)
+  {
+    index=mainHeading.indexOf(stringToSearch);
+
+  }
+
+  else  if (this.state.isBook2Selected && !this.state.isBook1Selected && !this.state.isBook3Selected && !this.state.isBook4Selected)
+  {
+    index=tempPara.indexOf(stringToSearch);
+
+  }
+
+  else  if (this.state.isBook3Selected && !this.state.isBook1Selected && !this.state.isBook2Selected && !this.state.isBook4Selected)
+  {
+    index=subHeading.indexOf(stringToSearch);
+
+  }
+
+  else  if (this.state.isBook4Selected && !this.state.isBook1Selected && !this.state.isBook2Selected && !this.state.isBook3Selected)
+  {
+    index=subbestheading.indexOf(stringToSearch);
+
+  }
+
+  else  if (this.state.isBook1Selected && this.state.isBook2Selected && !this.state.isBook3Selected && !this.state.isBook4Selected)
+  {
+    index=mainHeading.indexOf(stringToSearch);
+    index=tempPara.indexOf(stringToSearch);
+  }
+
+  else  if (this.state.isBook1Selected && this.state.isBook3Selected && !this.state.isBook2Selected && !this.state.isBook4Selected)
+  {
+    index=mainHeading.indexOf(stringToSearch);
+    index=subHeading.indexOf(stringToSearch);
+  }
+
+  else  if (this.state.isBook1Selected && this.state.isBook4Selected && !this.state.isBook2Selected && !this.state.isBook3Selected)
+  {
+    index=mainHeading.indexOf(stringToSearch);
+    index=subbestheading.indexOf(stringToSearch);
+  }
+
+
+
+  else  if (this.state.isBook2Selected && this.state.isBook1Selected && !this.state.isBook3Selected && !this.state.isBook4Selected)
+  {
+    index=mainHeading.indexOf(stringToSearch);
+    index=tempPara.indexOf(stringToSearch);
+  }
+
+  else  if (this.state.isBook2Selected && this.state.isBook3Selected && !this.state.isBook1Selected && !this.state.isBook4Selected)
+  {
+    index=tempPara.indexOf(stringToSearch);
+    index=subHeading.indexOf(stringToSearch);
+  }
+
+  else  if (this.state.isBook2Selected && this.state.isBook4Selected && !this.state.isBook1Selected && !this.state.isBook3Selected)
+  {
+    index=tempPara.indexOf(stringToSearch);
+    index=subbestheading.indexOf(stringToSearch);
+  }
+
+
+
+////// ///// /////
+
+  else  if (this.state.isBook3Selected && this.state.isBook1Selected && !this.state.isBook2Selected && !this.state.isBook4Selected)
+  {
+    index=mainHeading.indexOf(stringToSearch);
+    index=subHeading.indexOf(stringToSearch);
+  }
+
+  else  if (this.state.isBook3Selected && this.state.isBook2Selected && !this.state.isBook1Selected && !this.state.isBook4Selected)
+  {
+    index=tempPara.indexOf(stringToSearch);
+    index=subHeading.indexOf(stringToSearch);
+  }
+
+  else  if (this.state.isBook3Selected && this.state.isBook4Selected && !this.state.isBook1Selected && !this.state.isBook2Selected)
+  {
+    index=subHeading.indexOf(stringToSearch);
+    index=subbestheading.indexOf(stringToSearch);
+  }
+
+
+
+  ////// ///// /////
+
+    else  if (this.state.isBook4Selected && this.state.isBook1Selected && !this.state.isBook2Selected && !this.state.isBook3Selected)
+    {
+      index=mainHeading.indexOf(stringToSearch);
+      index=subbestheading.indexOf(stringToSearch);
+
+    }
+
+    else  if (this.state.isBook4Selected && this.state.isBook2Selected && !this.state.isBook1Selected && !this.state.isBook3Selected)
+    {
+
+      index=tempPara.indexOf(stringToSearch);
+      index=subbestheading.indexOf(stringToSearch);
+    }
+
+    else  if (this.state.isBook4Selected && this.state.isBook3Selected && !this.state.isBook1Selected && !this.state.isBook2Selected)
+    {
+      index=subHeading.indexOf(stringToSearch);
+      index=subbestheading.indexOf(stringToSearch);
+    }
+
+
+    ////// ///// /////
+
+      else  if (this.state.isBook1Selected && this.state.isBook2Selected && this.state.isBook3Selected && !this.state.isBook4Selected)
+      {
+        index=mainHeading.indexOf(stringToSearch);
+        index=tempPara.indexOf(stringToSearch);
+        index=subHeading.indexOf(stringToSearch);
+
+      }
+
+      else  if (this.state.isBook1Selected && this.state.isBook2Selected && this.state.isBook4Selected && !this.state.isBook3Selected)
+      {
+        index=mainHeading.indexOf(stringToSearch);
+        index=tempPara.indexOf(stringToSearch);
+        index=subbestheading.indexOf(stringToSearch);
+
+      }
+
+      else  if (this.state.isBook1Selected && this.state.isBook3Selected && this.state.isBook4Selected && !this.state.isBook2Selected)
+      {
+
+        index=mainHeading.indexOf(stringToSearch);
+        index=subHeading.indexOf(stringToSearch);
+        index=subbestheading.indexOf(stringToSearch);
+
+      }
+
+
+  if (index != -1) {
+    var object={key:counter,data:bookArray[i]}
+    searchedArray.push(object);
+    counter++;
+  }
+
+}
+
+var searchResult={'word':stringToSearch,'searchedArray':searchedArray,bookname:this.state.bookArray[x].title};
+
+this.setState({showProgress:false})
+if (searchedArray.length!=0) {
+  flag++;
+}
+
+  finalArray.push(searchResult);
+
+}
+
+// // // console.log('Search Result Word is = ',finalArray[0]);
+
+if (flag == 0){
+  Alert.alert('Stop!','No result found');
   return;
 }
+
+this.setState({showProgress:false});
+
+  this.props.navigation.navigate('DisplayResultScreen',{
+    finalArray:finalArray,
+  });
+
+// this.props.navigator.push({
+//   screen:'DisplayResultScreen',
+//   passProps:{finalArray},
+//   navigatorStyle:{
+//     navBarHidden:true,
+//   },
+// })
+
 }
+
+// actionButtonSearch(){
+// var stringToSearch=this.state.txtSearch.trim();
+//   stringToSearch=stringToSearch.toLowerCase();
+// if (stringToSearch.length <=0) {
+//   Alert.alert('Stop!','Search complete word');
+//   return;
+// }else{
+//   return;
+// }
+// }
 
 searchExactWord(){
 
@@ -3750,13 +3999,17 @@ searchExactWord(){
       return;
     }
 
-    this.props.navigator.push({
-      screen:'DisplayResultScreen',
-      passProps:{searchResult},
-      navigatorStyle:{
-        navBarHidden:true,
-      },
-    })
+    this.props.navigation.navigate('DisplayResultScreen',{
+      searchResult:searchResult,
+    });
+
+    // this.props.navigator.push({
+    //   screen:'DisplayResultScreen',
+    //   passProps:{searchResult},
+    //   navigatorStyle:{
+    //     navBarHidden:true,
+    //   },
+    // })
 }
 
 actionCheckBox1(){
@@ -3908,7 +4161,7 @@ _rowSelected(index){
   if (finalArrayToCheckRepitition.length > 1) {
    // console.log('Compare Array Multiple',this.state.searchResultArray[0]);
 
-  Alert.alert('Call some Function 1');
+  // Alert.alert('Call some Function 1');
 
   this.props.navigation.navigate('RelatedWords',{
   //  rollnumber:1,
@@ -3916,7 +4169,7 @@ _rowSelected(index){
   //  data:obj,
   //  compare:1,
 
-   passProps:{finalArrayToCheckRepitition},
+   sectionArray:finalArrayToCheckRepitition,
 
    });
 
@@ -3931,7 +4184,7 @@ _rowSelected(index){
 
   }else{
 
-    Alert.alert('Call some Function 2');
+    // Alert.alert('Call some Function 2');
 
     var selectedRow = 0; //index
     var sectionArray = [];
@@ -3966,7 +4219,7 @@ render(){
      <View style={styles.outerContainer}>
      <ImageBackground source={backgroundImage} style={{width:window.width,height:window.height,backgroundColor:'gray'}}>
 
-       <Header navigator={this.props.navigator} showMenu={true} title='طبی  کتب'/>
+     <Header navigation={this.props.navigation} navigator={this.props.navigator} showMenu={true} title='طبی  کتب'/>
 
      <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1}} enableOnAndroid={true}>
      <View style={styles.logoView}>

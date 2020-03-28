@@ -35,20 +35,20 @@ class Testing extends Component{
     this.state = {
       visible: false,
       showData: [],
-      
+
     }
 
   }
-  
+
      componentWillMount(){
      //  console.log("hello! :)",this.props.fullData[0],this.props.fullData.length,
     //   this.props.fullData[0].data.length);
-       
+
      }
      componentDidMount(){
     //  this.settingOut();
      }
-        
+
         // settingOut(){
         //   var tempArray=[];
         //   Alert.alert(this.props.fullData[1].title,this.props.fullData[1].data[0].data);
@@ -58,7 +58,7 @@ class Testing extends Component{
 
         //     for(var j=0; j<this.props.fullData[i].data.length; j++){
         //     var data= this.props.fullData[i].data[j].data;
-            
+
         //     var key= j;
         //     var obj={data:data,title:title,key:key}
         //     tempArray.push(obj);
@@ -71,7 +71,7 @@ class Testing extends Component{
 
      //map to some od. We use the "id" attribute of each item in our list created in our MockPersonList
      _keyExtractor = (item, index) => item.key;
-   
+
      // REQUIRED for ReactNativePagination to work correctly
      onViewableItemsChanged = ({ viewableItems, changed }) =>
        this.setState({ viewableItems });
@@ -89,13 +89,13 @@ class Testing extends Component{
       return(
 
             <View style={styles.outerContainer}>
-            <Header title='نسخہ ' navigator={this.props.navigator}/>
-              
-            <FlatList 
+            <Header title='نسخہ ' navigator={this.props.navigator} navigation={this.props.navigation}/>
+
+            <FlatList
              horizontal
              pagingEnabled={true}
              showsHorizontalScrollIndicator={false}
-           
+
              legacyImplementation={false}
           data={this.props.fullData}
          // ref={r => (this.refs = r)} // create refrence point to enable scrolling
@@ -120,7 +120,7 @@ class Testing extends Component{
         </TouchableOpacity>
 
         <TouchableOpacity  onPress={()=>{
-             Share.open(shareOptions);}} 
+             Share.open(shareOptions);}}
             style={{marginLeft:40,marginRight:40,marginBottom:40,marginTop:30,backgroundColor:'#2C3990',height:50,justifyContent:'center',alignItems:'center',borderRadius:30}}>
             <View style={styles.innerView}>
             <Image source={share_icon}  style={styles.iconShare}/>
@@ -130,7 +130,7 @@ class Testing extends Component{
             </ScrollView>
             }
             />
-         
+
             </View>
           );}
 }

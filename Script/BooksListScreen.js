@@ -152,13 +152,18 @@ class BooksListScreen extends Component{
         var book={bookName:bookName,
                   bookNameWithoutExtension:bookNameWithoutExtension};
 
-        this.props.navigator.push({
-            screen:'ChaptersListScreen',
-            passProps:{book,finalArray},
-            navigatorStyle:{
-                    navBarHidden:true,
-            },
-        })
+        this.props.navigation.navigate('ChaptersListScreen',{
+          finalArray:finalArray,
+          book:book,
+        });
+
+        // this.props.navigator.push({
+        //     screen:'ChaptersListScreen',
+        //     passProps:{book,finalArray},
+        //     navigatorStyle:{
+        //       navBarHidden:true,
+        //     },
+        // })
 
     }
 
@@ -166,7 +171,7 @@ class BooksListScreen extends Component{
 
     return(
       <View style={styles.outerContainer}>
-      <Header title='تصنیف' showMenu={false} navigator={this.props.navigator}/>
+      <Header title='تصنیف' showMenu={false} navigator={this.props.navigator} navigation={this.props.navigation}/>
 
             <View style={{flex:1}}>
             <FlatList

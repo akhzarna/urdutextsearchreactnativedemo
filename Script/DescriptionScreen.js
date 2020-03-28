@@ -27,17 +27,17 @@ class DescriptionScreen extends Component{
 
   constructor(props){
     super(props);
-    var bookName=this.props.selectedItem.bookName;
-    var tempData=this.props.selectedItem.data.data;
-   // Alert.alert("hello"+this.props.selectedItem.data);
-    var mainHeading = this.props.selectedItem.data.mainheading;
-    var subHeading = this.props.selectedItem.data.subheading;
-    var subbestHeading = this.props.selectedItem.data.subbestheading;
+    var bookName=this.props.navigation.state.params.selectedItem.bookName;
+    var tempData=this.props.navigation.state.params.selectedItem.data.data;
+   // Alert.alert("hello"+this.props.navigation.state.params.selectedItem.data);
+    var mainHeading = this.props.navigation.state.params.selectedItem.data.mainheading;
+    var subHeading = this.props.navigation.state.params.selectedItem.data.subheading;
+    var subbestHeading = this.props.navigation.state.params.selectedItem.data.subbestheading;
     var mainArray = [mainHeading,subHeading,subbestHeading];
     mainHeading=this.seperateHeadingWord(mainHeading);
 
     var orignalData=tempData;
-    var searchWord=this.props.selectedItem.searchWord;
+    var searchWord=this.props.navigation.state.params.selectedItem.searchWord;
     var headingWords=this.seperateHeadingWord(orignalData);
 
     // var stringTOreplace='/'+searchWord+'/g';
@@ -73,13 +73,13 @@ class DescriptionScreen extends Component{
       subbestHeading:subbestHeading,
       mainArray:mainArray,
       bookName:bookName,
-      forABMdata:this.props.selectedItem.data,
+      forABMdata:this.props.navigation.state.params.selectedItem.data,
     }
 
     this.checkForAlreadyBookMark();
     this.tagSearchWord(afterHeading);
   }
-  
+
      componentWillMount(){
       // Alert.alert("hello! :)");
      }
@@ -124,7 +124,7 @@ return array;
 }
 
 tagSearchWord(data){
-  var searchWord=this.props.selectedItem.searchWord;
+  var searchWord=this.props.navigation.state.params.selectedItem.searchWord;
   var tempString=data;
   var index=0;
   for (var i = 0; i <tempString.length; i++){
@@ -234,14 +234,14 @@ tagSimiliarword(data,spaceAfterIndex,index){
                       var savedValue=JSON.parse(value);
                       var array=savedValue.bookMark;
                     //  array.push(this.state.orignalData);
-                    array.push(this.props.selectedItem.data.data);
+                    array.push(this.props.navigation.state.params.selectedItem.data.data);
                       var bookMark={bookMark:array};
                       AsyncStorage.setItem('bookMark', JSON.stringify(bookMark))
                       this.setState({indexOfBookMark:array.length-1});
 
                 }else{
                   var tempArray=[];
-                  tempArray.push(this.props.selectedItem.data.data);
+                  tempArray.push(this.props.navigation.state.params.selectedItem.data.data);
                   var bookMark={bookMark:tempArray};
                   AsyncStorage.setItem('bookMark', JSON.stringify(bookMark))
                   this.setState({indexOfBookMark:tempArray.length-1});
@@ -255,7 +255,7 @@ tagSimiliarword(data,spaceAfterIndex,index){
 
 
 checkForAlreadyBookMark(){
- // var data=this.props.selectedItem.data;
+ // var data=this.props.navigation.state.params.selectedItem.data;
  var data= this.state.data;
   console.log("data"+data[0]);
   AsyncStorage.getItem("bookMark").then((value) => {
@@ -266,7 +266,7 @@ checkForAlreadyBookMark(){
                   for (var i = 0; i < array.length; i++) {
                     var paragraph=array[i];
                     var str1 = array[i].slice(0,60);
-                  //  
+                  //
                     var str2 =   data.slice(0,60);        //this.state.forABMdata.slice(0,60);
                     if (str1==str2) {
                       // console.log("marked");
@@ -285,7 +285,7 @@ checkForAlreadyBookMark(){
 
     let shareOptions = {
          title: "کتاب الرویا",
-         message:this.props.selectedItem.data.data,
+         message:this.props.navigation.state.params.selectedItem.data.data,
         //  url: "",
          subject: "Share Link" //  for email
        };
@@ -293,7 +293,7 @@ checkForAlreadyBookMark(){
       return(
 
             <View style={styles.outerContainer}>
-            <Header title='نسخہ ' navigator={this.props.navigator}/>
+            <Header title='نسخہ ' navigator={this.props.navigator} navigation={this.props.navigation}/>
 
             <ScrollView style={styles.textView}>
               <View style={{marginBottom:15}}>

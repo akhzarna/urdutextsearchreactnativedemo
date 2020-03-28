@@ -33,11 +33,11 @@
       super(props);
 
             var finalArray=[];
-            for (var x = 0; x < this.props.finalArray.length; x++) {
+            for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
             var arrayList=[];
-            for (var i = 0; i < this.props.finalArray[x].searchedArray.length; i++) {
-              var paragraph=''+this.props.finalArray[x].searchedArray[i].data.data;
-              var searchWord=this.props.finalArray[x].word;
+            for (var i = 0; i < this.props.navigation.state.params.finalArray[x].searchedArray.length; i++) {
+              var paragraph=''+this.props.navigation.state.params.finalArray[x].searchedArray[i].data.data;
+              var searchWord=this.props.navigation.state.params.finalArray[x].word;
               var index=paragraph.indexOf(searchWord);
               // // console.log('Index to HightLight is = '+index);
               var data='';
@@ -80,7 +80,7 @@
         var tempNewArray=[];
         for (var i = 0; i < finalArray.length; i++) {
           var data=finalArray[i];
-          var title=this.props.finalArray[i].bookname
+          var title=this.props.navigation.state.params.finalArray[i].bookname
           var key=i;
           var object={data:data,key:key,title:title};
           tempNewArray.push(object);
@@ -101,7 +101,7 @@
 
   findFrequencyOfSearchWord(paragraph){
 
-      var searchWord=this.props.finalArray[0].word;
+      var searchWord=this.props.navigation.state.params.finalArray[0].word;
       // // console.log('Search Result For Frequency is = ' + searchWord);
       var freqCounter = 0;
       var headingEndIndex = paragraph.indexOf('\r',1);
@@ -124,7 +124,7 @@
       }
       return freqCounter;
   }
-    
+
   //  componentDidMount(){     4 testing
   //    if(this.state.searchedData.length){
   //    //  Alert.alert("calling");
@@ -147,7 +147,7 @@
 
   // //     for(var j=0; j<1; j++){
   // //     var data= this.state.searchedData[i].data[j].data;
-      
+
   // //     count = count+1;
   // //     var obj={data:data,title:title,key:count}
   // //     tempArray.push(obj);
@@ -156,24 +156,30 @@
   // //    this.setState({showData:tempArray});
   // //    // this.settingOut();
   // }
-    
+
   rowSelected(item,section){
 
     // // console.log('Choosed Item is =' + item);
     if (item.key == -1) {
       return ;
     }
-    var dataSelected=this.props.finalArray[section.key].searchedArray[item.key].data;
+    var dataSelected=this.props.navigation.state.params.finalArray[section.key].searchedArray[item.key].data;
     // // console.log('DataSelected is =' + dataSelected);
-    var searchWord=this.props.finalArray[0].word;
+    var searchWord=this.props.navigation.state.params.finalArray[0].word;
     var selectedItem={key:item.key,data:dataSelected,searchWord:searchWord};
-      this.props.navigator.push({
-        screen:'DescriptionScreen',
-        passProps:{selectedItem},
-        navigatorStyle:{
-          navBarHidden:true,
-        },
-      })
+
+    this.props.navigation.navigate('DescriptionScreen',{
+      selectedItem:selectedItem,
+    });
+
+      // this.props.navigator.push({
+      //   screen:'DescriptionScreen',
+      //   passProps:{selectedItem},
+      //   navigatorStyle:{
+      //     navBarHidden:true,
+      //   },
+      // })
+
     }
 
 
@@ -181,10 +187,11 @@
 
 //    var fullData=this.state.showData;
 //      // Alert.alert('a'+this.state.showData.length,this.state.showData[30].data);
-//   //var dataSelected=this.props.finalArray[section.key].searchedArray[item.key].data;
+//   //var dataSelected=this.props.navigation.state.params.finalArray[section.key].searchedArray[item.key].data;
 
-//   //var searchWord=this.props.finalArray[0].word;
+//   //var searchWord=this.props.navigation.state.params.finalArray[0].word;
 //  // var selectedItem={key:item.key,data:dataSelected,searchWord:searchWord};
+
 //     this.props.navigator.push({
 //       screen:  'Testing',   //'DescriptionScreen',
 //       passProps:{fullData},
@@ -219,10 +226,10 @@
       return;
     }
     var finalArray=[];
-    for (var x = 0; x < this.props.finalArray.length; x++) {
+    for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
     var arrayList=[];
-    for (var i = 0; i < this.props.finalArray[x].searchedArray.length; i++) {
-      var paragraph=''+this.props.finalArray[x].searchedArray[i].data.data;
+    for (var i = 0; i < this.props.navigation.state.params.finalArray[x].searchedArray.length; i++) {
+      var paragraph=''+this.props.navigation.state.params.finalArray[x].searchedArray[i].data.data;
 
       var index=paragraph.indexOf(searchWord);
       // // console.log('Index to HightLight is = '+index);
@@ -272,7 +279,7 @@
 var tempNewArray=[];
 for (var i = 0; i < finalArray.length; i++) {
   var data=finalArray[i];
-  var title=this.props.finalArray[i].bookname
+  var title=this.props.navigation.state.params.finalArray[i].bookname
   var key=i;
   var object={data:data,key:key,title:title};
   tempNewArray.push(object);
@@ -348,12 +355,12 @@ for (var i = 0; i < finalArray.length; i++) {
                       color:'white',
                       fontSize:20,
 
-                    }}>{this.props.book.bookNameWithoutExtension}</Text>
+                    }}>{this.props.navigation.state.params.book.bookNameWithoutExtension}</Text>
                   )
                 }
                 </View>
 
-                <TouchableOpacity onPress={()=>this.props.navigator.pop()} style={{marginRight:10}}>
+                <TouchableOpacity onPress={()=>this.props.navigation.pop()} style={{marginRight:10}}>
                 <Image style={{width:30,height:22}} source={backArrow}/>
                 </TouchableOpacity>
 

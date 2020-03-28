@@ -28,30 +28,30 @@ class BookCatagoryScreen2 extends Component{
 
   constructor(props){
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
     this.state={
       showProgress:true,
     }
 
     }
 
-    onNavigationEvent(event) {
-          // handle a deep link
-            if (event.type == 'DeepLink') {
-              const parts = event.link;
-              if (parts=='Home') {
-                // console.log(parts);
-                return;
-              }else{
-                    this.props.navigator.resetTo({
-                    screen: parts,
-                    navigatorStyle: {
-                      navBarHidden:true,
-                    },
-                  });
-                }
-          }
-    }
+    // onNavigationEvent(event) {
+    //       // handle a deep link
+    //         if (event.type == 'DeepLink') {
+    //           const parts = event.link;
+    //           if (parts=='Home') {
+    //             // console.log(parts);
+    //             return;
+    //           }else{
+    //                 this.props.navigator.resetTo({
+    //                 screen: parts,
+    //                 navigatorStyle: {
+    //                   navBarHidden:true,
+    //                 },
+    //               });
+    //             }
+    //       }
+    // }
 
 
     componentDidMount() {
@@ -3479,12 +3479,17 @@ actionButtonPress(id){
   // }else if (id==4) {
   //   screenName='HomeScreen';
   // }
-  this.props.navigator.push({
-    screen:screenName,
-    navigatorStyle:{
-      navBarHidden:true,
-    },
-  })
+
+
+  this.props.navigation.navigate(screenName);
+
+  // this.props.navigator.push({
+  //   screen:screenName,
+  //   navigatorStyle:{
+  //     navBarHidden:true,
+  //   },
+  // })
+
 }
 
 
@@ -3493,7 +3498,7 @@ actionButtonPress(id){
 
     return(
       <View style={styles.outerContainer}>
-      <Header navigator={this.props.navigator} showMenu={false} title='طبی کتب'/>
+      <Header navigator={this.props.navigator} navigation={this.props.navigation} showMenu={false} title='طبی کتب'/>
 
 
 

@@ -16,7 +16,6 @@ import {
 const window = Dimensions.get('window');
 class DialerResultScreen extends Component{
 
-
   constructor(props){
     super(props);
 
@@ -29,7 +28,7 @@ class DialerResultScreen extends Component{
   render(){
     return(
       <View style={styles.outercontainer}>
-    
+
       </View>
     );
   }

@@ -43,8 +43,7 @@ class HomeScreen extends Component{
 
   constructor(props){
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
-
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
     var alif = {key:'ا',data:0};
     var bay = {key:'ب',data:0};
     var pay = {key:'پ',data:0};
@@ -116,23 +115,23 @@ class HomeScreen extends Component{
     }
 }
 
-  onNavigationEvent(event) {
-	// handle a deep link
-		if (event.type == 'DeepLink') {
-			const parts = event.link;
-			if (parts=='Home') {
-				// // // console.log(parts);
-				return;
-			}else{
-    				this.props.navigator.resetTo({
-    			  screen: parts,
-    				navigatorStyle: {
-    					navBarHidden:true,
-    				},
-    			});
-			  }
-		}
-}
+//   onNavigationEvent(event) {
+// 	// handle a deep link
+// 		if (event.type == 'DeepLink') {
+// 			const parts = event.link;
+// 			if (parts=='Home') {
+// 				// // // console.log(parts);
+// 				return;
+// 			}else{
+//     				this.props.navigator.resetTo({
+//     			  screen: parts,
+//     				navigatorStyle: {
+//     					navBarHidden:true,
+//     				},
+//     			});
+// 			  }
+// 		}
+// }
 
   componentDidMount() {
 
@@ -3675,14 +3674,14 @@ class HomeScreen extends Component{
    //  Alert.alert('Working on it...');
   // Alert.alert('Hello'+this.state.bookArray[1].data[2].mainheading);
   var tempArray=[];
-      for(var i=0; i<this.state.bookArray.length; i++){ 
+      for(var i=0; i<this.state.bookArray.length; i++){
          var dataArray=[];
        // console.log('Hello'+this.state.bookArray[i].data[0].data);
       //   console.log("1 inddexx"+this.state.bookArray[0].data[0].mainheading);
        for(var j=0; j<this.state.bookArray[i].data.length-1; j++){
                                    //   console.log("when 0"+this.state.bookArray[i].data.length);
        if(this.state.bookArray[i].data[j].data !== this.state.bookArray[i].data[j+1].data)
-                                   {    
+                                   {
                                   dataArray.push(this.state.bookArray[i].data[j].data);
                                    }
                                   // if(j==0){
@@ -3695,19 +3694,19 @@ class HomeScreen extends Component{
              var newobj=[];
               newobj.push(this.state.bookArray[i].data[j].mainheading);
               tempArray.push(newobj);
-             // var objj= [{subbestHeading:this.state.bookArray[i].data[j].subheading}]; 
+             // var objj= [{subbestHeading:this.state.bookArray[i].data[j].subheading}];
               //   console.log("detail",tempArray.length,tempArray[j]);
-              
+
           //  }else {
             //  mainArray.push(tempArray);
 
-          
+
             //  }
-              
-            
-         
+
+
+
            var obj =  { title:this.state.bookArray[i].title,
-            //  mainheading:this.state.bookArray[i].data[j].mainheading, 
+            //  mainheading:this.state.bookArray[i].data[j].mainheading,
             //  subheading:this.state.bookArray[i].data[j].subheading,
               subbestheading:tempArray,
                  data:dataArray} ;
@@ -3715,27 +3714,27 @@ class HomeScreen extends Component{
             //   console.log("1",tempArray.length);
               tempArray=[];
               mainArray.push(obj);
-              
+
               this.setState({fineArray:mainArray});
            }
-       
-          
-        }  
-       
-        
+
+
+        }
+
+
       }
-       
-       
-      
+
+
+
      //  console.log("0",mainArray.length);
-      
-     
-      
+
+
+
       // console.log("0",this.state.fineArray[3].subheading);
       // Alert.alert("0"+this.state.fineArray[2].subbestheading[0]);
-         
+
     //   var mainArray2=[];
-    //   for(var i=0; i<2; i++){ 
+    //   for(var i=0; i<2; i++){
     //     var tempArray2=[];
     //     for( var j=0; j<10; j++) {
     //       if(j==0){
@@ -3744,13 +3743,13 @@ class HomeScreen extends Component{
     //     if(this.state.bookArray[i].data[j].mainheading = this.state.bookArray[i].data[j+1].mainheading){
 
     //       tempArray2.push(this.state.bookArray[i].data[j+1].subheading);
-    //    // var objj= [{subbestHeading:this.state.bookArray[i].data[j].subheading}]; 
+    //    // var objj= [{subbestHeading:this.state.bookArray[i].data[j].subheading}];
     //  //  console.log("chapter",tempArray2.length,tempArray2[j]);
-        
+
     //   }else{
-            
+
     //     var obj = {title:this.state.bookArray[i].title,
-    //       mainheading:this.state.bookArray[i].data[j].mainheading, 
+    //       mainheading:this.state.bookArray[i].data[j].mainheading,
     //       subheading: tempArray2,
     //       subbestheading:tempArray
     //     } ;
@@ -3771,7 +3770,7 @@ class HomeScreen extends Component{
 
 
     //   var mainArray3=[];
-    //   for(var i=0; i<2; i++){ 
+    //   for(var i=0; i<2; i++){
     //     var tempArray3=[];
     //     for( var j=0; j<10; j++) {
     //       if(j==0){
@@ -3780,13 +3779,13 @@ class HomeScreen extends Component{
     //     if(this.state.bookArray[i].data[j].mainheading != this.state.bookArray[i].data[j+1].subheading){
 
     //       tempArray3.push(this.state.bookArray[i].data[j+1].subbestheading);
-    //    // var objj= [{subbestHeading:this.state.bookArray[i].data[j].subheading}]; 
+    //    // var objj= [{subbestHeading:this.state.bookArray[i].data[j].subheading}];
     //   // console.log("title",tempArray3.length,tempArray3[j]);
-        
+
     //   }else{
-            
+
     //       var obj = {title:this.state.bookArray[i].title,
-    //       mainheading:tempArray3, 
+    //       mainheading:tempArray3,
     //       subheading:mainArray2,
     //       subbestheading:mainArray
     //     } ;
@@ -3799,24 +3798,28 @@ class HomeScreen extends Component{
     //     }
     //   }  this.setState({fineArray:mainArray3});
 
-    //     console.log("data",mainArray3); 
+    //     console.log("data",mainArray3);
 
      }
 
-    
+
 
 
 actionButtonBooksList(){
       // // console.log("check dobara");
     var screenName='BooksListScreen';
 
-    this.props.navigator.push({
-      screen:screenName,
-      // passProps:{finalArray},
-      navigatorStyle:{
-        navBarHidden:true,
-      },
-    })
+    this.props.navigation.navigate(screenName,{
+      finalArray:finalArray,
+    });
+
+    // this.props.navigator.push({
+    //   screen:screenName,
+    //   // passProps:{finalArray},
+    //   navigatorStyle:{
+    //     navBarHidden:true,
+    //   },
+    // })
 
 }
 
@@ -4050,13 +4053,17 @@ if (flag == 0){
 }
 
 this.setState({showProgress:false});
-this.props.navigator.push({
-  screen:'DisplayResultScreen',
-  passProps:{finalArray},
-  navigatorStyle:{
-    navBarHidden:true,
-  },
-})
+this.props.navigation.navigate('DisplayResultScreen',{
+  finalArray:finalArray,
+});
+
+// this.props.navigator.push({
+//   screen:'DisplayResultScreen',
+//   passProps:{finalArray},
+//   navigatorStyle:{
+//     navBarHidden:true,
+//   },
+// })
 
 }
 
@@ -4121,13 +4128,17 @@ searchExactWord(){
       return;
     }
 
-    this.props.navigator.push({
-      screen:'DisplayResultScreen',
-      passProps:{searchResult},
-      navigatorStyle:{
-        navBarHidden:true,
-      },
-    })
+    this.props.navigation.navigate('DisplayResultScreen',{
+      searchResult:searchResult,
+    });
+
+    // this.props.navigator.push({
+    //   screen:'DisplayResultScreen',
+    //   passProps:{searchResult},
+    //   navigatorStyle:{
+    //     navBarHidden:true,
+    //   },
+    // })
 }
 
 actionCheckBox1(){
@@ -4308,7 +4319,7 @@ callSomeFunction(index){
     return(
       <View style={styles.outerContainer}>
       <Image  source={backgroundImage} style={{width:window.width,height:window.height,backgroundColor:'gray'}}>
-      <Header navigator={this.props.navigator} showMenu={true} title='طبی  کتب'/>
+      <Header navigator={this.props.navigator} navigation={this.props.navigation} showMenu={true} title='طبی  کتب'/>
       <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1}} enableOnAndroid={true}>
       <View style={styles.logoView}>
       <Image source={dashboard_logo} style={styles.logoStyle}/>
@@ -4383,7 +4394,7 @@ callSomeFunction(index){
        <Text style={styles.textStyle}>{this.state.buttonSearchTitle}</Text>
        </TouchableOpacity>
        </View>
-       
+
 
        {
       /*
@@ -4436,7 +4447,7 @@ callSomeFunction(index){
         }
           />
          </View>
-          
+
           {this.state.fineArray ?
         <View style={{marginTop:20}}>
           <FlatList

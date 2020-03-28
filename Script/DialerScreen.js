@@ -17,9 +17,7 @@ const window = Dimensions.get('window');
 var backspaceIcon=require('./Icons/backspaceIcon.png');
 import WebServiceHandler from 'react-native-web-service-handler';
 
-
 class DialerScreen extends Component{
-
 
   constructor(props){
     super(props);
@@ -67,13 +65,17 @@ actionButtonPlay(){
 
 navigateToNextScreen(responseJson){
 
-  this.props.navigator.push({
-    screen:'DialerResultScreen',
-    passProps:{responseJson},
-    navigatorStyle:{
-      navBarHidden:true,
-    },
-  })
+  this.props.navigation.navigate('DialerResultScreen',{
+    responseJson:responseJson,
+  });
+
+  // this.props.navigator.push({
+  //   screen:'DialerResultScreen',
+  //   passProps:{responseJson},
+  //   navigatorStyle:{
+  //     navBarHidden:true,
+  //   },
+  // })
 }
 
 

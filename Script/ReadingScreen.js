@@ -25,11 +25,14 @@ import Share, {ShareSheet, Button} from 'react-native-share';
 var isiPhone=Platform.OS === 'ios';
 
 class ReadingScreen extends Component{
+
   constructor(props){
     super(props);
     var readingArray = [];
     this.width = Dimensions.get('window').width;
     this.height = Dimensions.get('window').height;
+
+    // Alert.alert('Data is = ' + this.props.navigation.state.params.sectionArray.length);
 
     for (var i = 0; i < this.props.navigation.state.params.sectionArray.length; i++) {
 
@@ -195,9 +198,6 @@ seperateHeadingWord(data){
                 Alert.alert('Alert!','Book Mark Saved.')
              }).done();
 
-
-
-
    }else{
       item.bookmarkCheck = false;
 
@@ -235,8 +235,6 @@ seperateHeadingWord(data){
 
   }
 
-
-
   componentDidMount() {
     console.log("key",this.props.navigation.state.params.selectedRow);
     if(this.props.navigation.state.params.selectedRow){
@@ -251,14 +249,11 @@ seperateHeadingWord(data){
 
     }
 
-
     getItemLayout = (data, index) => (
       { length: 0, offset: 900 * index, index }
     );
 
-
-  render(){
-
+  render(route){
 
     let shareOptions = {
          title: "کتاب الرویا",
@@ -277,7 +272,7 @@ seperateHeadingWord(data){
     return(
 
       <View style={styles.outerContainer}>
-      <Header title={this.state.bookTitle} navigator={this.props.navigator} />
+      <Header title={this.state.bookTitle} navigator={this.props.navigator} navigation={this.props.navigation} />
 
       <FlatList
           ref={(ref) => { this.flatListRef = ref; }}

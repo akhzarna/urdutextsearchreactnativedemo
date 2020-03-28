@@ -26,49 +26,42 @@ const DEVICE_WIDTH=window.width;
 const DEVICE_HEIGHT=window.height;
 var backArrow=require('./Icons/backArrow_2.png')
 
-
 class ForumScreen extends Component{
-
 
   constructor(props){
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
-
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
 }
 
-
-onNavigationEvent(event) {
-// handle a deep link
-  if (event.type == 'DeepLink') {
-    const parts = event.link;
-    if (parts=='Home') {
-      // console.log(parts);
-      return;
-    }else{
-          this.props.navigator.resetTo({
-          screen: parts,
-          navigatorStyle: {
-            navBarHidden:true,
-          },
-        });
-      }
-  }
-}
-
-
+// onNavigationEvent(event) {
+// // handle a deep link
+//   if (event.type == 'DeepLink') {
+//     const parts = event.link;
+//     if (parts=='Home') {
+//       // console.log(parts);
+//       return;
+//     }else{
+//           this.props.navigator.resetTo({
+//           screen: parts,
+//           navigatorStyle: {
+//             navBarHidden:true,
+//           },
+//         });
+//       }
+//   }
+// }
 
   render(){
     return (
       <View  style={styles.outerContainer}>
-       <Header title='Forum' showMenu={true} navigator={this.props.navigator}/>
+       <Header title='Forum' showMenu={true} navigator={this.props.navigator} navigation={this.props.navigation} />
 
-
-         <WebView
+  <WebView
     source={{uri: 'http://www.sulemani.com.pk/'}}
     style={{flex: 1}}
   />
 
-     
+
       </View>
     )
   }

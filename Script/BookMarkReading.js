@@ -15,34 +15,25 @@ import {
 
 var Header=require('./Header');
 var HeadingView=require('./HeadingView');
-
-
-
 var bookmark_icon=require('./Icons/bookmark_icon.png')
 var share_icon=require('./Icons/share_icon.png')
 import HTMLView from 'react-native-htmlview';
-
-
 import Share, {ShareSheet, Button} from 'react-native-share';
 
-
-
 class BookMarkReading extends Component{
+
   constructor(props){
     super(props);
+
     var reciveData=this.props.selectedItem.data
     var tempData=this.props.selectedItem.data;
     var headingWords=this.seperateHeadingWord(tempData);
-
     var index=tempData.indexOf('\r');
     var beforeHeading=tempData.slice(0,index);
     var afterHeading=tempData.slice(index+1,tempData.length);
     var headingData='<h1>'+beforeHeading+'</h1>';
-
     afterHeading=afterHeading.replace('\n','');
-
     afterHeading='<p>'+afterHeading+'</p>';
-
 
     if (Platform.OS === 'ios') {
     }else{
@@ -58,9 +49,6 @@ class BookMarkReading extends Component{
       headingWords:headingWords,
     }
   }
-
-
-
 
   seperateHeadingWord(data){
     // data='پاکستان\r';
@@ -171,10 +159,7 @@ class BookMarkReading extends Component{
 
     return(
       <View style={styles.outerContainer}>
-      <Header callBackFunction={this.props.callBackFunction} title='Book Mark' navigator={this.props.navigator} />
-
-
-
+      <Header callBackFunction={this.props.callBackFunction} title='Book Mark' navigator={this.props.navigator} navigation={this.props.navigation} />
 
       <ScrollView style={styles.listView}>
 
