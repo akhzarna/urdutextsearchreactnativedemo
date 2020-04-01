@@ -49,7 +49,6 @@ import {
 //
 // export default App;
 
-
 // 1st Step
  import { createStackNavigator } from 'react-navigation-stack';
  // authentication views
