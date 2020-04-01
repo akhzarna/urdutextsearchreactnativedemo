@@ -27,8 +27,8 @@ var HeadingView=require('./HeadingView');
 class ArticlesReading extends Component{
   constructor(props){
     super(props);
-    var heading=this.props.selectedItem.heading;
-    var mainData=this.props.selectedItem.data;
+    var heading=this.props.navigation.state.params.selectedItem.heading;
+    var mainData=this.props.navigation.state.params.selectedItem.data;
     var array=[heading];
     this.state={
         headingWords:array,
@@ -37,7 +37,7 @@ class ArticlesReading extends Component{
   }
 
 componentDidMount(){
-  Alert.alert(this.state.mainData);
+  // Alert.alert(this.state.mainData);
 }
 
   render(){
@@ -53,7 +53,7 @@ componentDidMount(){
       <View style={{marginRight:15,marginLeft:15,marginBottom:20}}>
 
       {/*
-      <ArticlesText ArticlesId={this.props.selectedItem.ArticlesId} />
+      <ArticlesText ArticlesId={this.props.navigation.state.params.selectedItem.ArticlesId} />
       */}
 
       <Text style={styles.textStyle}>

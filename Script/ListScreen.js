@@ -344,14 +344,19 @@ actionButtonSearch(){
   }
 
   this.setState({showProgress:false});
-  this.props.navigator.push({
-    screen:'DisplayResultScreen',
-   // title:'مضامین',
-    passProps:{finalArray},
-    navigatorStyle:{
-      navBarHidden:true,
-    },
-  })
+
+  this.props.navigation.navigate('DisplayResultScreen',{
+    finalArray:finalArray,
+  });
+
+  // this.props.navigator.push({
+  //   screen:'DisplayResultScreen',
+  //  // title:'مضامین',
+  //   passProps:{finalArray},
+  //   navigatorStyle:{
+  //     navBarHidden:true,
+  //   },
+  // })
 
   }
 
@@ -362,14 +367,19 @@ actionButtonSearch(){
   }
 
   backFunction(){
-    this.props.navigator.push({
-      screen:'HomeScreen',
-     // title:'مضامین',
-     // passProps:{finalArray},
-      navigatorStyle:{
-        navBarHidden:true,
-      },
-    })
+
+    this.props.navigation.pop()
+      // finalArray:finalArray,
+    // }
+
+    // this.props.navigator.push({
+    //   screen:'HomeScreen',
+    //  // title:'مضامین',
+    //  // passProps:{finalArray},
+    //   navigatorStyle:{
+    //     navBarHidden:true,
+    //   },
+    // })
 
   }
 

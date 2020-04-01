@@ -62,8 +62,8 @@ rowSelected(selectedItem){
             }else if(selectedItem.key==8){
               screenName='ForumScreen';
             }else{
-              this.toggleDrawer();
-              return;
+              // this.toggleDrawer();
+              // return;
             }
 
             this.props.navigation.navigate(screenName);
