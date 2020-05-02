@@ -52,12 +52,12 @@ import {
 // 1st Step
  import { createStackNavigator } from 'react-navigation-stack';
  // authentication views
-
  import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 
  import  HomeScreen  from "./Script/HomeScreen";
  import  RelatedWords  from "./Script/RelatedWords";
  import  ReadingScreen  from "./Script/ReadingScreen";
+ import  ReadingComponentFromBooks from "./Script/ReadingComponentFromBooks";
  import  BooksListScreen  from "./Script/BooksListScreen";
  import  DisplayResultScreen  from "./Script/DisplayResultScreen";
  import  DescriptionScreen  from "./Script/DescriptionScreen";
@@ -73,6 +73,8 @@ import {
  import  BooksChapters  from "./Script/BooksChapters";
  import  BooksScreen  from "./Script/BooksScreen";
  import  ChaptersListScreen  from "./Script/ChaptersListScreen";
+ import  ChaptersListComponent  from "./Script/ChaptersListComponent";
+ import  ChaptersListDetailComponent  from "./Script/ChaptersListDetailComponent";
  // import  DialerScreen  from "./Script/DialerScreen";
  import  IndexScreen  from "./Script/IndexScreen";
  import  IntroductionScreen  from "./Script/IntroductionScreen";
@@ -82,6 +84,7 @@ import {
     HomeScreen: { screen: HomeScreen },
     RelatedWords: { screen: RelatedWords },
     ReadingScreen: { screen: ReadingScreen },
+    ReadingComponentFromBooks: { screen: ReadingComponentFromBooks },
     BooksListScreen: { screen: BooksListScreen },
     DisplayResultScreen: { screen: DisplayResultScreen },
     DescriptionScreen: { screen: DescriptionScreen },
@@ -97,6 +100,8 @@ import {
     BooksChapters: { screen: BooksChapters },
     BooksScreen: { screen: BooksScreen },
     ChaptersListScreen: { screen: ChaptersListScreen },
+    ChaptersListComponent: { screen: ChaptersListComponent },
+    ChaptersListDetailComponent: { screen: ChaptersListDetailComponent },
     // DialerScreen: { screen: DialerScreen },
     IndexScreen: { screen: IndexScreen },
     IntroductionScreen: { screen: IntroductionScreen },
@@ -110,7 +115,6 @@ import {
  const App = createAppContainer(AuthNavigator);
 
  export default App;
-
 
 
  // Other Code, Including Drawer and Tabbar etc is written below

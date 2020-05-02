@@ -32,8 +32,8 @@ class ReadingScreen extends Component{
     this.width = Dimensions.get('window').width;
     this.height = Dimensions.get('window').height;
 
-    // Alert.alert('Data is = ' + this.props.navigation.state.params.sectionArray.length);
-
+    console.log('ReadingScreen ko kia chahiay = ', this.props.navigation.state.params.sectionArray);
+    
     for (var i = 0; i < this.props.navigation.state.params.sectionArray.length; i++) {
 
     var tempData = this.props.navigation.state.params.sectionArray[i].data.data;
@@ -236,6 +236,7 @@ seperateHeadingWord(data){
   }
 
   componentDidMount() {
+    Alert.alert('ReadingScreen');
     console.log("key",this.props.navigation.state.params.selectedRow);
     if(this.props.navigation.state.params.selectedRow){
       scrollToIndex = () => {

@@ -55,11 +55,9 @@ class ListScreen extends Component{
 
 componentDidMount(){
 
-
   // For Test Akhzar Nazir
   if(Platform.OS === 'ios'){
-
-    var path0='';
+  var path0='';
   path0=RNFS.MainBundlePath+'/Articles.txt';
   var tempArray=[];
   var mainArray=[];
@@ -126,13 +124,10 @@ componentDidMount(){
           articlesArray:mainArray,
           testArray:tempArray,
         })
-
       })
-    }
-    else {
+    }else {
 
-     var path1='Articles.txt';
-
+  var path1='Articles.txt';
   RNFS.readDirAssets('') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
   .then((result) => {
     // // console.log('GOT RESULT', result);

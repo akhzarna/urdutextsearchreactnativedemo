@@ -29,6 +29,8 @@ import * as Progress from 'react-native-progress';
 import Autocomplete from 'react-native-autocomplete-input';
 import Carousel from 'react-native-snap-carousel';
 
+var BookManager=require('./BookManager');
+
 var dashboard_logo=require('./Icons/logo.png')
 var checkIcon=require('./Icons/checkBoxWhite.png');
 var uncheckIcon=require('./Icons/uncheckBoxWhite.png');
@@ -41,10 +43,32 @@ var DEVICE_HEIGHT=window.height;
 var sliderWidth=DEVICE_WIDTH;
 var itemWidth=DEVICE_WIDTH/2-50;
 
+// For Database
+import { openDatabase } from 'react-native-sqlite-storage';
+var db = openDatabase({ name: 'booksdatabase.db' });
+
 class HomeScreen extends Component{
 
   constructor(props){
     super(props);
+
+    // For Database
+    db.transaction(function(txn) {
+        txn.executeSql(
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='table_books'",
+          [],
+          function(tx, res) {
+            console.log('item:', res.rows.length);
+            if (res.rows.length == 0) {
+              txn.executeSql('DROP TABLE IF EXISTS table_books', []);
+              txn.executeSql(
+                'CREATE TABLE IF NOT EXISTS table_books(book_name VARCHAR(255), chapter_name VARCHAR(255), disease_name VARCHAR(255),prescription_name VARCHAR(255),prescription_detail VARCHAR(255))',
+                []
+              );
+            }
+          }
+        );
+      });
 
     // Akhzar Nazir
     // this.props.navigator.setOnNavigatorEvent(this.onNavigationEvent.bind(this));
@@ -82,12 +106,13 @@ class HomeScreen extends Component{
     var meem = {key:'م',data:0};
     var noon = {key:'ن',data:0};
     var wao = {key:'و',data:0};
-    var hey = {key:'ہ',data:0};
+    var haa = {key:'ہ',data:0};
     var chotiye = {key:'ی',data:0};
 
-    var array=[alif,bay,pay,tay,ttay,say,jeem,chay,hey,khey,dal,ddal,zaal,ray,aray,zay,say,seen,sheen,saad,zaad,toain,zoain,ain,ghain,fey,kaf,kaaf,gaaf,laam,meem,noon,wao,hey,chotiye];
+    var array=[alif,bay,pay,tay,ttay,say,jeem,chay,hey,khey,dal,ddal,zaal,ray,aray,zay,say,seen,sheen,saad,zaad,toain,zoain,ain,ghain,fey,kaf,kaaf,gaaf,laam,meem,noon,wao,haa,chotiye];
 
     this.state={
+        lastSelectedAlphabetIndex:{ index: '0', data: 2 },
         urduAlphabet:array,
         fileContent:'kdsnfk',
         bookArray:[],
@@ -100,10 +125,10 @@ class HomeScreen extends Component{
         isBook1Selected:true,
         isBook2Selected:true,
         pressStatus: false,
-        // isBook3Selected: this.props.isOption1,
-        // isBook4Selected: !this.props.isOption1,
-        isBook3Selected: true,
-        isBook4Selected: true,
+        isBook3Selected: this.props.isOption1,
+        isBook4Selected: !this.props.isOption1,
+        // ْْْْisBook3Selected: true,
+        // isBook4Selected: true,
         searchResultArray:[],
         bannersArray:[
           {fileName:require('./Banner/Matab_Banner_1.jpg'),key:5},
@@ -118,41 +143,28 @@ class HomeScreen extends Component{
     }
 }
 
-//   onNavigationEvent(event) {
-// 	// handle a deep link
-// 		if (event.type == 'DeepLink') {
-// 			const parts = event.link;
-// 			if (parts=='Home') {
-// 				// // // console.log(parts);
-// 				return;
-// 			}else{
-//     				this.props.navigator.resetTo({
-//     			  screen: parts,
-//     				navigatorStyle: {
-//     					navBarHidden:true,
-//     				},
-//     			});
-// 			  }
-// 		}
-// }
-
   componentDidMount() {
-
+    console.log('Akhzar Nazir New Experiment',BookManager.bookArrayForNuskhajaat);
+    // For Testing Commented by Akhzar Nazir
     AsyncStorage.getItem("booksData").then((value) => {
     var testVar = JSON.parse(value);
     if (testVar == null) {
-      this.actionButtonLoadBook();
+      this.booksLoadAction();
     }else{
-    // Test Akhzar Nazir
-    this.setState({
-      bookArray:JSON.parse(value)
-    });
-    this.setState({showProgress:false});
-    // Alert.alert(this.state.bookArray[0].data[0].subbestheading);
-    this.slectFunc();
+      this.booksLoadAction();
+    // For Testing Else Part is Commented by Akhzar Nazir
+
+    // this.setState({
+    //   bookArray:JSON.parse(value)
+    // });
+    // this.setState({showProgress:false});
+    // // Alert.alert(this.state.bookArray[0].data[0].subbestheading);
+    // this.horizontalrowselected();
+
     }
   }
     ).done();
+
 
 }
 
@@ -160,7 +172,7 @@ class HomeScreen extends Component{
 
   }
 
-  actionButtonLoadBook(){
+  booksLoadAction(){
 
     var path0='';
     var path1='';
@@ -182,9 +194,8 @@ class HomeScreen extends Component{
 
     if (isiPhone) {
 
-    // path0=RNFS.MainBundlePath+'/Articles.txt';
-
-    path0=RNFS.MainBundlePath+'/islami riasat.txt';
+    // isiPhone
+    path0=RNFS.MainBundlePath+'/Articles.txt';
     path1=RNFS.MainBundlePath+'/آرنڈ.txt';
     path2=RNFS.MainBundlePath+'/اندرائین.txt';
     path3=RNFS.MainBundlePath+'/انگور.txt';
@@ -208,7 +219,6 @@ class HomeScreen extends Component{
     RNFS.readFile(path0)
         .then((contents) => {
           var contentString = contents.toString();
-          // console.log('Content Of Complete Book' + contentString);
           var articlesNameArray=[];
           var articlesHeadingArray=[];
           var articlesDetailArray=[];
@@ -223,6 +233,7 @@ class HomeScreen extends Component{
             var tempString=contentString.slice(firstIndexname+1,secondIndexname-1);
             articlesNameArray.push(tempString);
             i=secondIndexname;
+
             }
 
             for (var i = 0; i < contentString.length; i++) {
@@ -257,8 +268,6 @@ class HomeScreen extends Component{
             finalArray0.push(ObjectToSaveInArray);
           }
 
-          console.log('Marwa Dia Amir ne',finalArray0);
-
         })
 
 
@@ -267,7 +276,6 @@ class HomeScreen extends Component{
     RNFS.readFile(path1)
         .then((contents) => {
           var contentString = contents.toString();
-          // // // console.log('Content Of Complete Book' + contentString);
           var chaptersArray=[];
           // For Chapters Titles denoted by & Sign
           for (var i = 0; i < contentString.length; i++) {
@@ -277,13 +285,10 @@ class HomeScreen extends Component{
               break;
             }
 
-            // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
             var tempString=contentString.slice(firstIndex+1,secondIndex-1);
             chaptersArray.push(tempString);
             i=secondIndex;
           }
-
-          // // console.log('Chapters Array is ='+chaptersArray);
 
           var titlesArray=[];
 
@@ -292,7 +297,6 @@ class HomeScreen extends Component{
             var stringAtIndex = chaptersArray[i];
             var headingEndIndex = stringAtIndex.indexOf('\r',1);
             var testString=stringAtIndex.slice(0,headingEndIndex);
-            // // console.log('Akhzar is testing heading' + testString);
 
             for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -301,8 +305,6 @@ class HomeScreen extends Component{
               if (secondIndex==-1 || firstIndex==-1) {
                 break;
               }
-
-              // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
               // Save String and Heading Both in Array
               var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -312,28 +314,21 @@ class HomeScreen extends Component{
             }
           }
 
-          // // console.log('Titles Array is ='+titlesArray);
-
           var tempArray=[];
           // For Nuskha Jaat denoted by $ Sign
           for (var i = 0; i < titlesArray.length; i++) {
 
             var mainHeading = titlesArray[i].heading;
             var stringAtIndex = titlesArray[i].data;
-            // // console.log('Main Heading is == ' + mainHeading);
-            // // console.log('stringAtIndex is == ' + stringAtIndex);
             var headingEndIndex = stringAtIndex.indexOf('\r',1);
             var testString=stringAtIndex.slice(0,headingEndIndex);
-            // // console.log('Mobeen Gainda is testing heading' + testString);
             for (var x = 0; x < stringAtIndex.length; x++) {
               var firstIndex=stringAtIndex.indexOf('$',x);
               var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
               if (secondIndex==-1 || firstIndex==-1) {
                 break;
               }
-              // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-              // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
               var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
               tempArray.push(ObjectToSaveInArray);
               x=secondIndex;
@@ -341,7 +336,6 @@ class HomeScreen extends Component{
             }
           }
 
-          // // console.log('Main Temp Temp Array is ='+tempArray);
           // Extract Headings from Sub Content From $ Sign.
           // For Nuskha Jaat denoted by $ Sign
           for (var i = 0; i < tempArray.length; i++) {
@@ -350,19 +344,14 @@ class HomeScreen extends Component{
             var subHeading = tempArray[i].subheading;
             var stringAtIndex = tempArray[i].data;
 
-            // // console.log('Main Main Heading is == ' + mainHeading);
-            // // console.log('Sub Sub Heading is == ' + subHeading);
-            // // console.log('Main Main Data is == ' + stringAtIndex);
-
             var headingEndIndex = stringAtIndex.indexOf('\r',1);
             var testString=stringAtIndex.slice(0,headingEndIndex);
             var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
             finalArray1.push(ObjectToSaveInArray);
           }
 
-          console.log('final Array 1 is =',finalArray1);
-
         })
+
 
         var finalArray2=[];
 
@@ -443,8 +432,6 @@ class HomeScreen extends Component{
                 finalArray2.push(ObjectToSaveInArray);
 
               }
-
-              console.log('final Array 2 is =',finalArray2);
 
             })
 
@@ -1726,17 +1713,15 @@ class HomeScreen extends Component{
 
                                                                       }
 
-                                                                      console.log('First Array is = ',this.state.bookArray[0]);
                                                                       this.setState({showProgress:false});
                                                                       AsyncStorage.setItem('booksData', JSON.stringify(this.state.bookArray));
-                                                                      this.slectFunc();
-
+                                                                      this.horizontalrowselected();
+                                                                      this.dumpIntoDB();
                                                                     })
 
         var mainArray=[];
         // First Array is for Articles and Other is for Books
         var Object0ToSaveInMainArray = {title:'مضامین',data:finalArray0};
-
         var Object1ToSaveInMainArray = {title:'آرنڈ',data:finalArray1};
         var Object2ToSaveInMainArray = {title:'اندرائین',data:finalArray2};
         var Object3ToSaveInMainArray = {title:'انگور',data:finalArray3};
@@ -1779,45 +1764,45 @@ class HomeScreen extends Component{
           bookArray:mainArray
         })
 
+        console.log('final array to dump all bookss into DB is = ',this.state.bookArray);
+
   }else{
 
-    // For Android Path is different  خواص آک
+    // isAndroid
+    // For Android Path is different
 
-    var  path0='Articles.txt';
-    var  path1='آرنڈ.txt';
-    var  path2='اندرائین.txt';
-    var  path3='انگور.txt';
-    var  path4='آم.txt';
-    var  path5='خواص آک.txt';
-    var  path6='بادام.txt';
-    var  path7='برگد.txt';
-    var  path8='دھتورہ.txt';
-    var  path9='خواص شہد.txt';
-    var  path10='دھنیہ.txt';
-    var  path11='دودھ.txt';
-    var  path12='گاجر.txt';
-    var  path13='گھی کوار.txt';
-    var  path14='گھی.txt';
-    var  path15='دھی.txt';
-    var  path16='گل سرک.txt';
+    var  articles='Articles.txt';
+    var  arind='ارنڈ.txt';
+    var  indrain='اندرائین.txt';
+    var  angoor='انگور.txt';
+    var  aam='ام.txt';
+    var  khawasaak='خواص اک.txt';
+    var  badaam='بادام.txt';
+    var  bargad='برگد.txt';
+    var  dhatoora='دھتورہ.txt';
+    var  khawasshehad='خواص شہد.txt';
+    var  dhania='دھنیہ.txt';
+    var  doodh='دودھ.txt';
+    var  gajar='گاجر.txt';
+    var  gheekawar='گھی کوار.txt';
+    var  ghee='گھی.txt';
+    var  dahi='دھی.txt';
+    var  gulsarak='گل سرک.txt';
 
     // Alert.alert('title')
     RNFS.readDirAssets('') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
       .then((result) => {
-        // // console.log('GOT RESULT', result);
       // stat the first file
         // return Promise.all([RNFS.stat(result[0].path), result[0].path]);
       });
-      // // console.log('End of File results');
 
 
       // For Articles
       var mainArray=[];
       var finalArray0=[];
-      RNFS.readFileAssets(path0)
+      RNFS.readFileAssets(articles)
           .then((contents) => {
             var contentString = contents.toString();
-            // console.log('Content Of Complete Book' + contentString);
             var articlesNameArray=[];
             var articlesHeadingArray=[];
             var articlesDetailArray=[];
@@ -1866,15 +1851,13 @@ class HomeScreen extends Component{
               finalArray0.push(ObjectToSaveInArray);
             }
 
-            console.log('Marwa Dia Amir ne',finalArray0);
-
           })
 
     var finalArray1=[];
-    RNFS.readFileAssets(path1)
+    RNFS.readFileAssets(arind)
         .then((contents) => {
+          console.log('Arind Book is = ',contents);
           var contentString = contents.toString();
-          // // console.log('Content Of Complete Book' + contentString);
           var chaptersArray=[];
           // For Chapters Titles denoted by & Sign
           for (var i = 0; i < contentString.length; i++) {
@@ -1884,13 +1867,10 @@ class HomeScreen extends Component{
               break;
             }
 
-            // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
             var tempString=contentString.slice(firstIndex+1,secondIndex-1);
             chaptersArray.push(tempString);
             i=secondIndex;
           }
-
-          // // console.log('Chapters Array is ='+chaptersArray);
 
           var titlesArray=[];
 
@@ -1899,7 +1879,7 @@ class HomeScreen extends Component{
             var stringAtIndex = chaptersArray[i];
             var headingEndIndex = stringAtIndex.indexOf('\r',1);
             var testString=stringAtIndex.slice(0,headingEndIndex);
-            // // console.log('Akhzar is testing heading' + testString);
+            // // // // console.log('Akhzar is testing heading' + testString);
 
             for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -1909,7 +1889,7 @@ class HomeScreen extends Component{
                 break;
               }
 
-              // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+              // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
               // Save String and Heading Both in Array
               var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -1920,7 +1900,7 @@ class HomeScreen extends Component{
 
           }
 
-          // // console.log('Titles Array is ='+titlesArray);
+          // // // // console.log('Titles Array is ='+titlesArray);
 
           var tempArray=[];
           // For Nuskha Jaat denoted by $ Sign
@@ -1928,12 +1908,12 @@ class HomeScreen extends Component{
 
             var mainHeading = titlesArray[i].heading;
             var stringAtIndex = titlesArray[i].data;
-            // // console.log('Main Heading is == ' + mainHeading);
-            // // console.log('stringAtIndex is == ' + stringAtIndex);
+            // // // // console.log('Main Heading is == ' + mainHeading);
+            // // // // console.log('stringAtIndex is == ' + stringAtIndex);
 
             var headingEndIndex = stringAtIndex.indexOf('\r',1);
             var testString=stringAtIndex.slice(0,headingEndIndex);
-            // // console.log('Akhzar is testing heading' + testString);
+            // // // // console.log('Akhzar is testing heading' + testString);
 
             for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -1943,9 +1923,9 @@ class HomeScreen extends Component{
                 break;
               }
 
-              // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+              // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-              // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
+              // // // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
               var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
               tempArray.push(ObjectToSaveInArray);
@@ -1953,7 +1933,7 @@ class HomeScreen extends Component{
 
             }
           }
-          // // console.log('Main Temp Temp Array is ='+tempArray);
+          // // // // console.log('Main Temp Temp Array is ='+tempArray);
 
           // Extract Headings from Sub Content From $ Sign.
 
@@ -1964,9 +1944,9 @@ class HomeScreen extends Component{
             var subHeading = tempArray[i].subheading;
             var stringAtIndex = tempArray[i].data;
 
-            // // console.log('Main Main Heading is == ' + mainHeading);
-            // // console.log('Sub Sub Heading is == ' + subHeading);
-            // // console.log('Main Main Data is == ' + stringAtIndex);
+            // // // // console.log('Main Main Heading is == ' + mainHeading);
+            // // // // console.log('Sub Sub Heading is == ' + subHeading);
+            // // // // console.log('Main Main Data is == ' + stringAtIndex);
 
             var headingEndIndex = stringAtIndex.indexOf('\r',1);
             var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -1977,10 +1957,11 @@ class HomeScreen extends Component{
 
         var finalArray2=[];
 
-        RNFS.readFileAssets(path2)
+        RNFS.readFileAssets(indrain)
             .then((contents) => {
+              console.log('Indrain Book is = ',contents);
               var contentString = contents.toString();
-              // // console.log('Content Of Complete Book' + contentString);
+
               var chaptersArray=[];
               // For Chapters Titles denoted by & Sign
               for (var i = 0; i < contentString.length; i++) {
@@ -1990,13 +1971,13 @@ class HomeScreen extends Component{
                   break;
                 }
 
-                // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                 var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                 chaptersArray.push(tempString);
                 i=secondIndex;
               }
 
-              // // console.log('Chapters Array is ='+chaptersArray);
+              // // // // console.log('Chapters Array is ='+chaptersArray);
 
               var titlesArray=[];
 
@@ -2005,7 +1986,7 @@ class HomeScreen extends Component{
                 var stringAtIndex = chaptersArray[i];
                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                 var testString=stringAtIndex.slice(0,headingEndIndex);
-                // // console.log('Akhzar is testing heading' + testString);
+                // // // // console.log('Akhzar is testing heading' + testString);
 
                 for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2015,7 +1996,7 @@ class HomeScreen extends Component{
                     break;
                   }
 
-                  // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                  // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                   // Save String and Heading Both in Array
                   var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -2026,7 +2007,7 @@ class HomeScreen extends Component{
 
               }
 
-              // // console.log('Titles Array is ='+titlesArray);
+              // // // // console.log('Titles Array is ='+titlesArray);
 
               var tempArray=[];
               // For Nuskha Jaat denoted by $ Sign
@@ -2034,12 +2015,12 @@ class HomeScreen extends Component{
 
                 var mainHeading = titlesArray[i].heading;
                 var stringAtIndex = titlesArray[i].data;
-                // // console.log('Main Heading is == ' + mainHeading);
-                // // console.log('stringAtIndex is == ' + stringAtIndex);
+                // // // // console.log('Main Heading is == ' + mainHeading);
+                // // // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                 var testString=stringAtIndex.slice(0,headingEndIndex);
-                // // console.log('Akhzar is testing heading' + testString);
+                // // // // console.log('Akhzar is testing heading' + testString);
 
                 for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2049,9 +2030,9 @@ class HomeScreen extends Component{
                     break;
                   }
 
-                  // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                  // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                  // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
+                  // // // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                   var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                   tempArray.push(ObjectToSaveInArray);
@@ -2059,7 +2040,7 @@ class HomeScreen extends Component{
 
                 }
               }
-              // // console.log('Main Temp Temp Array is ='+tempArray);
+              // // // // console.log('Main Temp Temp Array is ='+tempArray);
 
               // Extract Headings from Sub Content From $ Sign.
 
@@ -2070,9 +2051,9 @@ class HomeScreen extends Component{
                 var subHeading = tempArray[i].subheading;
                 var stringAtIndex = tempArray[i].data;
 
-                // // console.log('Main Main Heading is == ' + mainHeading);
-                // // console.log('Sub Sub Heading is == ' + subHeading);
-                // // console.log('Main Main Data is == ' + stringAtIndex);
+                // // // // console.log('Main Main Heading is == ' + mainHeading);
+                // // // // console.log('Sub Sub Heading is == ' + subHeading);
+                // // // // console.log('Main Main Data is == ' + stringAtIndex);
 
                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                 var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -2085,10 +2066,9 @@ class HomeScreen extends Component{
 
             var finalArray3=[];
 
-            RNFS.readFileAssets(path3)
+            RNFS.readFileAssets(angoor)
                 .then((contents) => {
                   var contentString = contents.toString();
-                  // // console.log('Content Of Complete Book' + contentString);
                   var chaptersArray=[];
                   // For Chapters Titles denoted by & Sign
                   for (var i = 0; i < contentString.length; i++) {
@@ -2098,13 +2078,12 @@ class HomeScreen extends Component{
                       break;
                     }
 
-                    // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                     var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                     chaptersArray.push(tempString);
                     i=secondIndex;
                   }
 
-                  // // console.log('Chapters Array is ='+chaptersArray);
+                  // // // // console.log('Chapters Array is ='+chaptersArray);
 
                   var titlesArray=[];
 
@@ -2113,7 +2092,7 @@ class HomeScreen extends Component{
                     var stringAtIndex = chaptersArray[i];
                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                     var testString=stringAtIndex.slice(0,headingEndIndex);
-                    // // console.log('Akhzar is testing heading' + testString);
+                    // // // // console.log('Akhzar is testing heading' + testString);
 
                     for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2123,7 +2102,7 @@ class HomeScreen extends Component{
                         break;
                       }
 
-                      // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                      // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                       // Save String and Heading Both in Array
                       var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -2134,7 +2113,7 @@ class HomeScreen extends Component{
 
                   }
 
-                  // // console.log('Titles Array is ='+titlesArray);
+                  // // // // console.log('Titles Array is ='+titlesArray);
 
                   var tempArray=[];
                   // For Nuskha Jaat denoted by $ Sign
@@ -2142,12 +2121,12 @@ class HomeScreen extends Component{
 
                     var mainHeading = titlesArray[i].heading;
                     var stringAtIndex = titlesArray[i].data;
-                    // // console.log('Main Heading is == ' + mainHeading);
-                    // // console.log('stringAtIndex is == ' + stringAtIndex);
+                    // // // // console.log('Main Heading is == ' + mainHeading);
+                    // // // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                     var testString=stringAtIndex.slice(0,headingEndIndex);
-                    // // console.log('Akhzar is testing heading' + testString);
+                    // // // // console.log('Akhzar is testing heading' + testString);
 
                     for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2157,9 +2136,9 @@ class HomeScreen extends Component{
                         break;
                       }
 
-                      // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                      // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                      // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
+                      // // // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                       var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                       tempArray.push(ObjectToSaveInArray);
@@ -2167,7 +2146,7 @@ class HomeScreen extends Component{
 
                     }
                   }
-                  // // console.log('Main Temp Temp Array is ='+tempArray);
+                  // // // // console.log('Main Temp Temp Array is ='+tempArray);
 
                   // Extract Headings from Sub Content From $ Sign.
 
@@ -2178,9 +2157,9 @@ class HomeScreen extends Component{
                     var subHeading = tempArray[i].subheading;
                     var stringAtIndex = tempArray[i].data;
 
-                    // // console.log('Main Main Heading is == ' + mainHeading);
-                    // // console.log('Sub Sub Heading is == ' + subHeading);
-                    // // console.log('Main Main Data is == ' + stringAtIndex);
+                    // // // // console.log('Main Main Heading is == ' + mainHeading);
+                    // // // // console.log('Sub Sub Heading is == ' + subHeading);
+                    // // // // console.log('Main Main Data is == ' + stringAtIndex);
 
                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                     var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -2191,13 +2170,12 @@ class HomeScreen extends Component{
                 })
 
 
-
                 var finalArray4=[];
 
-                RNFS.readFileAssets(path4)
+                RNFS.readFileAssets(aam)
                     .then((contents) => {
+                      console.log('Aam Book is = ',contents);
                       var contentString = contents.toString();
-                      // // console.log('Content Of Complete Book' + contentString);
                       var chaptersArray=[];
                       // For Chapters Titles denoted by & Sign
                       for (var i = 0; i < contentString.length; i++) {
@@ -2207,13 +2185,10 @@ class HomeScreen extends Component{
                           break;
                         }
 
-                        // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                         var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                         chaptersArray.push(tempString);
                         i=secondIndex;
                       }
-
-                      // // console.log('Chapters Array is ='+chaptersArray);
 
                       var titlesArray=[];
 
@@ -2222,7 +2197,6 @@ class HomeScreen extends Component{
                         var stringAtIndex = chaptersArray[i];
                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                         var testString=stringAtIndex.slice(0,headingEndIndex);
-                        // // console.log('Akhzar is testing heading' + testString);
 
                         for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2232,7 +2206,6 @@ class HomeScreen extends Component{
                             break;
                           }
 
-                          // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                           // Save String and Heading Both in Array
                           var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -2243,20 +2216,15 @@ class HomeScreen extends Component{
 
                       }
 
-                      // // console.log('Titles Array is ='+titlesArray);
-
                       var tempArray=[];
                       // For Nuskha Jaat denoted by $ Sign
                       for (var i = 0; i < titlesArray.length; i++) {
 
                         var mainHeading = titlesArray[i].heading;
                         var stringAtIndex = titlesArray[i].data;
-                        // // console.log('Main Heading is == ' + mainHeading);
-                        // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                         var testString=stringAtIndex.slice(0,headingEndIndex);
-                        // // console.log('Akhzar is testing heading' + testString);
 
                         for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2266,9 +2234,7 @@ class HomeScreen extends Component{
                             break;
                           }
 
-                          // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                          // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                           var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                           tempArray.push(ObjectToSaveInArray);
@@ -2276,7 +2242,6 @@ class HomeScreen extends Component{
 
                         }
                       }
-                      // // console.log('Main Temp Temp Array is ='+tempArray);
 
                       // Extract Headings from Sub Content From $ Sign.
 
@@ -2287,10 +2252,6 @@ class HomeScreen extends Component{
                         var subHeading = tempArray[i].subheading;
                         var stringAtIndex = tempArray[i].data;
 
-                        // // console.log('Main Main Heading is == ' + mainHeading);
-                        // // console.log('Sub Sub Heading is == ' + subHeading);
-                        // // console.log('Main Main Data is == ' + stringAtIndex);
-
                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                         var testString=stringAtIndex.slice(0,headingEndIndex);
                         var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
@@ -2300,14 +2261,12 @@ class HomeScreen extends Component{
                     })
 
 
-
-
                     var finalArray5=[];
 
-                    RNFS.readFileAssets(path5)
+                    RNFS.readFileAssets(khawasaak)
                         .then((contents) => {
+                          console.log('Khawas Aak Book is = ',contents);
                           var contentString = contents.toString();
-                          // // console.log('Content Of Complete Book' + contentString);
                           var chaptersArray=[];
                           // For Chapters Titles denoted by & Sign
                           for (var i = 0; i < contentString.length; i++) {
@@ -2317,13 +2276,10 @@ class HomeScreen extends Component{
                               break;
                             }
 
-                            // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                             var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                             chaptersArray.push(tempString);
                             i=secondIndex;
                           }
-
-                          // // console.log('Chapters Array is ='+chaptersArray);
 
                           var titlesArray=[];
 
@@ -2332,7 +2288,6 @@ class HomeScreen extends Component{
                             var stringAtIndex = chaptersArray[i];
                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
                             var testString=stringAtIndex.slice(0,headingEndIndex);
-                            // // console.log('Akhzar is testing heading' + testString);
 
                             for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2342,7 +2297,6 @@ class HomeScreen extends Component{
                                 break;
                               }
 
-                              // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                               // Save String and Heading Both in Array
                               var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -2353,20 +2307,15 @@ class HomeScreen extends Component{
 
                           }
 
-                          // // console.log('Titles Array is ='+titlesArray);
-
                           var tempArray=[];
                           // For Nuskha Jaat denoted by $ Sign
                           for (var i = 0; i < titlesArray.length; i++) {
 
                             var mainHeading = titlesArray[i].heading;
                             var stringAtIndex = titlesArray[i].data;
-                            // // console.log('Main Heading is == ' + mainHeading);
-                            // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
                             var testString=stringAtIndex.slice(0,headingEndIndex);
-                            // // console.log('Akhzar is testing heading' + testString);
 
                             for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2376,9 +2325,7 @@ class HomeScreen extends Component{
                                 break;
                               }
 
-                              // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                              // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                               var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                               tempArray.push(ObjectToSaveInArray);
@@ -2386,7 +2333,6 @@ class HomeScreen extends Component{
 
                             }
                           }
-                          // // console.log('Main Temp Temp Array is ='+tempArray);
 
                           // Extract Headings from Sub Content From $ Sign.
 
@@ -2396,10 +2342,6 @@ class HomeScreen extends Component{
                             var mainHeading = tempArray[i].mainheading;
                             var subHeading = tempArray[i].subheading;
                             var stringAtIndex = tempArray[i].data;
-
-                            // // console.log('Main Main Heading is == ' + mainHeading);
-                            // // console.log('Sub Sub Heading is == ' + subHeading);
-                            // // console.log('Main Main Data is == ' + stringAtIndex);
 
                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
                             var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -2413,10 +2355,11 @@ class HomeScreen extends Component{
 
                         var finalArray6=[];
 
-                        RNFS.readFileAssets(path6)
+
+                        RNFS.readFileAssets(badaam)
                             .then((contents) => {
+                              console.log('Aik aur Book is = ',contents);
                               var contentString = contents.toString();
-                              // // console.log('Content Of Complete Book' + contentString);
                               var chaptersArray=[];
                               // For Chapters Titles denoted by & Sign
                               for (var i = 0; i < contentString.length; i++) {
@@ -2426,13 +2369,10 @@ class HomeScreen extends Component{
                                   break;
                                 }
 
-                                // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                 var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                 chaptersArray.push(tempString);
                                 i=secondIndex;
                               }
-
-                              // // console.log('Chapters Array is ='+chaptersArray);
 
                               var titlesArray=[];
 
@@ -2441,7 +2381,6 @@ class HomeScreen extends Component{
                                 var stringAtIndex = chaptersArray[i];
                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                 var testString=stringAtIndex.slice(0,headingEndIndex);
-                                // // console.log('Akhzar is testing heading' + testString);
 
                                 for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2451,7 +2390,6 @@ class HomeScreen extends Component{
                                     break;
                                   }
 
-                                  // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                   // Save String and Heading Both in Array
                                   var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -2462,20 +2400,15 @@ class HomeScreen extends Component{
 
                               }
 
-                              // // console.log('Titles Array is ='+titlesArray);
-
                               var tempArray=[];
                               // For Nuskha Jaat denoted by $ Sign
                               for (var i = 0; i < titlesArray.length; i++) {
 
                                 var mainHeading = titlesArray[i].heading;
                                 var stringAtIndex = titlesArray[i].data;
-                                // // console.log('Main Heading is == ' + mainHeading);
-                                // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                 var testString=stringAtIndex.slice(0,headingEndIndex);
-                                // // console.log('Akhzar is testing heading' + testString);
 
                                 for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2485,9 +2418,7 @@ class HomeScreen extends Component{
                                     break;
                                   }
 
-                                  // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                  // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                                   var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                   tempArray.push(ObjectToSaveInArray);
@@ -2495,7 +2426,6 @@ class HomeScreen extends Component{
 
                                 }
                               }
-                              // // console.log('Main Temp Temp Array is ='+tempArray);
 
                               // Extract Headings from Sub Content From $ Sign.
 
@@ -2505,10 +2435,6 @@ class HomeScreen extends Component{
                                 var mainHeading = tempArray[i].mainheading;
                                 var subHeading = tempArray[i].subheading;
                                 var stringAtIndex = tempArray[i].data;
-
-                                // // console.log('Main Main Heading is == ' + mainHeading);
-                                // // console.log('Sub Sub Heading is == ' + subHeading);
-                                // // console.log('Main Main Data is == ' + stringAtIndex);
 
                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                 var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -2522,10 +2448,10 @@ class HomeScreen extends Component{
 
                             var finalArray7=[];
 
-                            RNFS.readFileAssets(path7)
+
+                            RNFS.readFileAssets(bargad)
                                 .then((contents) => {
                                   var contentString = contents.toString();
-                                  // // console.log('Content Of Complete Book' + contentString);
                                   var chaptersArray=[];
                                   // For Chapters Titles denoted by & Sign
                                   for (var i = 0; i < contentString.length; i++) {
@@ -2535,13 +2461,10 @@ class HomeScreen extends Component{
                                       break;
                                     }
 
-                                    // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                     var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                     chaptersArray.push(tempString);
                                     i=secondIndex;
                                   }
-
-                                  // // console.log('Chapters Array is ='+chaptersArray);
 
                                   var titlesArray=[];
 
@@ -2550,7 +2473,6 @@ class HomeScreen extends Component{
                                     var stringAtIndex = chaptersArray[i];
                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                     var testString=stringAtIndex.slice(0,headingEndIndex);
-                                    // // console.log('Akhzar is testing heading' + testString);
 
                                     for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2560,7 +2482,6 @@ class HomeScreen extends Component{
                                         break;
                                       }
 
-                                      // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                       // Save String and Heading Both in Array
                                       var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -2571,20 +2492,15 @@ class HomeScreen extends Component{
 
                                   }
 
-                                  // // console.log('Titles Array is ='+titlesArray);
-
                                   var tempArray=[];
                                   // For Nuskha Jaat denoted by $ Sign
                                   for (var i = 0; i < titlesArray.length; i++) {
 
                                     var mainHeading = titlesArray[i].heading;
                                     var stringAtIndex = titlesArray[i].data;
-                                    // // console.log('Main Heading is == ' + mainHeading);
-                                    // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                     var testString=stringAtIndex.slice(0,headingEndIndex);
-                                    // // console.log('Akhzar is testing heading' + testString);
 
                                     for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2594,9 +2510,7 @@ class HomeScreen extends Component{
                                         break;
                                       }
 
-                                      // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                      // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                                       var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                       tempArray.push(ObjectToSaveInArray);
@@ -2604,7 +2518,6 @@ class HomeScreen extends Component{
 
                                     }
                                   }
-                                  // // console.log('Main Temp Temp Array is ='+tempArray);
 
                                   // Extract Headings from Sub Content From $ Sign.
 
@@ -2615,10 +2528,6 @@ class HomeScreen extends Component{
                                     var subHeading = tempArray[i].subheading;
                                     var stringAtIndex = tempArray[i].data;
 
-                                    // // console.log('Main Main Heading is == ' + mainHeading);
-                                    // // console.log('Sub Sub Heading is == ' + subHeading);
-                                    // // console.log('Main Main Data is == ' + stringAtIndex);
-
                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                     var testString=stringAtIndex.slice(0,headingEndIndex);
                                     var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
@@ -2627,15 +2536,12 @@ class HomeScreen extends Component{
                                   }
                                 })
 
-
-
-
                                 var finalArray8=[];
 
-                                RNFS.readFileAssets(path8)
+
+                                RNFS.readFileAssets(dhatoora)
                                     .then((contents) => {
                                       var contentString = contents.toString();
-                                      // // console.log('Content Of Complete Book' + contentString);
                                       var chaptersArray=[];
                                       // For Chapters Titles denoted by & Sign
                                       for (var i = 0; i < contentString.length; i++) {
@@ -2645,13 +2551,10 @@ class HomeScreen extends Component{
                                           break;
                                         }
 
-                                        // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                         var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                         chaptersArray.push(tempString);
                                         i=secondIndex;
                                       }
-
-                                      // // console.log('Chapters Array is ='+chaptersArray);
 
                                       var titlesArray=[];
 
@@ -2660,7 +2563,6 @@ class HomeScreen extends Component{
                                         var stringAtIndex = chaptersArray[i];
                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                         var testString=stringAtIndex.slice(0,headingEndIndex);
-                                        // // console.log('Akhzar is testing heading' + testString);
 
                                         for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2670,7 +2572,6 @@ class HomeScreen extends Component{
                                             break;
                                           }
 
-                                          // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                           // Save String and Heading Both in Array
                                           var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -2681,20 +2582,14 @@ class HomeScreen extends Component{
 
                                       }
 
-                                      // // console.log('Titles Array is ='+titlesArray);
-
                                       var tempArray=[];
                                       // For Nuskha Jaat denoted by $ Sign
                                       for (var i = 0; i < titlesArray.length; i++) {
 
                                         var mainHeading = titlesArray[i].heading;
                                         var stringAtIndex = titlesArray[i].data;
-                                        // // console.log('Main Heading is == ' + mainHeading);
-                                        // // console.log('stringAtIndex is == ' + stringAtIndex);
-
                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                         var testString=stringAtIndex.slice(0,headingEndIndex);
-                                        // // console.log('Akhzar is testing heading' + testString);
 
                                         for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2704,17 +2599,13 @@ class HomeScreen extends Component{
                                             break;
                                           }
 
-                                          // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                          // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
-
                                           var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                           tempArray.push(ObjectToSaveInArray);
                                           x=secondIndex;
 
                                         }
                                       }
-                                      // // console.log('Main Temp Temp Array is ='+tempArray);
 
                                       // Extract Headings from Sub Content From $ Sign.
 
@@ -2724,10 +2615,6 @@ class HomeScreen extends Component{
                                         var mainHeading = tempArray[i].mainheading;
                                         var subHeading = tempArray[i].subheading;
                                         var stringAtIndex = tempArray[i].data;
-
-                                        // // console.log('Main Main Heading is == ' + mainHeading);
-                                        // // console.log('Sub Sub Heading is == ' + subHeading);
-                                        // // console.log('Main Main Data is == ' + stringAtIndex);
 
                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                         var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -2741,10 +2628,9 @@ class HomeScreen extends Component{
 
                                     var finalArray9=[];
 
-                                    RNFS.readFileAssets(path9)
+                                    RNFS.readFileAssets(khawasshehad)
                                         .then((contents) => {
                                           var contentString = contents.toString();
-                                          // // console.log('Content Of Complete Book' + contentString);
                                           var chaptersArray=[];
                                           // For Chapters Titles denoted by & Sign
                                           for (var i = 0; i < contentString.length; i++) {
@@ -2754,13 +2640,10 @@ class HomeScreen extends Component{
                                               break;
                                             }
 
-                                            // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                             var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                             chaptersArray.push(tempString);
                                             i=secondIndex;
                                           }
-
-                                          // // console.log('Chapters Array is ='+chaptersArray);
 
                                           var titlesArray=[];
 
@@ -2769,7 +2652,6 @@ class HomeScreen extends Component{
                                             var stringAtIndex = chaptersArray[i];
                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                             var testString=stringAtIndex.slice(0,headingEndIndex);
-                                            // // console.log('Akhzar is testing heading' + testString);
 
                                             for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2779,7 +2661,6 @@ class HomeScreen extends Component{
                                                 break;
                                               }
 
-                                              // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                               // Save String and Heading Both in Array
                                               var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -2790,20 +2671,15 @@ class HomeScreen extends Component{
 
                                           }
 
-                                          // // console.log('Titles Array is ='+titlesArray);
-
                                           var tempArray=[];
                                           // For Nuskha Jaat denoted by $ Sign
                                           for (var i = 0; i < titlesArray.length; i++) {
 
                                             var mainHeading = titlesArray[i].heading;
                                             var stringAtIndex = titlesArray[i].data;
-                                            // // console.log('Main Heading is == ' + mainHeading);
-                                            // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                             var testString=stringAtIndex.slice(0,headingEndIndex);
-                                            // // console.log('Akhzar is testing heading' + testString);
 
                                             for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2813,9 +2689,7 @@ class HomeScreen extends Component{
                                                 break;
                                               }
 
-                                              // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                              // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                                               var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                               tempArray.push(ObjectToSaveInArray);
@@ -2823,7 +2697,6 @@ class HomeScreen extends Component{
 
                                             }
                                           }
-                                          // // console.log('Main Temp Temp Array is ='+tempArray);
 
                                           // Extract Headings from Sub Content From $ Sign.
 
@@ -2833,10 +2706,6 @@ class HomeScreen extends Component{
                                             var mainHeading = tempArray[i].mainheading;
                                             var subHeading = tempArray[i].subheading;
                                             var stringAtIndex = tempArray[i].data;
-
-                                            // // console.log('Main Main Heading is == ' + mainHeading);
-                                            // // console.log('Sub Sub Heading is == ' + subHeading);
-                                            // // console.log('Main Main Data is == ' + stringAtIndex);
 
                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                             var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -2850,10 +2719,11 @@ class HomeScreen extends Component{
 
                                         var finalArray10=[];
 
-                                        RNFS.readFileAssets(path10)
+
+
+                                        RNFS.readFileAssets(dhania)
                                             .then((contents) => {
                                               var contentString = contents.toString();
-                                              // // console.log('Content Of Complete Book' + contentString);
                                               var chaptersArray=[];
                                               // For Chapters Titles denoted by & Sign
                                               for (var i = 0; i < contentString.length; i++) {
@@ -2863,13 +2733,11 @@ class HomeScreen extends Component{
                                                   break;
                                                 }
 
-                                                // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                 var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                                 chaptersArray.push(tempString);
                                                 i=secondIndex;
                                               }
 
-                                              // // console.log('Chapters Array is ='+chaptersArray);
 
                                               var titlesArray=[];
 
@@ -2878,7 +2746,6 @@ class HomeScreen extends Component{
                                                 var stringAtIndex = chaptersArray[i];
                                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                 var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                // // console.log('Akhzar is testing heading' + testString);
 
                                                 for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2888,7 +2755,6 @@ class HomeScreen extends Component{
                                                     break;
                                                   }
 
-                                                  // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                                   // Save String and Heading Both in Array
                                                   var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -2899,7 +2765,7 @@ class HomeScreen extends Component{
 
                                               }
 
-                                              // // console.log('Titles Array is ='+titlesArray);
+                                              // // // // console.log('Titles Array is ='+titlesArray);
 
                                               var tempArray=[];
                                               // For Nuskha Jaat denoted by $ Sign
@@ -2907,12 +2773,9 @@ class HomeScreen extends Component{
 
                                                 var mainHeading = titlesArray[i].heading;
                                                 var stringAtIndex = titlesArray[i].data;
-                                                // // console.log('Main Heading is == ' + mainHeading);
-                                                // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                 var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                // // console.log('Akhzar is testing heading' + testString);
 
                                                 for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2922,9 +2785,7 @@ class HomeScreen extends Component{
                                                     break;
                                                   }
 
-                                                  // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                  // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                                                   var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                                   tempArray.push(ObjectToSaveInArray);
@@ -2932,7 +2793,6 @@ class HomeScreen extends Component{
 
                                                 }
                                               }
-                                              // // console.log('Main Temp Temp Array is ='+tempArray);
 
                                               // Extract Headings from Sub Content From $ Sign.
 
@@ -2942,10 +2802,6 @@ class HomeScreen extends Component{
                                                 var mainHeading = tempArray[i].mainheading;
                                                 var subHeading = tempArray[i].subheading;
                                                 var stringAtIndex = tempArray[i].data;
-
-                                                // // console.log('Main Main Heading is == ' + mainHeading);
-                                                // // console.log('Sub Sub Heading is == ' + subHeading);
-                                                // // console.log('Main Main Data is == ' + stringAtIndex);
 
                                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                 var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -2957,10 +2813,10 @@ class HomeScreen extends Component{
 
                                             var finalArray11=[];
 
-                                            RNFS.readFileAssets(path11)
+
+                                            RNFS.readFileAssets(doodh)
                                                 .then((contents) => {
                                                   var contentString = contents.toString();
-                                                  // // console.log('Content Of Complete Book' + contentString);
                                                   var chaptersArray=[];
                                                   // For Chapters Titles denoted by & Sign
                                                   for (var i = 0; i < contentString.length; i++) {
@@ -2970,13 +2826,11 @@ class HomeScreen extends Component{
                                                       break;
                                                     }
 
-                                                    // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                     var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                                     chaptersArray.push(tempString);
                                                     i=secondIndex;
                                                   }
 
-                                                  // // console.log('Chapters Array is ='+chaptersArray);
 
                                                   var titlesArray=[];
 
@@ -2985,7 +2839,6 @@ class HomeScreen extends Component{
                                                     var stringAtIndex = chaptersArray[i];
                                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                     var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                    // // console.log('Akhzar is testing heading' + testString);
 
                                                     for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -2995,7 +2848,6 @@ class HomeScreen extends Component{
                                                         break;
                                                       }
 
-                                                      // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                                       // Save String and Heading Both in Array
                                                       var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -3006,7 +2858,6 @@ class HomeScreen extends Component{
 
                                                   }
 
-                                                  // // console.log('Titles Array is ='+titlesArray);
 
                                                   var tempArray=[];
                                                   // For Nuskha Jaat denoted by $ Sign
@@ -3014,12 +2865,9 @@ class HomeScreen extends Component{
 
                                                     var mainHeading = titlesArray[i].heading;
                                                     var stringAtIndex = titlesArray[i].data;
-                                                    // // console.log('Main Heading is == ' + mainHeading);
-                                                    // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                     var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                    // // console.log('Akhzar is testing heading' + testString);
 
                                                     for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3029,9 +2877,7 @@ class HomeScreen extends Component{
                                                         break;
                                                       }
 
-                                                      // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                      // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                                                       var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                                       tempArray.push(ObjectToSaveInArray);
@@ -3039,7 +2885,6 @@ class HomeScreen extends Component{
 
                                                     }
                                                   }
-                                                  // // console.log('Main Temp Temp Array is ='+tempArray);
 
                                                   // Extract Headings from Sub Content From $ Sign.
 
@@ -3050,9 +2895,9 @@ class HomeScreen extends Component{
                                                     var subHeading = tempArray[i].subheading;
                                                     var stringAtIndex = tempArray[i].data;
 
-                                                    // // console.log('Main Main Heading is == ' + mainHeading);
-                                                    // // console.log('Sub Sub Heading is == ' + subHeading);
-                                                    // // console.log('Main Main Data is == ' + stringAtIndex);
+                                                    // // // // console.log('Main Main Heading is == ' + mainHeading);
+                                                    // // // // console.log('Sub Sub Heading is == ' + subHeading);
+                                                    // // // // console.log('Main Main Data is == ' + stringAtIndex);
 
                                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                     var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -3067,10 +2912,11 @@ class HomeScreen extends Component{
 
                                                 var finalArray12=[];
 
-                                                RNFS.readFileAssets(path12)
+
+                                                RNFS.readFileAssets(gajar)
                                                     .then((contents) => {
                                                       var contentString = contents.toString();
-                                                      // // console.log('Content Of Complete Book' + contentString);
+                                                      // // // // console.log('Content Of Complete Book' + contentString);
                                                       var chaptersArray=[];
                                                       // For Chapters Titles denoted by & Sign
                                                       for (var i = 0; i < contentString.length; i++) {
@@ -3080,13 +2926,13 @@ class HomeScreen extends Component{
                                                           break;
                                                         }
 
-                                                        // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                        // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                         var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                                         chaptersArray.push(tempString);
                                                         i=secondIndex;
                                                       }
 
-                                                      // // console.log('Chapters Array is ='+chaptersArray);
+                                                      // // // // console.log('Chapters Array is ='+chaptersArray);
 
                                                       var titlesArray=[];
 
@@ -3095,7 +2941,7 @@ class HomeScreen extends Component{
                                                         var stringAtIndex = chaptersArray[i];
                                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                         var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                        // // console.log('Akhzar is testing heading' + testString);
+                                                        // // // // console.log('Akhzar is testing heading' + testString);
 
                                                         for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3105,7 +2951,7 @@ class HomeScreen extends Component{
                                                             break;
                                                           }
 
-                                                          // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                          // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                                           // Save String and Heading Both in Array
                                                           var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -3116,7 +2962,7 @@ class HomeScreen extends Component{
 
                                                       }
 
-                                                      // // console.log('Titles Array is ='+titlesArray);
+                                                      // // // // console.log('Titles Array is ='+titlesArray);
 
                                                       var tempArray=[];
                                                       // For Nuskha Jaat denoted by $ Sign
@@ -3124,12 +2970,12 @@ class HomeScreen extends Component{
 
                                                         var mainHeading = titlesArray[i].heading;
                                                         var stringAtIndex = titlesArray[i].data;
-                                                        // // console.log('Main Heading is == ' + mainHeading);
-                                                        // // console.log('stringAtIndex is == ' + stringAtIndex);
+                                                        // // // // console.log('Main Heading is == ' + mainHeading);
+                                                        // // // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                         var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                        // // console.log('Akhzar is testing heading' + testString);
+                                                        // // // // console.log('Akhzar is testing heading' + testString);
 
                                                         for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3139,9 +2985,9 @@ class HomeScreen extends Component{
                                                             break;
                                                           }
 
-                                                          // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                          // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                          // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
+                                                          // // // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                                                           var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                                           tempArray.push(ObjectToSaveInArray);
@@ -3149,7 +2995,7 @@ class HomeScreen extends Component{
 
                                                         }
                                                       }
-                                                      // // console.log('Main Temp Temp Array is ='+tempArray);
+                                                      // // // // console.log('Main Temp Temp Array is ='+tempArray);
 
                                                       // Extract Headings from Sub Content From $ Sign.
 
@@ -3160,9 +3006,9 @@ class HomeScreen extends Component{
                                                         var subHeading = tempArray[i].subheading;
                                                         var stringAtIndex = tempArray[i].data;
 
-                                                        // // console.log('Main Main Heading is == ' + mainHeading);
-                                                        // // console.log('Sub Sub Heading is == ' + subHeading);
-                                                        // // console.log('Main Main Data is == ' + stringAtIndex);
+                                                        // // // // console.log('Main Main Heading is == ' + mainHeading);
+                                                        // // // // console.log('Sub Sub Heading is == ' + subHeading);
+                                                        // // // // console.log('Main Main Data is == ' + stringAtIndex);
 
                                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                         var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -3176,10 +3022,10 @@ class HomeScreen extends Component{
 
                                                     var finalArray13=[];
 
-                                                    RNFS.readFileAssets(path13)
+                                                    RNFS.readFileAssets(gheekawar)
                                                         .then((contents) => {
                                                           var contentString = contents.toString();
-                                                          // // console.log('Content Of Complete Book' + contentString);
+                                                          // // // // console.log('Content Of Complete Book' + contentString);
                                                           var chaptersArray=[];
                                                           // For Chapters Titles denoted by & Sign
                                                           for (var i = 0; i < contentString.length; i++) {
@@ -3189,13 +3035,13 @@ class HomeScreen extends Component{
                                                               break;
                                                             }
 
-                                                            // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                            // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                             var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                                             chaptersArray.push(tempString);
                                                             i=secondIndex;
                                                           }
 
-                                                          // // console.log('Chapters Array is ='+chaptersArray);
+                                                          // // // // console.log('Chapters Array is ='+chaptersArray);
 
                                                           var titlesArray=[];
 
@@ -3204,7 +3050,7 @@ class HomeScreen extends Component{
                                                             var stringAtIndex = chaptersArray[i];
                                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                             var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                            // // console.log('Akhzar is testing heading' + testString);
+                                                            // // // // console.log('Akhzar is testing heading' + testString);
 
                                                             for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3214,7 +3060,7 @@ class HomeScreen extends Component{
                                                                 break;
                                                               }
 
-                                                              // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                              // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                                               // Save String and Heading Both in Array
                                                               var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -3225,7 +3071,7 @@ class HomeScreen extends Component{
 
                                                           }
 
-                                                          // // console.log('Titles Array is ='+titlesArray);
+                                                          // // // // console.log('Titles Array is ='+titlesArray);
 
                                                           var tempArray=[];
                                                           // For Nuskha Jaat denoted by $ Sign
@@ -3233,12 +3079,12 @@ class HomeScreen extends Component{
 
                                                             var mainHeading = titlesArray[i].heading;
                                                             var stringAtIndex = titlesArray[i].data;
-                                                            // // console.log('Main Heading is == ' + mainHeading);
-                                                            // // console.log('stringAtIndex is == ' + stringAtIndex);
+                                                            // // // // console.log('Main Heading is == ' + mainHeading);
+                                                            // // // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                             var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                            // // console.log('Akhzar is testing heading' + testString);
+                                                            // // // // console.log('Akhzar is testing heading' + testString);
 
                                                             for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3248,9 +3094,9 @@ class HomeScreen extends Component{
                                                                 break;
                                                               }
 
-                                                              // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                              // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                              // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
+                                                              // // // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                                                               var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                                               tempArray.push(ObjectToSaveInArray);
@@ -3258,7 +3104,7 @@ class HomeScreen extends Component{
 
                                                             }
                                                           }
-                                                          // // console.log('Main Temp Temp Array is ='+tempArray);
+                                                          // // // // console.log('Main Temp Temp Array is ='+tempArray);
 
                                                           // Extract Headings from Sub Content From $ Sign.
 
@@ -3269,9 +3115,9 @@ class HomeScreen extends Component{
                                                             var subHeading = tempArray[i].subheading;
                                                             var stringAtIndex = tempArray[i].data;
 
-                                                            // // console.log('Main Main Heading is == ' + mainHeading);
-                                                            // // console.log('Sub Sub Heading is == ' + subHeading);
-                                                            // // console.log('Main Main Data is == ' + stringAtIndex);
+                                                            // // // // console.log('Main Main Heading is == ' + mainHeading);
+                                                            // // // // console.log('Sub Sub Heading is == ' + subHeading);
+                                                            // // // // console.log('Main Main Data is == ' + stringAtIndex);
 
                                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                             var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -3286,10 +3132,10 @@ class HomeScreen extends Component{
 
                                                         var finalArray14=[];
 
-                                                        RNFS.readFileAssets(path14)
+                                                        RNFS.readFileAssets(ghee)
                                                             .then((contents) => {
                                                               var contentString = contents.toString();
-                                                              // // console.log('Content Of Complete Book' + contentString);
+                                                              // // // // console.log('Content Of Complete Book' + contentString);
                                                               var chaptersArray=[];
                                                               // For Chapters Titles denoted by & Sign
                                                               for (var i = 0; i < contentString.length; i++) {
@@ -3299,13 +3145,13 @@ class HomeScreen extends Component{
                                                                   break;
                                                                 }
 
-                                                                // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                                // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                                 var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                                                 chaptersArray.push(tempString);
                                                                 i=secondIndex;
                                                               }
 
-                                                              // // console.log('Chapters Array is ='+chaptersArray);
+                                                              // // // // console.log('Chapters Array is ='+chaptersArray);
 
                                                               var titlesArray=[];
 
@@ -3314,7 +3160,7 @@ class HomeScreen extends Component{
                                                                 var stringAtIndex = chaptersArray[i];
                                                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                                 var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                                // // console.log('Akhzar is testing heading' + testString);
+                                                                // // // // console.log('Akhzar is testing heading' + testString);
 
                                                                 for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3324,7 +3170,7 @@ class HomeScreen extends Component{
                                                                     break;
                                                                   }
 
-                                                                  // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                                  // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                                                   // Save String and Heading Both in Array
                                                                   var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -3335,7 +3181,7 @@ class HomeScreen extends Component{
 
                                                               }
 
-                                                              // // console.log('Titles Array is ='+titlesArray);
+                                                              // // // // console.log('Titles Array is ='+titlesArray);
 
                                                               var tempArray=[];
                                                               // For Nuskha Jaat denoted by $ Sign
@@ -3343,12 +3189,12 @@ class HomeScreen extends Component{
 
                                                                 var mainHeading = titlesArray[i].heading;
                                                                 var stringAtIndex = titlesArray[i].data;
-                                                                // // console.log('Main Heading is == ' + mainHeading);
-                                                                // // console.log('stringAtIndex is == ' + stringAtIndex);
+                                                                // // // // console.log('Main Heading is == ' + mainHeading);
+                                                                // // // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                                                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                                 var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                                // // console.log('Akhzar is testing heading' + testString);
+                                                                // // // // console.log('Akhzar is testing heading' + testString);
 
                                                                 for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3358,9 +3204,9 @@ class HomeScreen extends Component{
                                                                     break;
                                                                   }
 
-                                                                  // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                                  // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                                  // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
+                                                                  // // // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                                                                   var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                                                   tempArray.push(ObjectToSaveInArray);
@@ -3368,7 +3214,7 @@ class HomeScreen extends Component{
 
                                                                 }
                                                               }
-                                                              // // console.log('Main Temp Temp Array is ='+tempArray);
+                                                              // // // // console.log('Main Temp Temp Array is ='+tempArray);
 
                                                               // Extract Headings from Sub Content From $ Sign.
 
@@ -3379,9 +3225,9 @@ class HomeScreen extends Component{
                                                                 var subHeading = tempArray[i].subheading;
                                                                 var stringAtIndex = tempArray[i].data;
 
-                                                                // // console.log('Main Main Heading is == ' + mainHeading);
-                                                                // // console.log('Sub Sub Heading is == ' + subHeading);
-                                                                // // console.log('Main Main Data is == ' + stringAtIndex);
+                                                                // // // // console.log('Main Main Heading is == ' + mainHeading);
+                                                                // // // // console.log('Sub Sub Heading is == ' + subHeading);
+                                                                // // // // console.log('Main Main Data is == ' + stringAtIndex);
 
                                                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                                 var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -3397,10 +3243,10 @@ class HomeScreen extends Component{
 
                                                             var finalArray15=[];
 
-                                                            RNFS.readFileAssets(path15)
+                                                            RNFS.readFileAssets(dahi)
                                                                 .then((contents) => {
                                                                   var contentString = contents.toString();
-                                                                  // // console.log('Content Of Complete Book' + contentString);
+                                                                  // // // // console.log('Content Of Complete Book' + contentString);
                                                                   var chaptersArray=[];
                                                                   // For Chapters Titles denoted by & Sign
                                                                   for (var i = 0; i < contentString.length; i++) {
@@ -3410,13 +3256,13 @@ class HomeScreen extends Component{
                                                                       break;
                                                                     }
 
-                                                                    // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                                    // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                                     var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                                                     chaptersArray.push(tempString);
                                                                     i=secondIndex;
                                                                   }
 
-                                                                  // // console.log('Chapters Array is ='+chaptersArray);
+                                                                  // // // // console.log('Chapters Array is ='+chaptersArray);
 
                                                                   var titlesArray=[];
 
@@ -3425,7 +3271,7 @@ class HomeScreen extends Component{
                                                                     var stringAtIndex = chaptersArray[i];
                                                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                                     var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                                    // // console.log('Akhzar is testing heading' + testString);
+                                                                    // // // // console.log('Akhzar is testing heading' + testString);
 
                                                                     for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3435,7 +3281,7 @@ class HomeScreen extends Component{
                                                                         break;
                                                                       }
 
-                                                                      // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                                      // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                                                       // Save String and Heading Both in Array
                                                                       var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -3446,7 +3292,7 @@ class HomeScreen extends Component{
 
                                                                   }
 
-                                                                  // // console.log('Titles Array is ='+titlesArray);
+                                                                  // // // // console.log('Titles Array is ='+titlesArray);
 
                                                                   var tempArray=[];
                                                                   // For Nuskha Jaat denoted by $ Sign
@@ -3454,12 +3300,12 @@ class HomeScreen extends Component{
 
                                                                     var mainHeading = titlesArray[i].heading;
                                                                     var stringAtIndex = titlesArray[i].data;
-                                                                    // // console.log('Main Heading is == ' + mainHeading);
-                                                                    // // console.log('stringAtIndex is == ' + stringAtIndex);
+                                                                    // // // // console.log('Main Heading is == ' + mainHeading);
+                                                                    // // // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                                                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                                     var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                                    // // console.log('Akhzar is testing heading' + testString);
+                                                                    // // // // console.log('Akhzar is testing heading' + testString);
 
                                                                     for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3469,9 +3315,9 @@ class HomeScreen extends Component{
                                                                         break;
                                                                       }
 
-                                                                      // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                                      // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                                      // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
+                                                                      // // // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                                                                       var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                                                       tempArray.push(ObjectToSaveInArray);
@@ -3479,7 +3325,7 @@ class HomeScreen extends Component{
 
                                                                     }
                                                                   }
-                                                                  // // console.log('Main Temp Temp Array is ='+tempArray);
+                                                                  // // // // console.log('Main Temp Temp Array is ='+tempArray);
 
                                                                   // Extract Headings from Sub Content From $ Sign.
 
@@ -3490,9 +3336,9 @@ class HomeScreen extends Component{
                                                                     var subHeading = tempArray[i].subheading;
                                                                     var stringAtIndex = tempArray[i].data;
 
-                                                                    // // console.log('Main Main Heading is == ' + mainHeading);
-                                                                    // // console.log('Sub Sub Heading is == ' + subHeading);
-                                                                    // // console.log('Main Main Data is == ' + stringAtIndex);
+                                                                    // // // // console.log('Main Main Heading is == ' + mainHeading);
+                                                                    // // // // console.log('Sub Sub Heading is == ' + subHeading);
+                                                                    // // // // console.log('Main Main Data is == ' + stringAtIndex);
 
                                                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                                     var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -3508,10 +3354,12 @@ class HomeScreen extends Component{
 
                                                                 var finalArray16=[];
 
-                                                                RNFS.readFileAssets(path16)
+
+
+                                                                RNFS.readFileAssets(gulsarak)
                                                                     .then((contents) => {
                                                                       var contentString = contents.toString();
-                                                                      // // console.log('Content Of Complete Book' + contentString);
+                                                                      // // // // console.log('Content Of Complete Book' + contentString);
                                                                       var chaptersArray=[];
                                                                       // For Chapters Titles denoted by & Sign
                                                                       for (var i = 0; i < contentString.length; i++) {
@@ -3521,13 +3369,13 @@ class HomeScreen extends Component{
                                                                           break;
                                                                         }
 
-                                                                        // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                                        // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                                         var tempString=contentString.slice(firstIndex+1,secondIndex-1);
                                                                         chaptersArray.push(tempString);
                                                                         i=secondIndex;
                                                                       }
 
-                                                                      // // console.log('Chapters Array is ='+chaptersArray);
+                                                                      // // // // console.log('Chapters Array is ='+chaptersArray);
 
                                                                       var titlesArray=[];
 
@@ -3536,7 +3384,7 @@ class HomeScreen extends Component{
                                                                         var stringAtIndex = chaptersArray[i];
                                                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                                         var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                                        // // console.log('Akhzar is testing heading' + testString);
+                                                                        // // // // console.log('Akhzar is testing heading' + testString);
 
                                                                         for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3546,7 +3394,7 @@ class HomeScreen extends Component{
                                                                             break;
                                                                           }
 
-                                                                          // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                                          // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
                                                                           // Save String and Heading Both in Array
                                                                           var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
@@ -3557,7 +3405,7 @@ class HomeScreen extends Component{
 
                                                                       }
 
-                                                                      // // console.log('Titles Array is ='+titlesArray);
+                                                                      // // // // console.log('Titles Array is ='+titlesArray);
 
                                                                       var tempArray=[];
                                                                       // For Nuskha Jaat denoted by $ Sign
@@ -3565,12 +3413,12 @@ class HomeScreen extends Component{
 
                                                                         var mainHeading = titlesArray[i].heading;
                                                                         var stringAtIndex = titlesArray[i].data;
-                                                                        // // console.log('Main Heading is == ' + mainHeading);
-                                                                        // // console.log('stringAtIndex is == ' + stringAtIndex);
+                                                                        // // // // console.log('Main Heading is == ' + mainHeading);
+                                                                        // // // // console.log('stringAtIndex is == ' + stringAtIndex);
 
                                                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                                         var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                                        // // console.log('Akhzar is testing heading' + testString);
+                                                                        // // // // console.log('Akhzar is testing heading' + testString);
 
                                                                         for (var x = 0; x < stringAtIndex.length; x++) {
 
@@ -3580,9 +3428,9 @@ class HomeScreen extends Component{
                                                                             break;
                                                                           }
 
-                                                                          // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
+                                                                          // // // // console.log('FirstIndex and SecondIndex' + firstIndex +'   '+ secondIndex);
                                                                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                                          // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
+                                                                          // // // // console.log('What About main Heading = ' + mainHeading +' And What about Sub Heading  '+ testString +' And What About Subbest Heading  '+tempString.trim());
 
                                                                           var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
                                                                           tempArray.push(ObjectToSaveInArray);
@@ -3590,7 +3438,7 @@ class HomeScreen extends Component{
 
                                                                         }
                                                                       }
-                                                                      // // console.log('Main Temp Temp Array is ='+tempArray);
+                                                                      // // // // console.log('Main Temp Temp Array is ='+tempArray);
 
                                                                       // Extract Headings from Sub Content From $ Sign.
 
@@ -3601,9 +3449,9 @@ class HomeScreen extends Component{
                                                                         var subHeading = tempArray[i].subheading;
                                                                         var stringAtIndex = tempArray[i].data;
 
-                                                                        // // console.log('Main Main Heading is == ' + mainHeading);
-                                                                        // // console.log('Sub Sub Heading is == ' + subHeading);
-                                                                        // // console.log('Main Main Data is == ' + stringAtIndex);
+                                                                        // // // // console.log('Main Main Heading is == ' + mainHeading);
+                                                                        // // // // console.log('Sub Sub Heading is == ' + subHeading);
+                                                                        // // // // console.log('Main Main Data is == ' + stringAtIndex);
 
                                                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
                                                                         var testString=stringAtIndex.slice(0,headingEndIndex);
@@ -3614,7 +3462,9 @@ class HomeScreen extends Component{
 
                                                                       this.setState({showProgress:false});
                                                                       AsyncStorage.setItem('booksData', JSON.stringify(this.state.bookArray));
-                                                                      this.slectFunc();
+                                                                      this.horizontalrowselected();
+                                                                      this.dumpIntoDB();
+
                                                                     })
 
 
@@ -3623,7 +3473,6 @@ class HomeScreen extends Component{
 
         // First Array is for Articles and Other is for Books
         var Object0ToSaveInMainArray = {title:'مضامین',data:finalArray0};
-
         var Object1ToSaveInMainArray = {title:'آرنڈ',data:finalArray1};
         var Object2ToSaveInMainArray = {title:'اندرائین',data:finalArray2};
         var Object3ToSaveInMainArray = {title:'انگور',data:finalArray3};
@@ -3690,7 +3539,7 @@ actionButtonSearch(){
 
 // this.searchExactWord();
 var stringToSearch=this.state.txtSearch.trim();
-// // // console.log('String to Search' + stringToSearch);
+// // // // // console.log('String to Search' + stringToSearch);
   stringToSearch=stringToSearch.toLowerCase();
 if (stringToSearch.length <=0) {
   Alert.alert('Stop!','Search complete word');
@@ -3904,7 +3753,7 @@ if (searchedArray.length!=0) {
 
 }
 
-// // // console.log('Search Result Word is = ',finalArray[0]);
+// // // // // console.log('Search Result Word is = ',finalArray[0]);
 
 if (flag == 0){
   Alert.alert('Stop!','No result found');
@@ -4045,45 +3894,134 @@ actionCheckBox4(){
 
 wordSelected(index){
 
-  var letter=this.state.urduAlphabet[index].key;
-  var finalArray=[];
+  if (this.state.urduAlphabet[index].data == 0) {
+    // If Selected Row is empty no need to process any more
+  }else{
+    // Last selectedAlphabet
+  if (this.state.urduAlphabet[index].key == this.state.urduAlphabet[this.state.lastSelectedAlphabetIndex.index].key) {
+    // If You press already selected row, no need to process any more
 
-  for (var x = 0; x < this.state.bookArray.length; x++) {
-  var bookArray=this.state.bookArray[x].data;
-  var searchedArray=[];
-  var counter = 0;
-  var flag = 0;
+  }else{
 
-  for (var i = 0; i < bookArray.length; i++) {
-    var mainHeading=bookArray[i].mainheading;
-    var subHeading=bookArray[i].subheading;
-    var subbestheading=bookArray[i].subbestheading.trim();
-    var stringArray=subbestheading.split(")");
-    var newString=stringArray[0];
-    if (stringArray.length>0) {
-      newString=stringArray[1];
+    var letter=this.state.urduAlphabet[index].key;
+    var finalArray=[];
+
+    for (var x = 0; x < this.state.bookArray.length; x++) {
+    var bookArray=this.state.bookArray[x].data;
+    var searchedArray=[];
+    var counter = 0;
+    var flag = 0;
+
+    for (var i = 0; i < bookArray.length; i++) {
+      var mainHeading=bookArray[i].mainheading;
+      var subHeading=bookArray[i].subheading;
+      var subbestheading=bookArray[i].subbestheading.trim();
+      var stringArray=subbestheading.split(")");
+      var newString=stringArray[0];
+      if (stringArray.length>0) {
+        newString=stringArray[1];
+      }
+
+      if (newString == null) {
+        continue;
+      }
+
+      newString=newString.trim();
+      if (newString[0]==letter) {
+        var ObjectToSaveInArray = {title:this.state.bookArray[x].title,data:bookArray[i]};
+        finalArray.push(ObjectToSaveInArray)
+      }
     }
+  }
 
-    if (newString == null) {
-      continue;
-    }
+  this.state.urduAlphabet[index].data = 2;
+  this.state.urduAlphabet[this.state.lastSelectedAlphabetIndex.index].data = 1;
 
-    newString=newString.trim();
-    if (newString[0]==letter) {
-      var ObjectToSaveInArray = {title:this.state.bookArray[x].title,data:bookArray[i]};
-      finalArray.push(ObjectToSaveInArray)
+  // Update Laste selected index
+  this.state.lastSelectedAlphabetIndex.index = index;
+
+  this.setState({
+    searchResultArray:finalArray,
+  })
     }
   }
 }
 
-this.state.urduAlphabet[index].data = 2;
+ dumpIntoDB(){
 
-this.setState({
-  searchResultArray:finalArray,
-})
-}
+   console.log('Dump DB Called or not ?');
+   console.log('Data length is = ',this.state.bookArray.length);
+   console.log('Data length at 1 is = ',this.state.bookArray[1].data.length);
 
- slectFunc(){
+  //  for (var i = 0; i < this.state.bookArray.length; i++) {
+  //    for (var j = 0; j < this.state.bookArray[i].data.length; j++) {
+
+      //  console.log(this.state.bookArray[i].title);
+      //  console.log(this.state.bookArray[i].data[j].mainheading);
+      //  console.log(this.state.bookArray[i].data[j].subheading);
+      //  console.log(this.state.bookArray[i].data[j].subbestheading);
+      //  console.log(this.state.bookArray[i].data[j].data);
+
+
+console.log('insertDB Called');
+
+// if (this.state.user_name) {
+//  if (this.state.user_contact) {
+//    if (this.state.user_address) {
+
+
+     db.transaction((tx)=> {
+        for (var i = 0; i < this.state.bookArray.length; i++) {
+          for (var j = 0; j < this.state.bookArray[i].data.length; j++) {
+
+            console.log('DB book length at location 1 is = ', this.state.bookArray[1].title);
+            console.log('DB book data at location 1 is = ', this.state.bookArray[1].data);
+
+            // console.log('DB book_name is = ', this.state.bookArray[i].title);
+            // console.log('DB chapter_name is = ', this.state.bookArray[i].data[j].mainheading);
+            // console.log('DB subheading is = ', this.state.bookArray[i].data[j].subheading);
+            // console.log('DB subbestheading is = ', this.state.bookArray[i].data[j].subbestheading);
+            // console.log('DB data is = ', this.state.bookArray[i].data[j].data);
+
+       tx.executeSql(
+         'INSERT INTO table_books (book_name, chapter_name, disease_name, prescription_name, prescription_detail) VALUES (?,?,?,?,?)',
+         [this.state.bookArray[i].title, this.state.bookArray[i].data[j].mainheading, this.state.bookArray[i].data[j].subheading, this.state.bookArray[i].data[j].subbestheading, this.state.bookArray[i].data[j].data],
+         (tx, results) => {
+          //  console.log('Insert Results',results.rowsAffected);
+           if(results.rowsAffected>0){
+            //  Alert.alert( 'Success', 'Values Inserted successfully',
+            //    [
+            //      {text: 'Ok', onPress: () => this.props.navigation.navigate('HomeScreen')},
+            //    ],
+            //    { cancelable: false }
+            //  );
+           }else{
+             alert('Updation Failed');
+           }
+         }
+       );
+     }
+   }
+});
+
+//    } else {
+//      alert('Please fill Address');
+//    }
+//  } else {
+//    alert('Please fill Contact Number');
+//  }
+// } else {
+//  alert('Please fill Name');
+// }
+
+
+    //  }
+  //  }
+ }
+
+ horizontalrowselected(){
+
+   console.log('Akhzar Nazir New Logic Shuru',this.state.bookArray);
 
    for (var u = 0; u < this.state.urduAlphabet.length; u++) {
    var letter=this.state.urduAlphabet[u].key;
@@ -4095,38 +4033,22 @@ this.setState({
    var flag = 0;
 
    for (var i = 0; i < bookArray.length; i++) {
-     // // // console.log('Book Array is = ',bookArray[i].data);
      var mainHeading=bookArray[i].mainheading;
-     // // // console.log('Main Heading is = ',mainHeading);
      var subHeading=bookArray[i].subheading;
-     // // // console.log('Sub Heading is = ',subHeading);
-     // // // console.log('Subbest Heading before trim is = ',bookArray[i].subbestheading);
      var subbestheading=bookArray[i].subbestheading.trim();
-     // // // console.log('Subbest Heading After trim is = ',subbestheading);
-     // // // console.log('Main Data is = ',bookArray[i].data);
      var stringArray=subbestheading.split(")");
-     // // // console.log('Array Length is = ',stringArray.length);
-     // // // console.log('Array is = ',stringArray[0]);
-     // // // console.log('Array is = ',stringArray[1]);
      var newString=stringArray[0];
      if (stringArray.length>0) {
        newString = stringArray[1];
-       // // // console.log('If Greater Than Zero is = ', newString);
     }
 
-    // What these lines are doing
-     // var tempString=bookArray[i].data;
-     // var tempPara=tempString.toLowerCase();
      if (newString == null) {
        continue;
      }
      newString=newString.trim();
      if (newString[0]==letter) {
-       // // // console.log('New String Is = ',newString);
-       // Need to add one extra key to control repitition
        var ObjectToSaveInArray = {title:this.state.bookArray[x].title,data:bookArray[i],key:newString};
        finalArray.push(ObjectToSaveInArray)
-       // finalArray.push(bookArray[i])
        this.state.urduAlphabet[u].data = 1;
      }
    }
@@ -4140,6 +4062,9 @@ this.setState({
    })
  }
 }
+
+console.log('final array is = ',this.state.searchResultArray);
+
 }
 
  _onHideUnderlay(){
@@ -4159,10 +4084,6 @@ _rowSelected(index){
   }
 
   if (finalArrayToCheckRepitition.length > 1) {
-   // console.log('Compare Array Multiple',this.state.searchResultArray[0]);
-
-  // Alert.alert('Call some Function 1');
-
   this.props.navigation.navigate('RelatedWords',{
   //  rollnumber:1,
   //  others:'Akhzar Nazir',
@@ -4189,16 +4110,13 @@ _rowSelected(index){
     var selectedRow = 0; //index
     var sectionArray = [];
     sectionArray.push(this.state.searchResultArray[index]);
-   // console.log('Compare Array 1',sectionArray);
     // var selectedItem = this.state.searchResultArray[index].data;
     // var selectedTitle = this.state.searchResultArray[index].title;
 
+    console.log('section array before push is = ',sectionArray);
+    console.log('selectedRow before push is = ',selectedRow);
+
     this.props.navigation.navigate('ReadingScreen',{
-    //  rollnumber:1,
-    //  others:'Akhzar Nazir',
-    //  data:obj,
-    //  compare:1,
-    //passProps:{sectionArray,selectedRow},
     sectionArray:sectionArray,
     selectedRow:selectedRow,
      });
@@ -4233,14 +4151,9 @@ render(){
      underlineColorAndroid='transparent'
       />
 
-      {
-     /*
-      }<Text style={{textAlign:'right',marginRight:15,marginTop:15}}>کس کتاب سے تلاش کرنا چاہتے ہیں؟</Text>
-     */
-       }
 
-     {
-       /*
+      <Text style={{textAlign:'right',marginRight:15,marginTop:15,color:'white'}}>کس کتاب سے تلاش کرنا چاہتے ہیں؟</Text>
+
       <View style={{justifyContent:'flex-end',alignItems:'flex-end',marginRight:40,marginLeft:40,backgroundColor:'transparent'}}>
       <View style={{flexDirection:'row'}}>
 
@@ -4270,7 +4183,7 @@ render(){
                    <TouchableOpacity onPress={()=>this.actionCheckBox4()} style={{marginRight:20,width:120,height:40,alignItems:'flex-end',justifyContent:'center'}}>
 
                    <View style={{flexDirection:'row'}}>
-                   <Text style={{alignSelf:'center',color:'white'}}>علاج</Text>
+                   <Text style={{alignSelf:'center',color:'white'}}> نسخہ جات یا علاج</Text>
                    <Image source={this.state.isBook4Selected?checkIcon:uncheckIcon} style={{width:30,height:30,marginLeft:10}}/>
                    </View>
 
@@ -4279,7 +4192,7 @@ render(){
                    <TouchableOpacity onPress={()=>this.actionCheckBox3()} style={{width:140,height:40,alignItems:'flex-end',justifyContent:'center'}}>
 
                    <View style={{flexDirection:'row'}}>
-                   <Text style={{fontSize:12,color:'white'}}>نسخہ جات یا بیماریاں</Text>
+                   <Text style={{fontSize:12,color:'white'}}>بیماریاں</Text>
                    <Image source={this.state.isBook3Selected?checkIcon:uncheckIcon} style={{width:30,height:30,marginLeft:10}}/>
                    </View>
 
@@ -4287,8 +4200,6 @@ render(){
          </View>
 
     </View>
-    */
-  }
 
       <View style={styles.buttonView}>
       <TouchableOpacity onPress={()=>this.actionButtonSearch()} style={styles.buttonStyleOne}>

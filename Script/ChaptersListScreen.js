@@ -31,7 +31,7 @@
   class ChaptersListScreen extends Component{
     constructor(props){
       super(props);
-
+            console.log('Final Array in ChaptersListScreen = '+this.props.navigation.state.params.finalArray);
             var finalArray=[];
             for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
             var arrayList=[];
@@ -39,7 +39,6 @@
               var paragraph=''+this.props.navigation.state.params.finalArray[x].searchedArray[i].data.data;
               var searchWord=this.props.navigation.state.params.finalArray[x].word;
               var index=paragraph.indexOf(searchWord);
-              // // console.log('Index to HightLight is = '+index);
               var data='';
               var firstIndex=-1;
               var secondIndex=-1;
@@ -59,12 +58,6 @@
               // data=data.replace(searchWord,'<b>'+searchWord+'</b>');
               // data='<p>'+data+'</p>';
               var frequency=this.findFrequencyOfSearchWord(paragraph)
-
-              // // console.log('paragraph is = ' + paragraph);
-              // // console.log('data is = ' + data);
-              // // console.log('key is = ' + i);
-              // // console.log('frequency is = ' + frequency);
-
               var object={data:data,key:i,frequency:frequency};
               arrayList.push(object)
               arrayList.sort(function(a,b){

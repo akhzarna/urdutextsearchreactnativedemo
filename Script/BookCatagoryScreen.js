@@ -56,6 +56,8 @@ class BookCatagoryScreen extends Component{
 
     componentDidMount() {
 
+      // Alert.alert('BookCategoryScreen');
+
       AsyncStorage.getItem("booksData").then((value) => {
       var testVar = JSON.parse(value);
       if (testVar == null) {
@@ -3463,8 +3465,6 @@ class BookCatagoryScreen extends Component{
 
 actionButtonPress(id){
   var screenName='BooksListScreen';
-  if (id==4) {
-  }
    if (id==1) {
      screenName='BookCatagoryScreen2';
   // }else if (id==2) {

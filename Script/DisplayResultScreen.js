@@ -22,6 +22,8 @@ class DisplayResultScreen extends Component{
   constructor(props){
     super(props);
 
+          Alert.alert('DisplayResultScreen');
+          
           var finalArray=[];
           for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
           var arrayList=[];

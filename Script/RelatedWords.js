@@ -39,30 +39,22 @@
   }
 
   componentWillMount(){
+    Alert.alert('RelatedWords');
     this.function();
   }
 
   _rowSelected(item,section){
     var selectedRow = item.key;
-    console.log("keyyy",selectedRow);
     var sectionArray = [];
     sectionArray = this.state.finalArray;
-    // console.log('Compare Array 2',sectionArray);
-    // var selectedItem = this.state.sectionArray[item.key].read;
-    // var selectedTitle = this.state.sectionArray[item.key].title;
+
+    console.log("section Array is = ",sectionArray);
+    console.log("selected Row is = ",selectedRow);
 
     this.props.navigation.navigate('ReadingScreen',{
       sectionArray:sectionArray,
       selectedRow:selectedRow,
     });
-
-    // this.props.navigator.push({
-    //   screen:'ReadingScreen',
-    //   passProps:{sectionArray,selectedRow},
-    //   navigatorStyle:{
-    //     navBarHidden:true,
-    //   },
-    // });
 
   }
 
