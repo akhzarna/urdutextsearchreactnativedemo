@@ -12,14 +12,37 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		17CE9C2E4B9A4D9DA0C65FB0 /* noorehuda.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E56651A311164893A6AB0AF0 /* noorehuda.ttf */; };
+		2B07CDF7854742A3ABF2EEF7 /* AdobeArabic-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 580C5846462B46539EEEDEDF /* AdobeArabic-Regular.otf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* matabsulemaniTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* matabsulemaniTests.m */; };
 		364782A316A4A48D9F2F8532 /* libPods-matabsulemaniTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 950984FEF0AEEDA35F307681 /* libPods-matabsulemaniTests.a */; };
+		3E7F92375A0649A0ADEB5EEF /* NexaBold.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 585CDCFD78CD45F99FBE4662 /* NexaBold.OTF */; };
 		40F9137AAD15959C90C317EF /* libPods-matabsulemani-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC634836E47127E6E9A9E710 /* libPods-matabsulemani-tvOSTests.a */; };
+		503E95C95D3A4A76AF59C96F /* TitrBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AEAD840667B345A6853150D4 /* TitrBold.ttf */; };
+		63F70A9F99C74A868943A112 /* UrduNaskhAsiatype.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BABB3CAFCF1B47E883009F57 /* UrduNaskhAsiatype.ttf */; };
+		79244681A7F94643841E7891 /* MehrNastaliqWeb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8CD7BFD236E4CFA8FCCE920 /* MehrNastaliqWeb.ttf */; };
+		7C5FA22510824C70BB8D7EDD /* UrduTypesetting.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99024DDDFEE848F3B9CE415F /* UrduTypesetting.ttf */; };
+		809C13E58508404686686D02 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AFA74BB15A84A8FA31AEFD8 /* Roboto-Bold.ttf */; };
+		82A1741E76594E879B241E4C /* GeezaPro.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC52D7A77F40EEAC68B20B /* GeezaPro.ttc */; };
+		854415C39E6D4903ABE3F8EA /* 10MucZeit-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 195E387A821C47ACB3C3A03C /* 10MucZeit-Medium.ttf */; };
+		880A12F1289A47278B32412E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2BE776652654364AA87B235 /* Roboto-Regular.ttf */; };
 		8D16EB2FF23ADCE019390DF5 /* libPods-matabsulemani-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 484D07BD13602502C39D477A /* libPods-matabsulemani-tvOS.a */; };
+		9338397E40394FD6A8F1581B /* MuhammadiQuranicFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4EBBB5DCE4942B1A2D1F6FA /* MuhammadiQuranicFont.ttf */; };
 		96B403E41047421B0751D194 /* libPods-matabsulemani.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C52CDEA0B50276612305DE5 /* libPods-matabsulemani.a */; };
+		B9AB2D034BB5482FA9424836 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11DC05F71D44474B04BC815 /* OpenSans-Semibold.ttf */; };
+		B9AC845F491647F7A9BE82EE /* OpenSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0FC6AB6823384B8682BB738B /* OpenSans.ttf */; };
+		C46648861340406AAA2AAAAE /* Aslam.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 036FFAF08D9D4AF192B3D6FF /* Aslam.ttf */; };
+		C525417C0E9E4D268CAC5702 /* _PDMS_Saleem_QuranFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77FA3A319A3D439A914763E0 /* _PDMS_Saleem_QuranFont.ttf */; };
+		C7FDF977438F495895B0DBBA /* Jameel-Noori-Nastaleeq-Kasheeda.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6665A82351C34988AB458073 /* Jameel-Noori-Nastaleeq-Kasheeda.ttf */; };
+		D3327FF4259D443083E74367 /* AlQalamQuranMajeedWeb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA83B55A886E4ABC8A2B12BE /* AlQalamQuranMajeedWeb.ttf */; };
+		D6924E7B8B274821B637ED48 /* noorehira.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8175F88A7CA440D8370992F /* noorehira.ttf */; };
+		DCE73054EFE346909673E085 /* NafeesNastaleeq.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70E6E473546C45F4B8FF7128 /* NafeesNastaleeq.ttf */; };
+		E0F65E69F331416B85908F34 /* Jameel-Noori-Nastaleeq.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C8065A309EE4D3C899DF4AA /* Jameel-Noori-Nastaleeq.ttf */; };
+		F5060EB505D5432A8F0FE814 /* NafeesWebNaskh.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F45491D5A32C4E39B0758D66 /* NafeesWebNaskh.ttf */; };
+		FC13737D23F44197BE1FA55A /* FajerNooriNastalique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0F8D3315EFF49E884B30ACB /* FajerNooriNastalique.ttf */; };
 		FC5670B3242C6C7F0088F389 /* گھی کوار.txt in Resources */ = {isa = PBXBuildFile; fileRef = FC56709F242C6C7E0088F389 /* گھی کوار.txt */; };
 		FC5670B4242C6C7F0088F389 /* ArticlesMain.txt in Resources */ = {isa = PBXBuildFile; fileRef = FC5670A0242C6C7E0088F389 /* ArticlesMain.txt */; };
 		FC5670B5242C6C7F0088F389 /* آم.txt in Resources */ = {isa = PBXBuildFile; fileRef = FC5670A1242C6C7E0088F389 /* آم.txt */; };
@@ -40,29 +63,6 @@
 		FC5670C5242C6C7F0088F389 /* خواص آک.txt in Resources */ = {isa = PBXBuildFile; fileRef = FC5670B1242C6C7E0088F389 /* خواص آک.txt */; };
 		FC5670C6242C6C7F0088F389 /* خواص آک وادو.txt in Resources */ = {isa = PBXBuildFile; fileRef = FC5670B2242C6C7E0088F389 /* خواص آک وادو.txt */; };
 		FCD793FD244882370005AA4B /* آرنڈ.txt in Resources */ = {isa = PBXBuildFile; fileRef = FCD793FC244882360005AA4B /* آرنڈ.txt */; };
-		C525417C0E9E4D268CAC5702 /* _PDMS_Saleem_QuranFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77FA3A319A3D439A914763E0 /* _PDMS_Saleem_QuranFont.ttf */; };
-		854415C39E6D4903ABE3F8EA /* 10MucZeit-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 195E387A821C47ACB3C3A03C /* 10MucZeit-Medium.ttf */; };
-		2B07CDF7854742A3ABF2EEF7 /* AdobeArabic-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 580C5846462B46539EEEDEDF /* AdobeArabic-Regular.otf */; };
-		D3327FF4259D443083E74367 /* AlQalamQuranMajeedWeb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA83B55A886E4ABC8A2B12BE /* AlQalamQuranMajeedWeb.ttf */; };
-		C46648861340406AAA2AAAAE /* Aslam.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 036FFAF08D9D4AF192B3D6FF /* Aslam.ttf */; };
-		FC13737D23F44197BE1FA55A /* FajerNooriNastalique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0F8D3315EFF49E884B30ACB /* FajerNooriNastalique.ttf */; };
-		82A1741E76594E879B241E4C /* GeezaPro.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC52D7A77F40EEAC68B20B /* GeezaPro.ttc */; };
-		C7FDF977438F495895B0DBBA /* Jameel-Noori-Nastaleeq-Kasheeda.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6665A82351C34988AB458073 /* Jameel-Noori-Nastaleeq-Kasheeda.ttf */; };
-		E0F65E69F331416B85908F34 /* Jameel-Noori-Nastaleeq.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C8065A309EE4D3C899DF4AA /* Jameel-Noori-Nastaleeq.ttf */; };
-		79244681A7F94643841E7891 /* MehrNastaliqWeb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8CD7BFD236E4CFA8FCCE920 /* MehrNastaliqWeb.ttf */; };
-		9338397E40394FD6A8F1581B /* MuhammadiQuranicFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4EBBB5DCE4942B1A2D1F6FA /* MuhammadiQuranicFont.ttf */; };
-		DCE73054EFE346909673E085 /* NafeesNastaleeq.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70E6E473546C45F4B8FF7128 /* NafeesNastaleeq.ttf */; };
-		F5060EB505D5432A8F0FE814 /* NafeesWebNaskh.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F45491D5A32C4E39B0758D66 /* NafeesWebNaskh.ttf */; };
-		3E7F92375A0649A0ADEB5EEF /* NexaBold.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 585CDCFD78CD45F99FBE4662 /* NexaBold.OTF */; };
-		D6924E7B8B274821B637ED48 /* noorehira.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8175F88A7CA440D8370992F /* noorehira.ttf */; };
-		17CE9C2E4B9A4D9DA0C65FB0 /* noorehuda.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E56651A311164893A6AB0AF0 /* noorehuda.ttf */; };
-		B9AB2D034BB5482FA9424836 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11DC05F71D44474B04BC815 /* OpenSans-Semibold.ttf */; };
-		B9AC845F491647F7A9BE82EE /* OpenSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0FC6AB6823384B8682BB738B /* OpenSans.ttf */; };
-		809C13E58508404686686D02 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AFA74BB15A84A8FA31AEFD8 /* Roboto-Bold.ttf */; };
-		880A12F1289A47278B32412E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2BE776652654364AA87B235 /* Roboto-Regular.ttf */; };
-		503E95C95D3A4A76AF59C96F /* TitrBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AEAD840667B345A6853150D4 /* TitrBold.ttf */; };
-		63F70A9F99C74A868943A112 /* UrduNaskhAsiatype.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BABB3CAFCF1B47E883009F57 /* UrduNaskhAsiatype.ttf */; };
-		7C5FA22510824C70BB8D7EDD /* UrduTypesetting.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99024DDDFEE848F3B9CE415F /* UrduTypesetting.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +87,9 @@
 		00E356EE1AD99517003FC87E /* matabsulemaniTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = matabsulemaniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* matabsulemaniTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = matabsulemaniTests.m; sourceTree = "<group>"; };
+		036FFAF08D9D4AF192B3D6FF /* Aslam.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Aslam.ttf; path = ../assets/fonts/Aslam.ttf; sourceTree = "<group>"; };
+		0AFA74BB15A84A8FA31AEFD8 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		0FC6AB6823384B8682BB738B /* OpenSans.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = OpenSans.ttf; path = ../assets/fonts/OpenSans.ttf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* matabsulemani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = matabsulemani.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = matabsulemani/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = matabsulemani/AppDelegate.m; sourceTree = "<group>"; };
@@ -94,22 +97,43 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = matabsulemani/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = matabsulemani/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = matabsulemani/main.m; sourceTree = "<group>"; };
+		195E387A821C47ACB3C3A03C /* 10MucZeit-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "10MucZeit-Medium.ttf"; path = "../assets/fonts/10MucZeit-Medium.ttf"; sourceTree = "<group>"; };
 		1C52CDEA0B50276612305DE5 /* libPods-matabsulemani.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-matabsulemani.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE6139590ABB28E460488EB /* Pods-matabsulemani-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matabsulemani-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-matabsulemani-tvOSTests/Pods-matabsulemani-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		259025FC05CABA7ADA0E05BB /* Pods-matabsulemani.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matabsulemani.release.xcconfig"; path = "Target Support Files/Pods-matabsulemani/Pods-matabsulemani.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* matabsulemani-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "matabsulemani-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* matabsulemani-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "matabsulemani-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31E86891A45627898118F612 /* Pods-matabsulemani-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matabsulemani-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-matabsulemani-tvOSTests/Pods-matabsulemani-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		3CEC52D7A77F40EEAC68B20B /* GeezaPro.ttc */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = GeezaPro.ttc; path = ../assets/fonts/GeezaPro.ttc; sourceTree = "<group>"; };
 		484D07BD13602502C39D477A /* libPods-matabsulemani-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-matabsulemani-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		580C5846462B46539EEEDEDF /* AdobeArabic-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AdobeArabic-Regular.otf"; path = "../assets/fonts/AdobeArabic-Regular.otf"; sourceTree = "<group>"; };
+		585CDCFD78CD45F99FBE4662 /* NexaBold.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NexaBold.OTF; path = ../assets/fonts/NexaBold.OTF; sourceTree = "<group>"; };
+		6665A82351C34988AB458073 /* Jameel-Noori-Nastaleeq-Kasheeda.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Jameel-Noori-Nastaleeq-Kasheeda.ttf"; path = "../assets/fonts/Jameel-Noori-Nastaleeq-Kasheeda.ttf"; sourceTree = "<group>"; };
+		70E6E473546C45F4B8FF7128 /* NafeesNastaleeq.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NafeesNastaleeq.ttf; path = ../assets/fonts/NafeesNastaleeq.ttf; sourceTree = "<group>"; };
+		77FA3A319A3D439A914763E0 /* _PDMS_Saleem_QuranFont.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = _PDMS_Saleem_QuranFont.ttf; path = ../assets/fonts/_PDMS_Saleem_QuranFont.ttf; sourceTree = "<group>"; };
+		7C8065A309EE4D3C899DF4AA /* Jameel-Noori-Nastaleeq.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Jameel-Noori-Nastaleeq.ttf"; path = "../assets/fonts/Jameel-Noori-Nastaleeq.ttf"; sourceTree = "<group>"; };
 		950984FEF0AEEDA35F307681 /* libPods-matabsulemaniTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-matabsulemaniTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		99024DDDFEE848F3B9CE415F /* UrduTypesetting.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = UrduTypesetting.ttf; path = ../assets/fonts/UrduTypesetting.ttf; sourceTree = "<group>"; };
 		9CE85407EB08F5BDD1628DB8 /* Pods-matabsulemani-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matabsulemani-tvOS.release.xcconfig"; path = "Target Support Files/Pods-matabsulemani-tvOS/Pods-matabsulemani-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		A0F8D3315EFF49E884B30ACB /* FajerNooriNastalique.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FajerNooriNastalique.ttf; path = ../assets/fonts/FajerNooriNastalique.ttf; sourceTree = "<group>"; };
+		A2BE776652654364AA87B235 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		A8175F88A7CA440D8370992F /* noorehira.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = noorehira.ttf; path = ../assets/fonts/noorehira.ttf; sourceTree = "<group>"; };
+		AEAD840667B345A6853150D4 /* TitrBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = TitrBold.ttf; path = ../assets/fonts/TitrBold.ttf; sourceTree = "<group>"; };
 		B559711469FDEB46198EF5F5 /* Pods-matabsulemani-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matabsulemani-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-matabsulemani-tvOS/Pods-matabsulemani-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		B5EC9408B6460942D7226D45 /* Pods-matabsulemani.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matabsulemani.debug.xcconfig"; path = "Target Support Files/Pods-matabsulemani/Pods-matabsulemani.debug.xcconfig"; sourceTree = "<group>"; };
+		B8CD7BFD236E4CFA8FCCE920 /* MehrNastaliqWeb.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MehrNastaliqWeb.ttf; path = ../assets/fonts/MehrNastaliqWeb.ttf; sourceTree = "<group>"; };
+		BABB3CAFCF1B47E883009F57 /* UrduNaskhAsiatype.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = UrduNaskhAsiatype.ttf; path = ../assets/fonts/UrduNaskhAsiatype.ttf; sourceTree = "<group>"; };
+		C4EBBB5DCE4942B1A2D1F6FA /* MuhammadiQuranicFont.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MuhammadiQuranicFont.ttf; path = ../assets/fonts/MuhammadiQuranicFont.ttf; sourceTree = "<group>"; };
+		D11DC05F71D44474B04BC815 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Semibold.ttf"; path = "../assets/fonts/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		DC634836E47127E6E9A9E710 /* libPods-matabsulemani-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-matabsulemani-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1585CA9FD6C4B2BEB57BA4A /* Pods-matabsulemaniTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matabsulemaniTests.debug.xcconfig"; path = "Target Support Files/Pods-matabsulemaniTests/Pods-matabsulemaniTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E56651A311164893A6AB0AF0 /* noorehuda.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = noorehuda.ttf; path = ../assets/fonts/noorehuda.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F1040B54303BE2BFD13944A7 /* Pods-matabsulemaniTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-matabsulemaniTests.release.xcconfig"; path = "Target Support Files/Pods-matabsulemaniTests/Pods-matabsulemaniTests.release.xcconfig"; sourceTree = "<group>"; };
+		F45491D5A32C4E39B0758D66 /* NafeesWebNaskh.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NafeesWebNaskh.ttf; path = ../assets/fonts/NafeesWebNaskh.ttf; sourceTree = "<group>"; };
+		FA83B55A886E4ABC8A2B12BE /* AlQalamQuranMajeedWeb.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AlQalamQuranMajeedWeb.ttf; path = ../assets/fonts/AlQalamQuranMajeedWeb.ttf; sourceTree = "<group>"; };
+		FC05801E246A9D9F0038F8E3 /* Test.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = Test.geojson; sourceTree = "<group>"; };
 		FC56709F242C6C7E0088F389 /* گھی کوار.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "گھی کوار.txt"; sourceTree = "<group>"; };
 		FC5670A0242C6C7E0088F389 /* ArticlesMain.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ArticlesMain.txt; sourceTree = "<group>"; };
 		FC5670A1242C6C7E0088F389 /* آم.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "آم.txt"; sourceTree = "<group>"; };
@@ -130,29 +154,6 @@
 		FC5670B1242C6C7E0088F389 /* خواص آک.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "خواص آک.txt"; sourceTree = "<group>"; };
 		FC5670B2242C6C7E0088F389 /* خواص آک وادو.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "خواص آک وادو.txt"; sourceTree = "<group>"; };
 		FCD793FC244882360005AA4B /* آرنڈ.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "آرنڈ.txt"; sourceTree = "<group>"; };
-		77FA3A319A3D439A914763E0 /* _PDMS_Saleem_QuranFont.ttf */ = {isa = PBXFileReference; name = "_PDMS_Saleem_QuranFont.ttf"; path = "../assets/fonts/_PDMS_Saleem_QuranFont.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		195E387A821C47ACB3C3A03C /* 10MucZeit-Medium.ttf */ = {isa = PBXFileReference; name = "10MucZeit-Medium.ttf"; path = "../assets/fonts/10MucZeit-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		580C5846462B46539EEEDEDF /* AdobeArabic-Regular.otf */ = {isa = PBXFileReference; name = "AdobeArabic-Regular.otf"; path = "../assets/fonts/AdobeArabic-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		FA83B55A886E4ABC8A2B12BE /* AlQalamQuranMajeedWeb.ttf */ = {isa = PBXFileReference; name = "AlQalamQuranMajeedWeb.ttf"; path = "../assets/fonts/AlQalamQuranMajeedWeb.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		036FFAF08D9D4AF192B3D6FF /* Aslam.ttf */ = {isa = PBXFileReference; name = "Aslam.ttf"; path = "../assets/fonts/Aslam.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A0F8D3315EFF49E884B30ACB /* FajerNooriNastalique.ttf */ = {isa = PBXFileReference; name = "FajerNooriNastalique.ttf"; path = "../assets/fonts/FajerNooriNastalique.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3CEC52D7A77F40EEAC68B20B /* GeezaPro.ttc */ = {isa = PBXFileReference; name = "GeezaPro.ttc"; path = "../assets/fonts/GeezaPro.ttc"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6665A82351C34988AB458073 /* Jameel-Noori-Nastaleeq-Kasheeda.ttf */ = {isa = PBXFileReference; name = "Jameel-Noori-Nastaleeq-Kasheeda.ttf"; path = "../assets/fonts/Jameel-Noori-Nastaleeq-Kasheeda.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7C8065A309EE4D3C899DF4AA /* Jameel-Noori-Nastaleeq.ttf */ = {isa = PBXFileReference; name = "Jameel-Noori-Nastaleeq.ttf"; path = "../assets/fonts/Jameel-Noori-Nastaleeq.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B8CD7BFD236E4CFA8FCCE920 /* MehrNastaliqWeb.ttf */ = {isa = PBXFileReference; name = "MehrNastaliqWeb.ttf"; path = "../assets/fonts/MehrNastaliqWeb.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C4EBBB5DCE4942B1A2D1F6FA /* MuhammadiQuranicFont.ttf */ = {isa = PBXFileReference; name = "MuhammadiQuranicFont.ttf"; path = "../assets/fonts/MuhammadiQuranicFont.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		70E6E473546C45F4B8FF7128 /* NafeesNastaleeq.ttf */ = {isa = PBXFileReference; name = "NafeesNastaleeq.ttf"; path = "../assets/fonts/NafeesNastaleeq.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		F45491D5A32C4E39B0758D66 /* NafeesWebNaskh.ttf */ = {isa = PBXFileReference; name = "NafeesWebNaskh.ttf"; path = "../assets/fonts/NafeesWebNaskh.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		585CDCFD78CD45F99FBE4662 /* NexaBold.OTF */ = {isa = PBXFileReference; name = "NexaBold.OTF"; path = "../assets/fonts/NexaBold.OTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A8175F88A7CA440D8370992F /* noorehira.ttf */ = {isa = PBXFileReference; name = "noorehira.ttf"; path = "../assets/fonts/noorehira.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E56651A311164893A6AB0AF0 /* noorehuda.ttf */ = {isa = PBXFileReference; name = "noorehuda.ttf"; path = "../assets/fonts/noorehuda.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D11DC05F71D44474B04BC815 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; name = "OpenSans-Semibold.ttf"; path = "../assets/fonts/OpenSans-Semibold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0FC6AB6823384B8682BB738B /* OpenSans.ttf */ = {isa = PBXFileReference; name = "OpenSans.ttf"; path = "../assets/fonts/OpenSans.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0AFA74BB15A84A8FA31AEFD8 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A2BE776652654364AA87B235 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		AEAD840667B345A6853150D4 /* TitrBold.ttf */ = {isa = PBXFileReference; name = "TitrBold.ttf"; path = "../assets/fonts/TitrBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BABB3CAFCF1B47E883009F57 /* UrduNaskhAsiatype.ttf */ = {isa = PBXFileReference; name = "UrduNaskhAsiatype.ttf"; path = "../assets/fonts/UrduNaskhAsiatype.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		99024DDDFEE848F3B9CE415F /* UrduTypesetting.ttf */ = {isa = PBXFileReference; name = "UrduTypesetting.ttf"; path = "../assets/fonts/UrduTypesetting.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +276,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				FC05801E246A9D9F0038F8E3 /* Test.geojson */,
 				FC56709E242C6C7E0088F389 /* books */,
 				13B07FAE1A68108700A75B9A /* matabsulemani */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,

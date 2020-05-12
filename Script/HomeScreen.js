@@ -144,17 +144,6 @@ class HomeScreen extends Component{
 }
 
   componentDidMount() {
-    // console.log('Akhzar Nazir New Experiment',BookManager.completeBookArray);
-    // console.log('Total Books is = ',BookManager.completeBookArray.length);
-    // console.log('Books 1 title is = ',BookManager.completeBookArray[0].title);
-    //
-    // console.log('Total Chapters Book 1 is = ',BookManager.completeBookArray[0].data.length);
-    // console.log('Total Chapters Book 2 is = ',BookManager.completeBookArray[1].data.length);
-    //
-    // console.log('Total Diseases Book 1 Chapter 1 is = ',BookManager.completeBookArray[0].data[0].data.length);
-    //
-    // console.log('Total Prescriptions Diseases Book 1 Chapter 1 is = ',BookManager.completeBookArray[0].data[0].data[0].data.length);
-
     // For Testing Commented by Akhzar Nazir
     AsyncStorage.getItem("booksData").then((value) => {
     var testVar = JSON.parse(value);
@@ -163,19 +152,15 @@ class HomeScreen extends Component{
     }else{
       this.booksLoadAction();
     // For Testing Else Part is Commented by Akhzar Nazir
-
     this.setState({
       bookArray:JSON.parse(value)
     });
     this.setState({showProgress:false});
     // Alert.alert(this.state.bookArray[0].data[0].subbestheading);
     this.horizontalrowselected();
-
     }
   }
     ).done();
-
-
 }
 
   componentWillUnmount() {
@@ -183,6 +168,8 @@ class HomeScreen extends Component{
   }
 
   booksLoadAction(){
+
+    console.log('BookManager.completeBookArray=',BookManager.completeBookArray);
 
     var path0='';
     var path1='';
@@ -285,12 +272,13 @@ class HomeScreen extends Component{
     var finalArray1=[];
     RNFS.readFile(path1)
         .then((contents) => {
+
           var contentString = contents.toString();
           var chaptersArray=[];
           // For Chapters Titles denoted by & Sign
           for (var i = 0; i < contentString.length; i++) {
-            var firstIndex=contentString.indexOf('&',i);
-            var secondIndex=contentString.indexOf('&',firstIndex+1);
+            var firstIndex=contentString.indexOf('^',i);
+            var secondIndex=contentString.indexOf('^',firstIndex+1);
             if (secondIndex==-1 || firstIndex==-1) {
               break;
             }
@@ -300,8 +288,7 @@ class HomeScreen extends Component{
           }
           console.log('Chapters Array is = ',chaptersArray);
 
-          var newArrayToPushNewData = [];
-
+          var diseasesArray = [];
           // For Main Titles denoted by @ Sign
           for (var i = 0; i < chaptersArray.length; i++) {
 
@@ -312,8 +299,8 @@ class HomeScreen extends Component{
             var titlesArray=[];
 
             for (var x = 0; x < stringAtIndex.length; x++) {
-              var firstIndex=stringAtIndex.indexOf('@',x);
-              var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+              var firstIndex=stringAtIndex.indexOf('&',x);
+              var secondIndex=stringAtIndex.indexOf('&',firstIndex+1);
               if (secondIndex==-1 || firstIndex==-1) {
                 break;
               }
@@ -324,34 +311,24 @@ class HomeScreen extends Component{
               x=secondIndex;
             }
 
-            // console.log('Titles Array = ',titlesArray);
+            console.log('Titles Array = ',titlesArray);
             var mainArrayObjIs = {key:i, title:testStringChapters,data:titlesArray};
-            newArrayToPushNewData.push(mainArrayObjIs);
+            diseasesArray.push(mainArrayObjIs);
 
           }
 
-          console.log('newArrayToPushNewData = ',newArrayToPushNewData);
-
-          var aiknaiarraybanaygi = [];
+          var completeBookArray = [];
           // For Main Titles denoted by @ Sign
-          for (var i = 0; i < newArrayToPushNewData.length; i++) {
-
-            var newArrayToPushNewDataDollar = [];
-
-            console.log('When i = ',i);
-            console.log('When newArrayToPushNewDataDollar = ',newArrayToPushNewDataDollar);
-
-            for (var j = 0; j < newArrayToPushNewData[i].data.length; j++) {
-
+          for (var i = 0; i < diseasesArray.length; i++) {
+            var prescriptionArray = [];
+            for (var j = 0; j < diseasesArray[i].data.length; j++) {
               var titlesArrayNew = [];
-
-              var stringAtIndex = newArrayToPushNewData[i].data[j];
+              var stringAtIndex = diseasesArray[i].data[j];
               var headingEndIndex = stringAtIndex.indexOf('\r',1);
               var testStringChapters=stringAtIndex.slice(0,headingEndIndex);
-
               for (var x = 0; x < stringAtIndex.length; x++) {
-                var firstIndex=stringAtIndex.indexOf('$',x);
-                var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+                var firstIndex=stringAtIndex.indexOf('@',x);
+                var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
                 if (secondIndex==-1 || firstIndex==-1) {
                   break;
                 }
@@ -361,28 +338,59 @@ class HomeScreen extends Component{
                 titlesArrayNew.push(tempString.trim());
                 x=secondIndex;
               }
-
               // console.log('Titles Array  New = ',titlesArrayNew);
               var mainArrayObjIs = {key:j, title:testStringChapters,data:titlesArrayNew};
-              newArrayToPushNewDataDollar.push(mainArrayObjIs);
-
+              prescriptionArray.push(mainArrayObjIs);
             }
-
-            console.log('Dono Dafa i = ',i);
-
-            console.log('Dono Dafa = ',newArrayToPushNewDataDollar);
-
-            var aiknaiarrayObj = {key:i, title:newArrayToPushNewData[i].title,data:newArrayToPushNewDataDollar};
-            aiknaiarraybanaygi.push(aiknaiarrayObj);
-
+            // console.log('Dono Dafa i = ',i);
+            // console.log('Dono Dafa = ',prescriptionArray);
+            var aiknaiarrayObj = {key:i, title:diseasesArray[i].title,data:prescriptionArray};
+            completeBookArray.push(aiknaiarrayObj);
           }
 
-          console.log('newArrayToPushNewDataDollar = ',newArrayToPushNewDataDollar);
+          console.log('completeBookArray = ',completeBookArray.count);
 
-
-          console.log('aiknaiarraybanaygi = ',aiknaiarraybanaygi);
-
-
+          // For Test
+          var finalBookArrayCarrot = [];
+          for (var g = 0; g < completeBookArray.length; g++) {
+            var completeBookArrayCarrot = [];
+            for (var h = 0; h < completeBookArray[g].data.length; h++) {
+              var prescriptionArrayCarrot = [];
+              for (var k = 0; k < completeBookArray[g].data[h].data.length; k++) {
+                var titlesArrayNew = [];
+                var stringAtIndex = completeBookArray[g].data[h].data[k];
+                var headingEndIndex = stringAtIndex.indexOf('\r',1);
+                var testStringChapters=stringAtIndex.slice(0,headingEndIndex);
+                var indexforDollar = -1;
+                for (var x = 0; x < stringAtIndex.length; x++) {
+                  // console.log('String At Index = ',completeBookArray[g].data[h].data[k]);
+                  var firstIndex=stringAtIndex.indexOf('$',x);
+                  var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+                  if (secondIndex==-1 || firstIndex==-1) {
+                    break;
+                  }
+                  var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+                  // Save String and Heading Both in Array
+                  indexforDollar++;
+                  var titlesArrayObj = {key:indexforDollar, title:tempString.trim()};
+                  titlesArrayNew.push(titlesArrayObj);
+                  x=secondIndex;
+                  // console.log('secondIndex = ',secondIndex);
+                }
+                // console.log('Titles Array  New = ',titlesArrayNew);
+                var mainArrayObjIs = {key:k, title:testStringChapters,data:titlesArrayNew};
+                prescriptionArrayCarrot.push(mainArrayObjIs);
+                // console.log('K tak aa Raha hai = ',prescriptionArrayCarrot);
+              }
+              var aiknaiarrayObj = {key:h, title:completeBookArray[g].data[h].title,data:prescriptionArrayCarrot};
+              completeBookArrayCarrot.push(aiknaiarrayObj);
+              // console.log('H tak aa Raha hai = ',completeBookArrayCarrot);
+            }
+            var aiknaiarrayObjCarrot = {key:g, title:completeBookArray[g].title,data:completeBookArrayCarrot};
+            finalBookArrayCarrot.push(aiknaiarrayObjCarrot);
+            // console.log('G tak aa Raha hai = ',finalBookArrayCarrot);
+          }
+          console.log('Final Book Array Carrot = ',finalBookArrayCarrot);
 
           // var tempArray=[];
           // // For Nuskha Jaat denoted by $ Sign
