@@ -35,17 +35,17 @@ class ReadingComponentFromBooks extends Component{
     console.log('First time in ReadingComponentFromBooks data is = ', this.props.navigation.state.params.sectionArray);
     console.log('First time in ReadingComponentFromBooks length is = ', this.props.navigation.state.params.sectionArray.length);
     console.log('First time in ReadingComponentFromBooks selectedRow is = ', this.props.navigation.state.params.selectedRow);
-    console.log('Aik aur tarajba is = ', this.props.navigation.state.params.sectionArray[0].chapter_name);
+    console.log('Aik aur tarajba is = ', this.props.navigation.state.params.sectionArray[0].title);
 
     // Alert.alert('Data is = ' + this.props.navigation.state.params.sectionArray.length);
 
     for (var i = 0; i < this.props.navigation.state.params.sectionArray.length; i++) {
 
-    var tempData = this.props.navigation.state.params.sectionArray[i].prescription_detail;
-    var mainHeading = this.props.navigation.state.params.sectionArray[i].chapter_name;
-    var subHeading = this.props.navigation.state.params.sectionArray[i].disease_name;
-    var subbestHeading = this.props.navigation.state.params.sectionArray[i].prescription_name;
-    var bookTitle = this.props.navigation.state.params.sectionArray[0].disease_name;
+    // var mainHeading = this.props.navigation.state.params.sectionArray[i].chapter_name;
+    // var subHeading = this.props.navigation.state.params.sectionArray[i].disease_name;
+    var subbestHeading = this.props.navigation.state.params.disease_name;
+    var tempData = this.props.navigation.state.params.sectionArray[i].title;
+    var bookTitle = this.props.navigation.state.params.disease_name;
     // var headingWords = [mainHeading,subHeading,subbestHeading];
     var headingWords = [subbestHeading];
     var index = tempData.indexOf('\r');

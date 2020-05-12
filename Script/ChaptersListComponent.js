@@ -31,7 +31,6 @@
   class ChaptersListComponent extends Component{
     constructor(props){
       super(props);
-            console.log('Final Array in ChaptersListComponent = '+this.props.navigation.state.params.finalArray);
 
         //     var finalArray=[];
         //     for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
@@ -72,83 +71,85 @@
         // }
 
         this.state={
-          searchedData:[],
+          searchedData:this.props.navigation.state.params.finalArray,
           dataArray:[],
           // showSearchField:false,
           // finalArray:finalArray,
           // textSearch:'',
           // showData:[],
         }
-
-        // console.log('Final Data Array for Section LIST is = ' + this.state.dataArray);
   }
 
   componentDidMount(){
+
     // Alert.alert('ChapterListComponent');
-    var tempArray=[];
-    var flag = 0;
-    var key = -1;
-    while (flag < this.props.navigation.state.params.finalArray.length) {
-      var chapter_name = this.props.navigation.state.params.finalArray[flag].chapter_name;
-      var dataArray = [];
-      for (var j = flag; j < this.props.navigation.state.params.finalArray.length; j++) {
-        if (chapter_name == this.props.navigation.state.params.finalArray[j].chapter_name) {
-          dataArray.push(this.props.navigation.state.params.finalArray[j]);
-          flag = flag + 1;
-        }else{
-          // console.log('What is Flag = ',flag);
-          break;
-        }
-    }
 
-    // New One
-    var tempArrayNew=[];
-    var flagNew = 0;
-    var keyNew = -1;
-    while (flagNew < dataArray.length) {
-      var innerKeyValue = -1
-      var disease_name = dataArray[flagNew].disease_name;
-      var dataArrayNew = [];
-      for (var j = flagNew; j < dataArray.length; j++) {
-        if (disease_name == dataArray[j].disease_name) {
-          innerKeyValue++;
-          dataArray[j].key = innerKeyValue;
-          dataArrayNew.push(dataArray[j]);
-          flagNew = flagNew + 1;
-        }else{
-          // console.log('What is Flag = ',flagNew);
-          break;
-        }
-    }
+//     var tempArray=[];
+//     var flag = 0;
+//     var key = -1;
+//     while (flag < this.props.navigation.state.params.finalArray.length) {
+//       var chapter_name = this.props.navigation.state.params.finalArray[flag].chapter_name;
+//       var dataArray = [];
+//       for (var j = flag; j < this.props.navigation.state.params.finalArray.length; j++) {
+//         if (chapter_name == this.props.navigation.state.params.finalArray[j].chapter_name) {
+//           dataArray.push(this.props.navigation.state.params.finalArray[j]);
+//           flag = flag + 1;
+//         }else{
+//           // console.log('What is Flag = ',flag);
+//           break;
+//         }
+//     }
+//
+//     // New One
+//     var tempArrayNew=[];
+//     var flagNew = 0;
+//     var keyNew = -1;
+//     while (flagNew < dataArray.length) {
+//       var innerKeyValue = -1
+//       var disease_name = dataArray[flagNew].disease_name;
+//       var dataArrayNew = [];
+//       for (var j = flagNew; j < dataArray.length; j++) {
+//         if (disease_name == dataArray[j].disease_name) {
+//           innerKeyValue++;
+//           dataArray[j].key = innerKeyValue;
+//           dataArrayNew.push(dataArray[j]);
+//           flagNew = flagNew + 1;
+//         }else{
+//           // console.log('What is Flag = ',flagNew);
+//           break;
+//         }
+//     }
+//
+//     // console.log('What is data = ',dataArray);
+//
+//     keyNew = keyNew + 1;
+//     var dataNew=dataArrayNew;
+//     var titleNew=disease_name;
+//
+//     var objectNew={data:dataNew,key:keyNew,title:titleNew};
+//     tempArrayNew.push(objectNew);
+//
+//   }
+//
+//     // console.log('tempArrayNew = ',tempArrayNew);
+//     // End New One
+//
+//     key = key + 1;
+//     var data=tempArrayNew;
+//     var title=chapter_name;
+//
+//     var object={data:data,key:key,title:title};
+//     tempArray.push(object);
+// }
+//
+//     console.log('Final tempArrayNew is = ',tempArray);
+//
+//     this.setState({
+//       searchedData:tempArray,
+//       dataArray:tempArray,
+//     });
 
-    // console.log('What is data = ',dataArray);
 
-    keyNew = keyNew + 1;
-    var dataNew=dataArrayNew;
-    var titleNew=disease_name;
-
-    var objectNew={data:dataNew,key:keyNew,title:titleNew};
-    tempArrayNew.push(objectNew);
-
-  }
-
-    // console.log('tempArrayNew = ',tempArrayNew);
-    // End New One
-
-    key = key + 1;
-    var data=tempArrayNew;
-    var title=chapter_name;
-
-    var object={data:data,key:key,title:title};
-    tempArray.push(object);
-}
-
-    console.log('Final tempArrayNew is = ',tempArray);
-
-    this.setState({
-      searchedData:tempArray,
-      dataArray:tempArray,
-    });
   }
 
   findFrequencyOfSearchWord(paragraph){
@@ -215,18 +216,24 @@
       return ;
     }
 
-    // console.log('Selected Row Section is = ' + section.key);
-    // console.log('Selected Row item is = ' + item.key);
-    // console.log('Final Data is = ' + this.state.searchedData[section.key].data[item.key].data.length);
+    console.log('Selected Row Section is = ' + section.key);
+    console.log('Selected Row item is = ' + item.key);
+    console.log('Final Data is = ' + this.state.searchedData[section.key].data[item.key].title);
+    var finalArrayClone = [];
+    finalArrayClone.push(this.state.searchedData[section.key].data[item.key]);
+
+    console.log('Final clone Data is = ' + finalArrayClone.length);
+    console.log('Final clone Data is = ' + finalArrayClone.data);
 
     if (this.state.searchedData[section.key].data[item.key].data.length>1) {
       this.props.navigation.navigate('ChaptersListDetailComponent',{
-        finalArray:this.state.searchedData[section.key].data[item.key].data,
+        finalArray:finalArrayClone,
       });
     }else{
       this.props.navigation.navigate('ReadingComponentFromBooks',{
         sectionArray:this.state.searchedData[section.key].data[item.key].data,
-        selectedRow:0
+        selectedRow:0,
+        disease_name:this.state.searchedData[section.key].data[item.key].title
       });
     }
 
@@ -398,7 +405,7 @@ for (var i = 0; i < finalArray.length; i++) {
                       color:'white',
                       fontSize:20,
 
-                    }}>{this.props.navigation.state.params.finalArray[0].book_name}</Text>
+                    }}>{this.props.navigation.state.params.finalDict.title}</Text>
                   )
                 }
                 </View>
@@ -462,7 +469,8 @@ for (var i = 0; i < finalArray.length; i++) {
   }
         </View>
 
-      );}
+      );
+    }
 
   }
 

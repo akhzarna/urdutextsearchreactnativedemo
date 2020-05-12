@@ -144,7 +144,17 @@ class HomeScreen extends Component{
 }
 
   componentDidMount() {
-    console.log('Akhzar Nazir New Experiment',BookManager.bookArrayForNuskhajaat);
+    // console.log('Akhzar Nazir New Experiment',BookManager.completeBookArray);
+    // console.log('Total Books is = ',BookManager.completeBookArray.length);
+    // console.log('Books 1 title is = ',BookManager.completeBookArray[0].title);
+    //
+    // console.log('Total Chapters Book 1 is = ',BookManager.completeBookArray[0].data.length);
+    // console.log('Total Chapters Book 2 is = ',BookManager.completeBookArray[1].data.length);
+    //
+    // console.log('Total Diseases Book 1 Chapter 1 is = ',BookManager.completeBookArray[0].data[0].data.length);
+    //
+    // console.log('Total Prescriptions Diseases Book 1 Chapter 1 is = ',BookManager.completeBookArray[0].data[0].data[0].data.length);
+
     // For Testing Commented by Akhzar Nazir
     AsyncStorage.getItem("booksData").then((value) => {
     var testVar = JSON.parse(value);
@@ -154,12 +164,12 @@ class HomeScreen extends Component{
       this.booksLoadAction();
     // For Testing Else Part is Commented by Akhzar Nazir
 
-    // this.setState({
-    //   bookArray:JSON.parse(value)
-    // });
-    // this.setState({showProgress:false});
-    // // Alert.alert(this.state.bookArray[0].data[0].subbestheading);
-    // this.horizontalrowselected();
+    this.setState({
+      bookArray:JSON.parse(value)
+    });
+    this.setState({showProgress:false});
+    // Alert.alert(this.state.bookArray[0].data[0].subbestheading);
+    this.horizontalrowselected();
 
     }
   }
@@ -195,82 +205,82 @@ class HomeScreen extends Component{
     if (isiPhone) {
 
     // isiPhone
-    path0=RNFS.MainBundlePath+'/Articles.txt';
+    // path0=RNFS.MainBundlePath+'/Articles.txt';
+
     path1=RNFS.MainBundlePath+'/آرنڈ.txt';
-    path2=RNFS.MainBundlePath+'/اندرائین.txt';
-    path3=RNFS.MainBundlePath+'/انگور.txt';
-    path4=RNFS.MainBundlePath+'/آم.txt';
-    path5=RNFS.MainBundlePath+'/خواص آک.txt';
-    path6=RNFS.MainBundlePath+'/بادام.txt';
-    path7=RNFS.MainBundlePath+'/برگد.txt';
-    path8=RNFS.MainBundlePath+'/دھتورہ.txt';
-    path9=RNFS.MainBundlePath+'/خواص شہد.txt';
-    path10=RNFS.MainBundlePath+'/دھنیہ.txt';
-    path11=RNFS.MainBundlePath+'/دودھ.txt';
-    path12=RNFS.MainBundlePath+'/گاجر.txt';
-    path13=RNFS.MainBundlePath+'/گھی کوار.txt';
-    path14=RNFS.MainBundlePath+'/گھی.txt';
-    path15=RNFS.MainBundlePath+'/دھی.txt';
-    path16=RNFS.MainBundlePath+'/گل سرک.txt';
+
+    // path2=RNFS.MainBundlePath+'/اندرائین.txt';
+    // path3=RNFS.MainBundlePath+'/انگور.txt';
+    // path4=RNFS.MainBundlePath+'/آم.txt';
+    // path5=RNFS.MainBundlePath+'/خواص آک.txt';
+    // path6=RNFS.MainBundlePath+'/بادام.txt';
+    // path7=RNFS.MainBundlePath+'/برگد.txt';
+    // path8=RNFS.MainBundlePath+'/دھتورہ.txt';
+    // path9=RNFS.MainBundlePath+'/خواص شہد.txt';
+    // path10=RNFS.MainBundlePath+'/دھنیہ.txt';
+    // path11=RNFS.MainBundlePath+'/دودھ.txt';
+    // path12=RNFS.MainBundlePath+'/گاجر.txt';
+    // path13=RNFS.MainBundlePath+'/گھی کوار.txt';
+    // path14=RNFS.MainBundlePath+'/گھی.txt';
+    // path15=RNFS.MainBundlePath+'/دھی.txt';
+    // path16=RNFS.MainBundlePath+'/گل سرک.txt';
 
     // For Articles
-    var mainArray=[];
-    var finalArray0=[];
-    RNFS.readFile(path0)
-        .then((contents) => {
-          var contentString = contents.toString();
-          var articlesNameArray=[];
-          var articlesHeadingArray=[];
-          var articlesDetailArray=[];
-          for (var i = 0; i < contentString.length; i++) {
-            // Main Heading denoted by & Sign
-            var firstIndexname=contentString.indexOf('&',i);
-            var secondIndexname=contentString.indexOf('&',firstIndexname+1);
-            if (secondIndexname==-1 || firstIndexname==-1) {
-              break;
-            }
-
-            var tempString=contentString.slice(firstIndexname+1,secondIndexname-1);
-            articlesNameArray.push(tempString);
-            i=secondIndexname;
-
-            }
-
-            for (var i = 0; i < contentString.length; i++) {
-            // ArticleHeading denoted by @ Sign
-            var firstIndexheading=contentString.indexOf('@',i);
-            var secondIndexheading=contentString.indexOf('@',firstIndexheading+1);
-            if (secondIndexheading==-1 || firstIndexheading==-1) {
-              break;
-            }
-
-            var tempString=contentString.slice(firstIndexheading+1,secondIndexheading-1);
-            articlesHeadingArray.push(tempString);
-            i=secondIndexheading;
-          }
-
-          for (var i = 0; i < contentString.length; i++) {
-            // ArticleDetail denoted by $ Sign
-            var firstIndexdetail=contentString.indexOf('$',i);
-            var secondIndexdetail=contentString.indexOf('$',firstIndexdetail+1);
-            if (secondIndexdetail==-1 || firstIndexdetail==-1) {
-              break;
-            }
-
-            var tempString=contentString.slice(firstIndexdetail+1,secondIndexdetail-1);
-            articlesDetailArray.push(tempString);
-            i=secondIndexdetail;
-
-          }
-
-          for (var x = 0; x < articlesDetailArray.length; x++) {
-            var ObjectToSaveInArray = {mainheading:articlesNameArray[0],subheading:articlesHeadingArray[x],subbestheading:articlesHeadingArray[x],data:articlesDetailArray[x].trim()};
-            finalArray0.push(ObjectToSaveInArray);
-          }
-
-        })
-
-
+    // var mainArray=[];
+    // var finalArray0=[];
+    // RNFS.readFile(path0)
+    //     .then((contents) => {
+    //       var contentString = contents.toString();
+    //       var articlesNameArray=[];
+    //       var articlesHeadingArray=[];
+    //       var articlesDetailArray=[];
+    //       for (var i = 0; i < contentString.length; i++) {
+    //         // Main Heading denoted by & Sign
+    //         var firstIndexname=contentString.indexOf('&',i);
+    //         var secondIndexname=contentString.indexOf('&',firstIndexname+1);
+    //         if (secondIndexname==-1 || firstIndexname==-1) {
+    //           break;
+    //         }
+    //
+    //         var tempString=contentString.slice(firstIndexname+1,secondIndexname-1);
+    //         articlesNameArray.push(tempString);
+    //         i=secondIndexname;
+    //         }
+    //
+    //         for (var i = 0; i < contentString.length; i++) {
+    //         // ArticleHeading denoted by @ Sign
+    //         var firstIndexheading=contentString.indexOf('@',i);
+    //         var secondIndexheading=contentString.indexOf('@',firstIndexheading+1);
+    //         if (secondIndexheading==-1 || firstIndexheading==-1) {
+    //           break;
+    //         }
+    //
+    //         var tempString=contentString.slice(firstIndexheading+1,secondIndexheading-1);
+    //         articlesHeadingArray.push(tempString);
+    //         i=secondIndexheading;
+    //
+    //       }
+    //
+    //       for (var i = 0; i < contentString.length; i++) {
+    //         // ArticleDetail denoted by $ Sign
+    //         var firstIndexdetail=contentString.indexOf('$',i);
+    //         var secondIndexdetail=contentString.indexOf('$',firstIndexdetail+1);
+    //         if (secondIndexdetail==-1 || firstIndexdetail==-1) {
+    //           break;
+    //         }
+    //
+    //         var tempString=contentString.slice(firstIndexdetail+1,secondIndexdetail-1);
+    //         articlesDetailArray.push(tempString);
+    //         i=secondIndexdetail;
+    //
+    //       }
+    //
+    //       for (var x = 0; x < articlesDetailArray.length; x++) {
+    //         var ObjectToSaveInArray = {mainheading:articlesNameArray[0],subheading:articlesHeadingArray[x],subbestheading:articlesHeadingArray[x],data:articlesDetailArray[x].trim()};
+    //         finalArray0.push(ObjectToSaveInArray);
+    //       }
+    //
+    //     })
 
     var finalArray1=[];
     RNFS.readFile(path1)
@@ -284,22 +294,24 @@ class HomeScreen extends Component{
             if (secondIndex==-1 || firstIndex==-1) {
               break;
             }
-
             var tempString=contentString.slice(firstIndex+1,secondIndex-1);
             chaptersArray.push(tempString);
             i=secondIndex;
           }
+          console.log('Chapters Array is = ',chaptersArray);
 
-          var titlesArray=[];
+          var newArrayToPushNewData = [];
 
           // For Main Titles denoted by @ Sign
           for (var i = 0; i < chaptersArray.length; i++) {
+
             var stringAtIndex = chaptersArray[i];
             var headingEndIndex = stringAtIndex.indexOf('\r',1);
-            var testString=stringAtIndex.slice(0,headingEndIndex);
+            var testStringChapters=stringAtIndex.slice(0,headingEndIndex);
+
+            var titlesArray=[];
 
             for (var x = 0; x < stringAtIndex.length; x++) {
-
               var firstIndex=stringAtIndex.indexOf('@',x);
               var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
               if (secondIndex==-1 || firstIndex==-1) {
@@ -307,1455 +319,1521 @@ class HomeScreen extends Component{
               }
               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
               // Save String and Heading Both in Array
-              var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-              titlesArray.push(ObjectToSaveInArray);
+              // var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+              titlesArray.push(tempString.trim());
               x=secondIndex;
-
             }
+
+            // console.log('Titles Array = ',titlesArray);
+            var mainArrayObjIs = {key:i, title:testStringChapters,data:titlesArray};
+            newArrayToPushNewData.push(mainArrayObjIs);
+
           }
 
-          var tempArray=[];
-          // For Nuskha Jaat denoted by $ Sign
-          for (var i = 0; i < titlesArray.length; i++) {
+          console.log('newArrayToPushNewData = ',newArrayToPushNewData);
 
-            var mainHeading = titlesArray[i].heading;
-            var stringAtIndex = titlesArray[i].data;
-            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-            var testString=stringAtIndex.slice(0,headingEndIndex);
-            for (var x = 0; x < stringAtIndex.length; x++) {
-              var firstIndex=stringAtIndex.indexOf('$',x);
-              var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-              if (secondIndex==-1 || firstIndex==-1) {
-                break;
+          var aiknaiarraybanaygi = [];
+          // For Main Titles denoted by @ Sign
+          for (var i = 0; i < newArrayToPushNewData.length; i++) {
+
+            var newArrayToPushNewDataDollar = [];
+
+            console.log('When i = ',i);
+            console.log('When newArrayToPushNewDataDollar = ',newArrayToPushNewDataDollar);
+
+            for (var j = 0; j < newArrayToPushNewData[i].data.length; j++) {
+
+              var titlesArrayNew = [];
+
+              var stringAtIndex = newArrayToPushNewData[i].data[j];
+              var headingEndIndex = stringAtIndex.indexOf('\r',1);
+              var testStringChapters=stringAtIndex.slice(0,headingEndIndex);
+
+              for (var x = 0; x < stringAtIndex.length; x++) {
+                var firstIndex=stringAtIndex.indexOf('$',x);
+                var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+                if (secondIndex==-1 || firstIndex==-1) {
+                  break;
+                }
+                var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+                // Save String and Heading Both in Array
+                // var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+                titlesArrayNew.push(tempString.trim());
+                x=secondIndex;
               }
-              var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-              var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-              tempArray.push(ObjectToSaveInArray);
-              x=secondIndex;
+
+              // console.log('Titles Array  New = ',titlesArrayNew);
+              var mainArrayObjIs = {key:j, title:testStringChapters,data:titlesArrayNew};
+              newArrayToPushNewDataDollar.push(mainArrayObjIs);
 
             }
+
+            console.log('Dono Dafa i = ',i);
+
+            console.log('Dono Dafa = ',newArrayToPushNewDataDollar);
+
+            var aiknaiarrayObj = {key:i, title:newArrayToPushNewData[i].title,data:newArrayToPushNewDataDollar};
+            aiknaiarraybanaygi.push(aiknaiarrayObj);
+
           }
+
+          console.log('newArrayToPushNewDataDollar = ',newArrayToPushNewDataDollar);
+
+
+          console.log('aiknaiarraybanaygi = ',aiknaiarraybanaygi);
+
+
+
+          // var tempArray=[];
+          // // For Nuskha Jaat denoted by $ Sign
+          // for (var i = 0; i < titlesArray.length; i++) {
+          //
+          //   var mainHeading = titlesArray[i].heading;
+          //   var stringAtIndex = titlesArray[i].data;
+          //   var headingEndIndex = stringAtIndex.indexOf('\r',1);
+          //   var testString=stringAtIndex.slice(0,headingEndIndex);
+          //   for (var x = 0; x < stringAtIndex.length; x++) {
+          //     var firstIndex=stringAtIndex.indexOf('$',x);
+          //     var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+          //     if (secondIndex==-1 || firstIndex==-1) {
+          //       break;
+          //     }
+          //     var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+          //     var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+          //     tempArray.push(ObjectToSaveInArray);
+          //     x=secondIndex;
+          //
+          //   }
+          // }
 
           // Extract Headings from Sub Content From $ Sign.
           // For Nuskha Jaat denoted by $ Sign
-          for (var i = 0; i < tempArray.length; i++) {
+          // for (var i = 0; i < tempArray.length; i++) {
+          //
+          //   var mainHeading = tempArray[i].mainheading;
+          //   var subHeading = tempArray[i].subheading;
+          //   var stringAtIndex = tempArray[i].data;
+          //
+          //   var headingEndIndex = stringAtIndex.indexOf('\r',1);
+          //   var testString=stringAtIndex.slice(0,headingEndIndex);
+          //   var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+          //   finalArray1.push(ObjectToSaveInArray);
+          // }
 
-            var mainHeading = tempArray[i].mainheading;
-            var subHeading = tempArray[i].subheading;
-            var stringAtIndex = tempArray[i].data;
 
-            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-            var testString=stringAtIndex.slice(0,headingEndIndex);
-            var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-            finalArray1.push(ObjectToSaveInArray);
-          }
+          this.setState({showProgress:false});
+          AsyncStorage.setItem('booksData', JSON.stringify(this.state.bookArray));
+          // this.horizontalrowselected();
+          // this.dumpIntoDB();
+
+
 
         })
 
 
-        var finalArray2=[];
-
-        RNFS.readFile(path2)
-            .then((contents) => {
-
-              var contentString = contents.toString();
-              var chaptersArray=[];
-              // For Chapters Titles denoted by & Sign
-              for (var i = 0; i < contentString.length; i++) {
-                var firstIndex=contentString.indexOf('&',i);
-                var secondIndex=contentString.indexOf('&',firstIndex+1);
-                if (secondIndex==-1 || firstIndex==-1) {
-                  break;
-                }
-
-                var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                chaptersArray.push(tempString);
-                i=secondIndex;
-              }
-
-              var titlesArray=[];
-
-              // For Main Titles denoted by @ Sign
-              for (var i = 0; i < chaptersArray.length; i++) {
-                var stringAtIndex = chaptersArray[i];
-                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                for (var x = 0; x < stringAtIndex.length; x++) {
-
-                  var firstIndex=stringAtIndex.indexOf('@',x);
-                  var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                  if (secondIndex==-1 || firstIndex==-1) {
-                    break;
-                  }
-
-                  var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                  // Save String and Heading Both in Array
-                  var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                  titlesArray.push(ObjectToSaveInArray);
-                  x=secondIndex;
-                }
-
-              }
-
-              var tempArray=[];
-              // For Nuskha Jaat denoted by $ Sign
-              for (var i = 0; i < titlesArray.length; i++) {
-                var mainHeading = titlesArray[i].heading;
-                var stringAtIndex = titlesArray[i].data;
-                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                var testString=stringAtIndex.slice(0,headingEndIndex);
-                for (var x = 0; x < stringAtIndex.length; x++) {
-                  var firstIndex=stringAtIndex.indexOf('$',x);
-                  var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                  if (secondIndex==-1 || firstIndex==-1) {
-                    break;
-                  }
-                  var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                  var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                  tempArray.push(ObjectToSaveInArray);
-                  x=secondIndex;
-                }
-              }
-              // Extract Headings from Sub Content From $ Sign.
-
-              // For Nuskha Jaat denoted by $ Sign
-              for (var i = 0; i < tempArray.length; i++) {
-
-                var mainHeading = tempArray[i].mainheading;
-                var subHeading = tempArray[i].subheading;
-                var stringAtIndex = tempArray[i].data;
-
-                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                var testString=stringAtIndex.slice(0,headingEndIndex);
-                var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                finalArray2.push(ObjectToSaveInArray);
-
-              }
-
-            })
-
-            var finalArray3=[];
-
-            RNFS.readFile(path3)
-                .then((contents) => {
-                  var contentString = contents.toString();
-                  var chaptersArray=[];
-                  // For Chapters Titles denoted by & Sign
-                  for (var i = 0; i < contentString.length; i++) {
-                    var firstIndex=contentString.indexOf('&',i);
-                    var secondIndex=contentString.indexOf('&',firstIndex+1);
-                    if (secondIndex==-1 || firstIndex==-1) {
-                      break;
-                    }
-
-                    var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                    chaptersArray.push(tempString);
-                    i=secondIndex;
-                  }
-
-                  var titlesArray=[];
-
-                  // For Main Titles denoted by @ Sign
-                  for (var i = 0; i < chaptersArray.length; i++) {
-                    var stringAtIndex = chaptersArray[i];
-                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                    var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                    for (var x = 0; x < stringAtIndex.length; x++) {
-
-                      var firstIndex=stringAtIndex.indexOf('@',x);
-                      var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                      if (secondIndex==-1 || firstIndex==-1) {
-                        break;
-                      }
-
-                      var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                      // Save String and Heading Both in Array
-                      var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                      titlesArray.push(ObjectToSaveInArray);
-                      x=secondIndex;
-
-                    }
-
-                  }
-
-
-                  var tempArray=[];
-                  // For Nuskha Jaat denoted by $ Sign
-                  for (var i = 0; i < titlesArray.length; i++) {
-
-                    var mainHeading = titlesArray[i].heading;
-                    var stringAtIndex = titlesArray[i].data;
-
-                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                    var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                    for (var x = 0; x < stringAtIndex.length; x++) {
-
-                      var firstIndex=stringAtIndex.indexOf('$',x);
-                      var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                      if (secondIndex==-1 || firstIndex==-1) {
-                        break;
-                      }
-
-                      var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                      var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                      tempArray.push(ObjectToSaveInArray);
-                      x=secondIndex;
-
-                    }
-                  }
-
-                  // Extract Headings from Sub Content From $ Sign.
-
-                  // For Nuskha Jaat denoted by $ Sign
-                  for (var i = 0; i < tempArray.length; i++) {
-
-                    var mainHeading = tempArray[i].mainheading;
-                    var subHeading = tempArray[i].subheading;
-                    var stringAtIndex = tempArray[i].data;
-
-                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                    var testString=stringAtIndex.slice(0,headingEndIndex);
-                    var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                    finalArray3.push(ObjectToSaveInArray);
-
-                  }
-                })
-
-
-
-                var finalArray4=[];
-
-                RNFS.readFile(path4)
-                    .then((contents) => {
-                      var contentString = contents.toString();
-                      var chaptersArray=[];
-                      // For Chapters Titles denoted by & Sign
-                      for (var i = 0; i < contentString.length; i++) {
-                        var firstIndex=contentString.indexOf('&',i);
-                        var secondIndex=contentString.indexOf('&',firstIndex+1);
-                        if (secondIndex==-1 || firstIndex==-1) {
-                          break;
-                        }
-
-                        var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                        chaptersArray.push(tempString);
-                        i=secondIndex;
-                      }
-
-                      var titlesArray=[];
-
-                      // For Main Titles denoted by @ Sign
-                      for (var i = 0; i < chaptersArray.length; i++) {
-                        var stringAtIndex = chaptersArray[i];
-                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                        var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                        for (var x = 0; x < stringAtIndex.length; x++) {
-
-                          var firstIndex=stringAtIndex.indexOf('@',x);
-                          var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                          if (secondIndex==-1 || firstIndex==-1) {
-                            break;
-                          }
-
-                          var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                          // Save String and Heading Both in Array
-                          var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                          titlesArray.push(ObjectToSaveInArray);
-                          x=secondIndex;
-
-                        }
-
-                      }
-
-                      var tempArray=[];
-                      // For Nuskha Jaat denoted by $ Sign
-                      for (var i = 0; i < titlesArray.length; i++) {
-
-                        var mainHeading = titlesArray[i].heading;
-                        var stringAtIndex = titlesArray[i].data;
-
-                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                        var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                        for (var x = 0; x < stringAtIndex.length; x++) {
-
-                          var firstIndex=stringAtIndex.indexOf('$',x);
-                          var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                          if (secondIndex==-1 || firstIndex==-1) {
-                            break;
-                          }
-
-                          var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                          var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                          tempArray.push(ObjectToSaveInArray);
-                          x=secondIndex;
-
-                        }
-                      }
-
-                      // Extract Headings from Sub Content From $ Sign.
-
-                      // For Nuskha Jaat denoted by $ Sign
-                      for (var i = 0; i < tempArray.length; i++) {
-
-                        var mainHeading = tempArray[i].mainheading;
-                        var subHeading = tempArray[i].subheading;
-                        var stringAtIndex = tempArray[i].data;
-
-                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                        var testString=stringAtIndex.slice(0,headingEndIndex);
-                        var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                        finalArray4.push(ObjectToSaveInArray);
-
-                      }
-                    })
-
-
-
-
-                    var finalArray5=[];
-
-                    RNFS.readFile(path5)
-                        .then((contents) => {
-                          var contentString = contents.toString();
-                          var chaptersArray=[];
-                          // For Chapters Titles denoted by & Sign
-                          for (var i = 0; i < contentString.length; i++) {
-                            var firstIndex=contentString.indexOf('&',i);
-                            var secondIndex=contentString.indexOf('&',firstIndex+1);
-                            if (secondIndex==-1 || firstIndex==-1) {
-                              break;
-                            }
-
-                            var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                            chaptersArray.push(tempString);
-                            i=secondIndex;
-                          }
-
-                          var titlesArray=[];
-
-                          // For Main Titles denoted by @ Sign
-                          for (var i = 0; i < chaptersArray.length; i++) {
-                            var stringAtIndex = chaptersArray[i];
-                            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                            var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                            for (var x = 0; x < stringAtIndex.length; x++) {
-
-                              var firstIndex=stringAtIndex.indexOf('@',x);
-                              var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                              if (secondIndex==-1 || firstIndex==-1) {
-                                break;
-                              }
-
-                              var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                              // Save String and Heading Both in Array
-                              var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                              titlesArray.push(ObjectToSaveInArray);
-                              x=secondIndex;
-
-                            }
-
-                          }
-
-                          var tempArray=[];
-                          // For Nuskha Jaat denoted by $ Sign
-                          for (var i = 0; i < titlesArray.length; i++) {
-
-                            var mainHeading = titlesArray[i].heading;
-                            var stringAtIndex = titlesArray[i].data;
-
-                            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                            var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                            for (var x = 0; x < stringAtIndex.length; x++) {
-
-                              var firstIndex=stringAtIndex.indexOf('$',x);
-                              var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                              if (secondIndex==-1 || firstIndex==-1) {
-                                break;
-                              }
-
-                              var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                              var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                              tempArray.push(ObjectToSaveInArray);
-                              x=secondIndex;
-
-                            }
-                          }
-
-                          // Extract Headings from Sub Content From $ Sign.
-
-                          // For Nuskha Jaat denoted by $ Sign
-                          for (var i = 0; i < tempArray.length; i++) {
-
-                            var mainHeading = tempArray[i].mainheading;
-                            var subHeading = tempArray[i].subheading;
-                            var stringAtIndex = tempArray[i].data;
-
-                            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                            var testString=stringAtIndex.slice(0,headingEndIndex);
-                            var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                            finalArray5.push(ObjectToSaveInArray);
-
-                          }
-                        })
-
-
-
-                        var finalArray6=[];
-
-                        RNFS.readFile(path6)
-                            .then((contents) => {
-                              var contentString = contents.toString();
-                              var chaptersArray=[];
-                              // For Chapters Titles denoted by & Sign
-                              for (var i = 0; i < contentString.length; i++) {
-                                var firstIndex=contentString.indexOf('&',i);
-                                var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                if (secondIndex==-1 || firstIndex==-1) {
-                                  break;
-                                }
-
-                                var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                chaptersArray.push(tempString);
-                                i=secondIndex;
-                              }
-
-                              var titlesArray=[];
-
-                              // For Main Titles denoted by @ Sign
-                              for (var i = 0; i < chaptersArray.length; i++) {
-                                var stringAtIndex = chaptersArray[i];
-                                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                  var firstIndex=stringAtIndex.indexOf('@',x);
-                                  var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                  if (secondIndex==-1 || firstIndex==-1) {
-                                    break;
-                                  }
-
-                                  var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                  // Save String and Heading Both in Array
-                                  var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                  titlesArray.push(ObjectToSaveInArray);
-                                  x=secondIndex;
-
-                                }
-
-                              }
-
-                              var tempArray=[];
-                              // For Nuskha Jaat denoted by $ Sign
-                              for (var i = 0; i < titlesArray.length; i++) {
-
-                                var mainHeading = titlesArray[i].heading;
-                                var stringAtIndex = titlesArray[i].data;
-
-                                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                  var firstIndex=stringAtIndex.indexOf('$',x);
-                                  var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                  if (secondIndex==-1 || firstIndex==-1) {
-                                    break;
-                                  }
-
-                                  var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                  var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                  tempArray.push(ObjectToSaveInArray);
-                                  x=secondIndex;
-
-                                }
-                              }
-
-                              // Extract Headings from Sub Content From $ Sign.
-
-                              // For Nuskha Jaat denoted by $ Sign
-                              for (var i = 0; i < tempArray.length; i++) {
-
-                                var mainHeading = tempArray[i].mainheading;
-                                var subHeading = tempArray[i].subheading;
-                                var stringAtIndex = tempArray[i].data;
-
-                                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                var testString=stringAtIndex.slice(0,headingEndIndex);
-                                var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                finalArray6.push(ObjectToSaveInArray);
-
-                              }
-                            })
-
-
-
-                            var finalArray7=[];
-
-                            RNFS.readFile(path7)
-                                .then((contents) => {
-                                  var contentString = contents.toString();
-                                  var chaptersArray=[];
-                                  // For Chapters Titles denoted by & Sign
-                                  for (var i = 0; i < contentString.length; i++) {
-                                    var firstIndex=contentString.indexOf('&',i);
-                                    var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                    if (secondIndex==-1 || firstIndex==-1) {
-                                      break;
-                                    }
-
-                                    var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                    chaptersArray.push(tempString);
-                                    i=secondIndex;
-                                  }
-
-
-                                  var titlesArray=[];
-
-                                  // For Main Titles denoted by @ Sign
-                                  for (var i = 0; i < chaptersArray.length; i++) {
-                                    var stringAtIndex = chaptersArray[i];
-                                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                    var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                    for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                      var firstIndex=stringAtIndex.indexOf('@',x);
-                                      var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                      if (secondIndex==-1 || firstIndex==-1) {
-                                        break;
-                                      }
-
-                                      var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                      // Save String and Heading Both in Array
-                                      var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                      titlesArray.push(ObjectToSaveInArray);
-                                      x=secondIndex;
-
-                                    }
-
-                                  }
-
-                                  var tempArray=[];
-                                  // For Nuskha Jaat denoted by $ Sign
-                                  for (var i = 0; i < titlesArray.length; i++) {
-
-                                    var mainHeading = titlesArray[i].heading;
-                                    var stringAtIndex = titlesArray[i].data;
-
-                                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                    var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                    for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                      var firstIndex=stringAtIndex.indexOf('$',x);
-                                      var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                      if (secondIndex==-1 || firstIndex==-1) {
-                                        break;
-                                      }
-
-                                      var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                      var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                      tempArray.push(ObjectToSaveInArray);
-                                      x=secondIndex;
-
-                                    }
-                                  }
-
-                                  // Extract Headings from Sub Content From $ Sign.
-
-                                  // For Nuskha Jaat denoted by $ Sign
-                                  for (var i = 0; i < tempArray.length; i++) {
-
-                                    var mainHeading = tempArray[i].mainheading;
-                                    var subHeading = tempArray[i].subheading;
-                                    var stringAtIndex = tempArray[i].data;
-
-                                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                    var testString=stringAtIndex.slice(0,headingEndIndex);
-                                    var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                    finalArray7.push(ObjectToSaveInArray);
-
-                                  }
-                                })
-
-
-                                var finalArray8=[];
-
-                                RNFS.readFile(path8)
-                                    .then((contents) => {
-                                      var contentString = contents.toString();
-                                      var chaptersArray=[];
-                                      // For Chapters Titles denoted by & Sign
-                                      for (var i = 0; i < contentString.length; i++) {
-                                        var firstIndex=contentString.indexOf('&',i);
-                                        var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                        if (secondIndex==-1 || firstIndex==-1) {
-                                          break;
-                                        }
-
-                                        var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                        chaptersArray.push(tempString);
-                                        i=secondIndex;
-                                      }
-
-                                      var titlesArray=[];
-
-                                      // For Main Titles denoted by @ Sign
-                                      for (var i = 0; i < chaptersArray.length; i++) {
-                                        var stringAtIndex = chaptersArray[i];
-                                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                        var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                        for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                          var firstIndex=stringAtIndex.indexOf('@',x);
-                                          var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                          if (secondIndex==-1 || firstIndex==-1) {
-                                            break;
-                                          }
-
-                                          var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                          // Save String and Heading Both in Array
-                                          var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                          titlesArray.push(ObjectToSaveInArray);
-                                          x=secondIndex;
-
-                                        }
-
-                                      }
-
-                                      var tempArray=[];
-                                      // For Nuskha Jaat denoted by $ Sign
-                                      for (var i = 0; i < titlesArray.length; i++) {
-
-                                        var mainHeading = titlesArray[i].heading;
-                                        var stringAtIndex = titlesArray[i].data;
-
-                                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                        var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                        for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                          var firstIndex=stringAtIndex.indexOf('$',x);
-                                          var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                          if (secondIndex==-1 || firstIndex==-1) {
-                                            break;
-                                          }
-
-                                          var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                          var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                          tempArray.push(ObjectToSaveInArray);
-                                          x=secondIndex;
-
-                                        }
-                                      }
-
-                                      // Extract Headings from Sub Content From $ Sign.
-
-                                      // For Nuskha Jaat denoted by $ Sign
-                                      for (var i = 0; i < tempArray.length; i++) {
-
-                                        var mainHeading = tempArray[i].mainheading;
-                                        var subHeading = tempArray[i].subheading;
-                                        var stringAtIndex = tempArray[i].data;
-
-                                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                        var testString=stringAtIndex.slice(0,headingEndIndex);
-                                        var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                        finalArray8.push(ObjectToSaveInArray);
-
-                                      }
-                                    })
-
-
-
-                                    var finalArray9=[];
-
-                                    RNFS.readFile(path9)
-                                        .then((contents) => {
-                                          var contentString = contents.toString();
-                                          var chaptersArray=[];
-                                          // For Chapters Titles denoted by & Sign
-                                          for (var i = 0; i < contentString.length; i++) {
-                                            var firstIndex=contentString.indexOf('&',i);
-                                            var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                            if (secondIndex==-1 || firstIndex==-1) {
-                                              break;
-                                            }
-
-                                            var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                            chaptersArray.push(tempString);
-                                            i=secondIndex;
-                                          }
-
-                                          var titlesArray=[];
-
-                                          // For Main Titles denoted by @ Sign
-                                          for (var i = 0; i < chaptersArray.length; i++) {
-                                            var stringAtIndex = chaptersArray[i];
-                                            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                            var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                            for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                              var firstIndex=stringAtIndex.indexOf('@',x);
-                                              var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                              if (secondIndex==-1 || firstIndex==-1) {
-                                                break;
-                                              }
-
-                                              var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                              // Save String and Heading Both in Array
-                                              var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                              titlesArray.push(ObjectToSaveInArray);
-                                              x=secondIndex;
-
-                                            }
-
-                                          }
-
-                                          var tempArray=[];
-                                          // For Nuskha Jaat denoted by $ Sign
-                                          for (var i = 0; i < titlesArray.length; i++) {
-
-                                            var mainHeading = titlesArray[i].heading;
-                                            var stringAtIndex = titlesArray[i].data;
-
-                                            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                            var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                            for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                              var firstIndex=stringAtIndex.indexOf('$',x);
-                                              var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                              if (secondIndex==-1 || firstIndex==-1) {
-                                                break;
-                                              }
-
-                                              var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                              var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                              tempArray.push(ObjectToSaveInArray);
-                                              x=secondIndex;
-
-                                            }
-                                          }
-
-                                          // Extract Headings from Sub Content From $ Sign.
-
-                                          // For Nuskha Jaat denoted by $ Sign
-                                          for (var i = 0; i < tempArray.length; i++) {
-
-                                            var mainHeading = tempArray[i].mainheading;
-                                            var subHeading = tempArray[i].subheading;
-                                            var stringAtIndex = tempArray[i].data;
-
-                                            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                            var testString=stringAtIndex.slice(0,headingEndIndex);
-                                            var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                            finalArray9.push(ObjectToSaveInArray);
-
-                                          }
-                                        })
-
-
-
-                                        var finalArray10=[];
-
-                                        RNFS.readFile(path10)
-                                            .then((contents) => {
-                                              var contentString = contents.toString();
-                                              var chaptersArray=[];
-                                              // For Chapters Titles denoted by & Sign
-                                              for (var i = 0; i < contentString.length; i++) {
-                                                var firstIndex=contentString.indexOf('&',i);
-                                                var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                                if (secondIndex==-1 || firstIndex==-1) {
-                                                  break;
-                                                }
-
-                                                var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                                chaptersArray.push(tempString);
-                                                i=secondIndex;
-                                              }
-
-
-                                              var titlesArray=[];
-
-                                              // For Main Titles denoted by @ Sign
-                                              for (var i = 0; i < chaptersArray.length; i++) {
-                                                var stringAtIndex = chaptersArray[i];
-                                                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                  var firstIndex=stringAtIndex.indexOf('@',x);
-                                                  var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                                  if (secondIndex==-1 || firstIndex==-1) {
-                                                    break;
-                                                  }
-
-                                                  var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                  // Save String and Heading Both in Array
-                                                  var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                                  titlesArray.push(ObjectToSaveInArray);
-                                                  x=secondIndex;
-
-                                                }
-
-                                              }
-
-
-                                              var tempArray=[];
-                                              // For Nuskha Jaat denoted by $ Sign
-                                              for (var i = 0; i < titlesArray.length; i++) {
-
-                                                var mainHeading = titlesArray[i].heading;
-                                                var stringAtIndex = titlesArray[i].data;
-
-                                                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                  var firstIndex=stringAtIndex.indexOf('$',x);
-                                                  var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                                  if (secondIndex==-1 || firstIndex==-1) {
-                                                    break;
-                                                  }
-
-                                                  var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                                  var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                                  tempArray.push(ObjectToSaveInArray);
-                                                  x=secondIndex;
-
-                                                }
-                                              }
-
-                                              // Extract Headings from Sub Content From $ Sign.
-
-                                              // For Nuskha Jaat denoted by $ Sign
-                                              for (var i = 0; i < tempArray.length; i++) {
-
-                                                var mainHeading = tempArray[i].mainheading;
-                                                var subHeading = tempArray[i].subheading;
-                                                var stringAtIndex = tempArray[i].data;
-
-                                                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                                finalArray10.push(ObjectToSaveInArray);
-
-                                              }
-                                            })
-
-                                            var finalArray11=[];
-
-                                            RNFS.readFile(path11)
-                                                .then((contents) => {
-                                                  var contentString = contents.toString();
-                                                  var chaptersArray=[];
-                                                  // For Chapters Titles denoted by & Sign
-                                                  for (var i = 0; i < contentString.length; i++) {
-                                                    var firstIndex=contentString.indexOf('&',i);
-                                                    var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                                    if (secondIndex==-1 || firstIndex==-1) {
-                                                      break;
-                                                    }
-
-                                                    var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                                    chaptersArray.push(tempString);
-                                                    i=secondIndex;
-                                                  }
-
-                                                  var titlesArray=[];
-
-                                                  // For Main Titles denoted by @ Sign
-                                                  for (var i = 0; i < chaptersArray.length; i++) {
-                                                    var stringAtIndex = chaptersArray[i];
-                                                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                    var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                    for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                      var firstIndex=stringAtIndex.indexOf('@',x);
-                                                      var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                                      if (secondIndex==-1 || firstIndex==-1) {
-                                                        break;
-                                                      }
-
-                                                      var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                      // Save String and Heading Both in Array
-                                                      var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                                      titlesArray.push(ObjectToSaveInArray);
-                                                      x=secondIndex;
-
-                                                    }
-
-                                                  }
-
-                                                  var tempArray=[];
-                                                  // For Nuskha Jaat denoted by $ Sign
-                                                  for (var i = 0; i < titlesArray.length; i++) {
-
-                                                    var mainHeading = titlesArray[i].heading;
-                                                    var stringAtIndex = titlesArray[i].data;
-
-                                                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                    var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                    for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                      var firstIndex=stringAtIndex.indexOf('$',x);
-                                                      var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                                      if (secondIndex==-1 || firstIndex==-1) {
-                                                        break;
-                                                      }
-
-                                                      var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                                      var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                                      tempArray.push(ObjectToSaveInArray);
-                                                      x=secondIndex;
-
-                                                    }
-                                                  }
-
-                                                  // Extract Headings from Sub Content From $ Sign.
-
-                                                  // For Nuskha Jaat denoted by $ Sign
-                                                  for (var i = 0; i < tempArray.length; i++) {
-
-                                                    var mainHeading = tempArray[i].mainheading;
-                                                    var subHeading = tempArray[i].subheading;
-                                                    var stringAtIndex = tempArray[i].data;
-
-                                                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                    var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                    var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                                    finalArray11.push(ObjectToSaveInArray);
-
-                                                  }
-                                                })
-
-
-
-
-                                                var finalArray12=[];
-
-                                                RNFS.readFile(path12)
-                                                    .then((contents) => {
-                                                      var contentString = contents.toString();
-                                                      var chaptersArray=[];
-                                                      // For Chapters Titles denoted by & Sign
-                                                      for (var i = 0; i < contentString.length; i++) {
-                                                        var firstIndex=contentString.indexOf('&',i);
-                                                        var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                                        if (secondIndex==-1 || firstIndex==-1) {
-                                                          break;
-                                                        }
-
-                                                        var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                                        chaptersArray.push(tempString);
-                                                        i=secondIndex;
-                                                      }
-
-                                                      var titlesArray=[];
-
-                                                      // For Main Titles denoted by @ Sign
-                                                      for (var i = 0; i < chaptersArray.length; i++) {
-                                                        var stringAtIndex = chaptersArray[i];
-                                                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                        var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                        for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                          var firstIndex=stringAtIndex.indexOf('@',x);
-                                                          var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                                          if (secondIndex==-1 || firstIndex==-1) {
-                                                            break;
-                                                          }
-
-                                                          var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                          // Save String and Heading Both in Array
-                                                          var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                                          titlesArray.push(ObjectToSaveInArray);
-                                                          x=secondIndex;
-
-                                                        }
-
-                                                      }
-
-
-                                                      var tempArray=[];
-                                                      // For Nuskha Jaat denoted by $ Sign
-                                                      for (var i = 0; i < titlesArray.length; i++) {
-
-                                                        var mainHeading = titlesArray[i].heading;
-                                                        var stringAtIndex = titlesArray[i].data;
-
-                                                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                        var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                        for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                          var firstIndex=stringAtIndex.indexOf('$',x);
-                                                          var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                                          if (secondIndex==-1 || firstIndex==-1) {
-                                                            break;
-                                                          }
-
-                                                          var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                                          var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                                          tempArray.push(ObjectToSaveInArray);
-                                                          x=secondIndex;
-
-                                                        }
-                                                      }
-
-                                                      // Extract Headings from Sub Content From $ Sign.
-
-                                                      // For Nuskha Jaat denoted by $ Sign
-                                                      for (var i = 0; i < tempArray.length; i++) {
-
-                                                        var mainHeading = tempArray[i].mainheading;
-                                                        var subHeading = tempArray[i].subheading;
-                                                        var stringAtIndex = tempArray[i].data;
-
-                                                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                        var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                        var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                                        finalArray12.push(ObjectToSaveInArray);
-
-                                                      }
-                                                    })
-
-
-
-                                                    var finalArray13=[];
-
-                                                    RNFS.readFile(path13)
-                                                        .then((contents) => {
-                                                          var contentString = contents.toString();
-                                                          var chaptersArray=[];
-                                                          // For Chapters Titles denoted by & Sign
-                                                          for (var i = 0; i < contentString.length; i++) {
-                                                            var firstIndex=contentString.indexOf('&',i);
-                                                            var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                                            if (secondIndex==-1 || firstIndex==-1) {
-                                                              break;
-                                                            }
-
-                                                            var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                                            chaptersArray.push(tempString);
-                                                            i=secondIndex;
-                                                          }
-
-                                                          var titlesArray=[];
-
-                                                          // For Main Titles denoted by @ Sign
-                                                          for (var i = 0; i < chaptersArray.length; i++) {
-                                                            var stringAtIndex = chaptersArray[i];
-                                                            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                            var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                            for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                              var firstIndex=stringAtIndex.indexOf('@',x);
-                                                              var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                                              if (secondIndex==-1 || firstIndex==-1) {
-                                                                break;
-                                                              }
-
-                                                              var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                              // Save String and Heading Both in Array
-                                                              var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                                              titlesArray.push(ObjectToSaveInArray);
-                                                              x=secondIndex;
-
-                                                            }
-
-                                                          }
-
-
-                                                          var tempArray=[];
-                                                          // For Nuskha Jaat denoted by $ Sign
-                                                          for (var i = 0; i < titlesArray.length; i++) {
-
-                                                            var mainHeading = titlesArray[i].heading;
-                                                            var stringAtIndex = titlesArray[i].data;
-
-                                                            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                            var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                            for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                              var firstIndex=stringAtIndex.indexOf('$',x);
-                                                              var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                                              if (secondIndex==-1 || firstIndex==-1) {
-                                                                break;
-                                                              }
-
-                                                              var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                                              var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                                              tempArray.push(ObjectToSaveInArray);
-                                                              x=secondIndex;
-
-                                                            }
-                                                          }
-
-                                                          // Extract Headings from Sub Content From $ Sign.
-
-                                                          // For Nuskha Jaat denoted by $ Sign
-                                                          for (var i = 0; i < tempArray.length; i++) {
-
-                                                            var mainHeading = tempArray[i].mainheading;
-                                                            var subHeading = tempArray[i].subheading;
-                                                            var stringAtIndex = tempArray[i].data;
-
-                                                            var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                            var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                            var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                                            finalArray13.push(ObjectToSaveInArray);
-
-                                                          }
-                                                        })
-
-
-
-
-                                                        var finalArray14=[];
-
-                                                        RNFS.readFile(path14)
-                                                            .then((contents) => {
-                                                              var contentString = contents.toString();
-                                                              var chaptersArray=[];
-                                                              // For Chapters Titles denoted by & Sign
-                                                              for (var i = 0; i < contentString.length; i++) {
-                                                                var firstIndex=contentString.indexOf('&',i);
-                                                                var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                                                if (secondIndex==-1 || firstIndex==-1) {
-                                                                  break;
-                                                                }
-
-                                                                var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                                                chaptersArray.push(tempString);
-                                                                i=secondIndex;
-                                                              }
-
-                                                              var titlesArray=[];
-
-                                                              // For Main Titles denoted by @ Sign
-                                                              for (var i = 0; i < chaptersArray.length; i++) {
-                                                                var stringAtIndex = chaptersArray[i];
-                                                                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                                var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                                for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                                  var firstIndex=stringAtIndex.indexOf('@',x);
-                                                                  var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                                                  if (secondIndex==-1 || firstIndex==-1) {
-                                                                    break;
-                                                                  }
-
-                                                                  var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                                  // Save String and Heading Both in Array
-                                                                  var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                                                  titlesArray.push(ObjectToSaveInArray);
-                                                                  x=secondIndex;
-
-                                                                }
-
-                                                              }
-
-
-                                                              var tempArray=[];
-                                                              // For Nuskha Jaat denoted by $ Sign
-                                                              for (var i = 0; i < titlesArray.length; i++) {
-
-                                                                var mainHeading = titlesArray[i].heading;
-                                                                var stringAtIndex = titlesArray[i].data;
-
-                                                                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                                var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                                for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                                  var firstIndex=stringAtIndex.indexOf('$',x);
-                                                                  var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                                                  if (secondIndex==-1 || firstIndex==-1) {
-                                                                    break;
-                                                                  }
-
-                                                                  var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                                                  var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                                                  tempArray.push(ObjectToSaveInArray);
-                                                                  x=secondIndex;
-
-                                                                }
-                                                              }
-
-                                                              // Extract Headings from Sub Content From $ Sign.
-
-                                                              // For Nuskha Jaat denoted by $ Sign
-                                                              for (var i = 0; i < tempArray.length; i++) {
-
-                                                                var mainHeading = tempArray[i].mainheading;
-                                                                var subHeading = tempArray[i].subheading;
-                                                                var stringAtIndex = tempArray[i].data;
-
-                                                                var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                                var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                                var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                                                finalArray14.push(ObjectToSaveInArray);
-
-                                                              }
-                                                            })
-
-
-                                                            var finalArray15=[];
-
-                                                            RNFS.readFile(path15)
-                                                                .then((contents) => {
-                                                                  var contentString = contents.toString();
-                                                                  var chaptersArray=[];
-                                                                  // For Chapters Titles denoted by & Sign
-                                                                  for (var i = 0; i < contentString.length; i++) {
-                                                                    var firstIndex=contentString.indexOf('&',i);
-                                                                    var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                                                    if (secondIndex==-1 || firstIndex==-1) {
-                                                                      break;
-                                                                    }
-
-                                                                    var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                                                    chaptersArray.push(tempString);
-                                                                    i=secondIndex;
-                                                                  }
-
-
-                                                                  var titlesArray=[];
-
-                                                                  // For Main Titles denoted by @ Sign
-                                                                  for (var i = 0; i < chaptersArray.length; i++) {
-                                                                    var stringAtIndex = chaptersArray[i];
-                                                                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                                    var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                                    for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                                      var firstIndex=stringAtIndex.indexOf('@',x);
-                                                                      var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                                                      if (secondIndex==-1 || firstIndex==-1) {
-                                                                        break;
-                                                                      }
-
-                                                                      var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                                      // Save String and Heading Both in Array
-                                                                      var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                                                      titlesArray.push(ObjectToSaveInArray);
-                                                                      x=secondIndex;
-
-                                                                    }
-
-                                                                  }
-
-                                                                  var tempArray=[];
-                                                                  // For Nuskha Jaat denoted by $ Sign
-                                                                  for (var i = 0; i < titlesArray.length; i++) {
-
-                                                                    var mainHeading = titlesArray[i].heading;
-                                                                    var stringAtIndex = titlesArray[i].data;
-
-                                                                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                                    var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                                    for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                                      var firstIndex=stringAtIndex.indexOf('$',x);
-                                                                      var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                                                      if (secondIndex==-1 || firstIndex==-1) {
-                                                                        break;
-                                                                      }
-
-                                                                      var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                                                      var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                                                      tempArray.push(ObjectToSaveInArray);
-                                                                      x=secondIndex;
-
-                                                                    }
-                                                                  }
-
-                                                                  // Extract Headings from Sub Content From $ Sign.
-
-                                                                  // For Nuskha Jaat denoted by $ Sign
-                                                                  for (var i = 0; i < tempArray.length; i++) {
-
-                                                                    var mainHeading = tempArray[i].mainheading;
-                                                                    var subHeading = tempArray[i].subheading;
-                                                                    var stringAtIndex = tempArray[i].data;
-
-                                                                    var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                                    var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                                    var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                                                    finalArray15.push(ObjectToSaveInArray);
-
-                                                                  }
-                                                                })
-
-
-                                                                var finalArray16=[];
-
-                                                                RNFS.readFile(path16)
-                                                                    .then((contents) => {
-                                                                      var contentString = contents.toString();
-                                                                      var chaptersArray=[];
-                                                                      // For Chapters Titles denoted by & Sign
-                                                                      for (var i = 0; i < contentString.length; i++) {
-                                                                        var firstIndex=contentString.indexOf('&',i);
-                                                                        var secondIndex=contentString.indexOf('&',firstIndex+1);
-                                                                        if (secondIndex==-1 || firstIndex==-1) {
-                                                                          break;
-                                                                        }
-
-                                                                        var tempString=contentString.slice(firstIndex+1,secondIndex-1);
-                                                                        chaptersArray.push(tempString);
-                                                                        i=secondIndex;
-                                                                      }
-
-
-                                                                      var titlesArray=[];
-
-                                                                      // For Main Titles denoted by @ Sign
-                                                                      for (var i = 0; i < chaptersArray.length; i++) {
-                                                                        var stringAtIndex = chaptersArray[i];
-                                                                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                                        var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                                        for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                                          var firstIndex=stringAtIndex.indexOf('@',x);
-                                                                          var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
-                                                                          if (secondIndex==-1 || firstIndex==-1) {
-                                                                            break;
-                                                                          }
-
-                                                                          var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-                                                                          // Save String and Heading Both in Array
-                                                                          var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
-                                                                          titlesArray.push(ObjectToSaveInArray);
-                                                                          x=secondIndex;
-
-                                                                        }
-
-                                                                      }
-
-                                                                      var tempArray=[];
-                                                                      // For Nuskha Jaat denoted by $ Sign
-                                                                      for (var i = 0; i < titlesArray.length; i++) {
-
-                                                                        var mainHeading = titlesArray[i].heading;
-                                                                        var stringAtIndex = titlesArray[i].data;
-
-                                                                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                                        var testString=stringAtIndex.slice(0,headingEndIndex);
-
-                                                                        for (var x = 0; x < stringAtIndex.length; x++) {
-
-                                                                          var firstIndex=stringAtIndex.indexOf('$',x);
-                                                                          var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
-                                                                          if (secondIndex==-1 || firstIndex==-1) {
-                                                                            break;
-                                                                          }
-
-                                                                          var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
-
-                                                                          var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
-                                                                          tempArray.push(ObjectToSaveInArray);
-                                                                          x=secondIndex;
-
-                                                                        }
-                                                                      }
-
-                                                                      // Extract Headings from Sub Content From $ Sign.
-
-                                                                      // For Nuskha Jaat denoted by $ Sign
-                                                                      for (var i = 0; i < tempArray.length; i++) {
-
-                                                                        var mainHeading = tempArray[i].mainheading;
-                                                                        var subHeading = tempArray[i].subheading;
-                                                                        var stringAtIndex = tempArray[i].data;
-
-                                                                        var headingEndIndex = stringAtIndex.indexOf('\r',1);
-                                                                        var testString=stringAtIndex.slice(0,headingEndIndex);
-                                                                        var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
-                                                                        finalArray16.push(ObjectToSaveInArray);
-
-                                                                      }
-
-                                                                      this.setState({showProgress:false});
-                                                                      AsyncStorage.setItem('booksData', JSON.stringify(this.state.bookArray));
-                                                                      this.horizontalrowselected();
-                                                                      this.dumpIntoDB();
-                                                                    })
+        // var finalArray2=[];
+        //
+        // RNFS.readFile(path2)
+        //     .then((contents) => {
+        //
+        //       var contentString = contents.toString();
+        //       var chaptersArray=[];
+        //       // For Chapters Titles denoted by & Sign
+        //       for (var i = 0; i < contentString.length; i++) {
+        //         var firstIndex=contentString.indexOf('&',i);
+        //         var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //         if (secondIndex==-1 || firstIndex==-1) {
+        //           break;
+        //         }
+        //
+        //         var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //         chaptersArray.push(tempString);
+        //         i=secondIndex;
+        //       }
+        //
+        //       var titlesArray=[];
+        //
+        //       // For Main Titles denoted by @ Sign
+        //       for (var i = 0; i < chaptersArray.length; i++) {
+        //         var stringAtIndex = chaptersArray[i];
+        //         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //         for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //           var firstIndex=stringAtIndex.indexOf('@',x);
+        //           var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //           if (secondIndex==-1 || firstIndex==-1) {
+        //             break;
+        //           }
+        //
+        //           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //           // Save String and Heading Both in Array
+        //           var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //           titlesArray.push(ObjectToSaveInArray);
+        //           x=secondIndex;
+        //         }
+        //
+        //       }
+        //
+        //       var tempArray=[];
+        //       // For Nuskha Jaat denoted by $ Sign
+        //       for (var i = 0; i < titlesArray.length; i++) {
+        //         var mainHeading = titlesArray[i].heading;
+        //         var stringAtIndex = titlesArray[i].data;
+        //         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //         for (var x = 0; x < stringAtIndex.length; x++) {
+        //           var firstIndex=stringAtIndex.indexOf('$',x);
+        //           var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //           if (secondIndex==-1 || firstIndex==-1) {
+        //             break;
+        //           }
+        //           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //           var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //           tempArray.push(ObjectToSaveInArray);
+        //           x=secondIndex;
+        //         }
+        //       }
+        //       // Extract Headings from Sub Content From $ Sign.
+        //
+        //       // For Nuskha Jaat denoted by $ Sign
+        //       for (var i = 0; i < tempArray.length; i++) {
+        //
+        //         var mainHeading = tempArray[i].mainheading;
+        //         var subHeading = tempArray[i].subheading;
+        //         var stringAtIndex = tempArray[i].data;
+        //
+        //         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //         var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //         finalArray2.push(ObjectToSaveInArray);
+        //
+        //       }
+        //
+        //     })
+        //
+        //     var finalArray3=[];
+        //
+        //     RNFS.readFile(path3)
+        //         .then((contents) => {
+        //           var contentString = contents.toString();
+        //           var chaptersArray=[];
+        //           // For Chapters Titles denoted by & Sign
+        //           for (var i = 0; i < contentString.length; i++) {
+        //             var firstIndex=contentString.indexOf('&',i);
+        //             var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //             if (secondIndex==-1 || firstIndex==-1) {
+        //               break;
+        //             }
+        //
+        //             var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //             chaptersArray.push(tempString);
+        //             i=secondIndex;
+        //           }
+        //
+        //           var titlesArray=[];
+        //
+        //           // For Main Titles denoted by @ Sign
+        //           for (var i = 0; i < chaptersArray.length; i++) {
+        //             var stringAtIndex = chaptersArray[i];
+        //             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //             for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //               var firstIndex=stringAtIndex.indexOf('@',x);
+        //               var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //               if (secondIndex==-1 || firstIndex==-1) {
+        //                 break;
+        //               }
+        //
+        //               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //               // Save String and Heading Both in Array
+        //               var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //               titlesArray.push(ObjectToSaveInArray);
+        //               x=secondIndex;
+        //
+        //             }
+        //
+        //           }
+        //
+        //
+        //           var tempArray=[];
+        //           // For Nuskha Jaat denoted by $ Sign
+        //           for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //             var mainHeading = titlesArray[i].heading;
+        //             var stringAtIndex = titlesArray[i].data;
+        //
+        //             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //             for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //               var firstIndex=stringAtIndex.indexOf('$',x);
+        //               var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //               if (secondIndex==-1 || firstIndex==-1) {
+        //                 break;
+        //               }
+        //
+        //               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //               var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //               tempArray.push(ObjectToSaveInArray);
+        //               x=secondIndex;
+        //
+        //             }
+        //           }
+        //
+        //           // Extract Headings from Sub Content From $ Sign.
+        //
+        //           // For Nuskha Jaat denoted by $ Sign
+        //           for (var i = 0; i < tempArray.length; i++) {
+        //
+        //             var mainHeading = tempArray[i].mainheading;
+        //             var subHeading = tempArray[i].subheading;
+        //             var stringAtIndex = tempArray[i].data;
+        //
+        //             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //             var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //             finalArray3.push(ObjectToSaveInArray);
+        //
+        //           }
+        //         })
+        //
+        //
+        //
+        //         var finalArray4=[];
+        //
+        //         RNFS.readFile(path4)
+        //             .then((contents) => {
+        //               var contentString = contents.toString();
+        //               var chaptersArray=[];
+        //               // For Chapters Titles denoted by & Sign
+        //               for (var i = 0; i < contentString.length; i++) {
+        //                 var firstIndex=contentString.indexOf('&',i);
+        //                 var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                 if (secondIndex==-1 || firstIndex==-1) {
+        //                   break;
+        //                 }
+        //
+        //                 var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                 chaptersArray.push(tempString);
+        //                 i=secondIndex;
+        //               }
+        //
+        //               var titlesArray=[];
+        //
+        //               // For Main Titles denoted by @ Sign
+        //               for (var i = 0; i < chaptersArray.length; i++) {
+        //                 var stringAtIndex = chaptersArray[i];
+        //                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                 var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                 for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                   var firstIndex=stringAtIndex.indexOf('@',x);
+        //                   var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                   if (secondIndex==-1 || firstIndex==-1) {
+        //                     break;
+        //                   }
+        //
+        //                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                   // Save String and Heading Both in Array
+        //                   var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                   titlesArray.push(ObjectToSaveInArray);
+        //                   x=secondIndex;
+        //
+        //                 }
+        //
+        //               }
+        //
+        //               var tempArray=[];
+        //               // For Nuskha Jaat denoted by $ Sign
+        //               for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                 var mainHeading = titlesArray[i].heading;
+        //                 var stringAtIndex = titlesArray[i].data;
+        //
+        //                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                 var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                 for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                   var firstIndex=stringAtIndex.indexOf('$',x);
+        //                   var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                   if (secondIndex==-1 || firstIndex==-1) {
+        //                     break;
+        //                   }
+        //
+        //                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                   var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                   tempArray.push(ObjectToSaveInArray);
+        //                   x=secondIndex;
+        //
+        //                 }
+        //               }
+        //
+        //               // Extract Headings from Sub Content From $ Sign.
+        //
+        //               // For Nuskha Jaat denoted by $ Sign
+        //               for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                 var mainHeading = tempArray[i].mainheading;
+        //                 var subHeading = tempArray[i].subheading;
+        //                 var stringAtIndex = tempArray[i].data;
+        //
+        //                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                 var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                 var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                 finalArray4.push(ObjectToSaveInArray);
+        //
+        //               }
+        //             })
+        //
+        //
+        //
+        //
+        //             var finalArray5=[];
+        //
+        //             RNFS.readFile(path5)
+        //                 .then((contents) => {
+        //                   var contentString = contents.toString();
+        //                   var chaptersArray=[];
+        //                   // For Chapters Titles denoted by & Sign
+        //                   for (var i = 0; i < contentString.length; i++) {
+        //                     var firstIndex=contentString.indexOf('&',i);
+        //                     var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                     if (secondIndex==-1 || firstIndex==-1) {
+        //                       break;
+        //                     }
+        //
+        //                     var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                     chaptersArray.push(tempString);
+        //                     i=secondIndex;
+        //                   }
+        //
+        //                   var titlesArray=[];
+        //
+        //                   // For Main Titles denoted by @ Sign
+        //                   for (var i = 0; i < chaptersArray.length; i++) {
+        //                     var stringAtIndex = chaptersArray[i];
+        //                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                     var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                     for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                       var firstIndex=stringAtIndex.indexOf('@',x);
+        //                       var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                       if (secondIndex==-1 || firstIndex==-1) {
+        //                         break;
+        //                       }
+        //
+        //                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                       // Save String and Heading Both in Array
+        //                       var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                       titlesArray.push(ObjectToSaveInArray);
+        //                       x=secondIndex;
+        //
+        //                     }
+        //
+        //                   }
+        //
+        //                   var tempArray=[];
+        //                   // For Nuskha Jaat denoted by $ Sign
+        //                   for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                     var mainHeading = titlesArray[i].heading;
+        //                     var stringAtIndex = titlesArray[i].data;
+        //
+        //                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                     var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                     for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                       var firstIndex=stringAtIndex.indexOf('$',x);
+        //                       var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                       if (secondIndex==-1 || firstIndex==-1) {
+        //                         break;
+        //                       }
+        //
+        //                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                       var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                       tempArray.push(ObjectToSaveInArray);
+        //                       x=secondIndex;
+        //
+        //                     }
+        //                   }
+        //
+        //                   // Extract Headings from Sub Content From $ Sign.
+        //
+        //                   // For Nuskha Jaat denoted by $ Sign
+        //                   for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                     var mainHeading = tempArray[i].mainheading;
+        //                     var subHeading = tempArray[i].subheading;
+        //                     var stringAtIndex = tempArray[i].data;
+        //
+        //                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                     var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                     var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                     finalArray5.push(ObjectToSaveInArray);
+        //
+        //                   }
+        //                 })
+        //
+        //
+        //
+        //                 var finalArray6=[];
+        //
+        //                 RNFS.readFile(path6)
+        //                     .then((contents) => {
+        //                       var contentString = contents.toString();
+        //                       var chaptersArray=[];
+        //                       // For Chapters Titles denoted by & Sign
+        //                       for (var i = 0; i < contentString.length; i++) {
+        //                         var firstIndex=contentString.indexOf('&',i);
+        //                         var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                         if (secondIndex==-1 || firstIndex==-1) {
+        //                           break;
+        //                         }
+        //
+        //                         var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                         chaptersArray.push(tempString);
+        //                         i=secondIndex;
+        //                       }
+        //
+        //                       var titlesArray=[];
+        //
+        //                       // For Main Titles denoted by @ Sign
+        //                       for (var i = 0; i < chaptersArray.length; i++) {
+        //                         var stringAtIndex = chaptersArray[i];
+        //                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                         for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                           var firstIndex=stringAtIndex.indexOf('@',x);
+        //                           var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                           if (secondIndex==-1 || firstIndex==-1) {
+        //                             break;
+        //                           }
+        //
+        //                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                           // Save String and Heading Both in Array
+        //                           var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                           titlesArray.push(ObjectToSaveInArray);
+        //                           x=secondIndex;
+        //
+        //                         }
+        //
+        //                       }
+        //
+        //                       var tempArray=[];
+        //                       // For Nuskha Jaat denoted by $ Sign
+        //                       for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                         var mainHeading = titlesArray[i].heading;
+        //                         var stringAtIndex = titlesArray[i].data;
+        //
+        //                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                         for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                           var firstIndex=stringAtIndex.indexOf('$',x);
+        //                           var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                           if (secondIndex==-1 || firstIndex==-1) {
+        //                             break;
+        //                           }
+        //
+        //                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                           var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                           tempArray.push(ObjectToSaveInArray);
+        //                           x=secondIndex;
+        //
+        //                         }
+        //                       }
+        //
+        //                       // Extract Headings from Sub Content From $ Sign.
+        //
+        //                       // For Nuskha Jaat denoted by $ Sign
+        //                       for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                         var mainHeading = tempArray[i].mainheading;
+        //                         var subHeading = tempArray[i].subheading;
+        //                         var stringAtIndex = tempArray[i].data;
+        //
+        //                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                         var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                         finalArray6.push(ObjectToSaveInArray);
+        //
+        //                       }
+        //                     })
+        //
+        //
+        //
+        //                     var finalArray7=[];
+        //
+        //                     RNFS.readFile(path7)
+        //                         .then((contents) => {
+        //                           var contentString = contents.toString();
+        //                           var chaptersArray=[];
+        //                           // For Chapters Titles denoted by & Sign
+        //                           for (var i = 0; i < contentString.length; i++) {
+        //                             var firstIndex=contentString.indexOf('&',i);
+        //                             var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                             if (secondIndex==-1 || firstIndex==-1) {
+        //                               break;
+        //                             }
+        //
+        //                             var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                             chaptersArray.push(tempString);
+        //                             i=secondIndex;
+        //                           }
+        //
+        //
+        //                           var titlesArray=[];
+        //
+        //                           // For Main Titles denoted by @ Sign
+        //                           for (var i = 0; i < chaptersArray.length; i++) {
+        //                             var stringAtIndex = chaptersArray[i];
+        //                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                             for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                               var firstIndex=stringAtIndex.indexOf('@',x);
+        //                               var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                               if (secondIndex==-1 || firstIndex==-1) {
+        //                                 break;
+        //                               }
+        //
+        //                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                               // Save String and Heading Both in Array
+        //                               var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                               titlesArray.push(ObjectToSaveInArray);
+        //                               x=secondIndex;
+        //
+        //                             }
+        //
+        //                           }
+        //
+        //                           var tempArray=[];
+        //                           // For Nuskha Jaat denoted by $ Sign
+        //                           for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                             var mainHeading = titlesArray[i].heading;
+        //                             var stringAtIndex = titlesArray[i].data;
+        //
+        //                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                             for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                               var firstIndex=stringAtIndex.indexOf('$',x);
+        //                               var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                               if (secondIndex==-1 || firstIndex==-1) {
+        //                                 break;
+        //                               }
+        //
+        //                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                               var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                               tempArray.push(ObjectToSaveInArray);
+        //                               x=secondIndex;
+        //
+        //                             }
+        //                           }
+        //
+        //                           // Extract Headings from Sub Content From $ Sign.
+        //
+        //                           // For Nuskha Jaat denoted by $ Sign
+        //                           for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                             var mainHeading = tempArray[i].mainheading;
+        //                             var subHeading = tempArray[i].subheading;
+        //                             var stringAtIndex = tempArray[i].data;
+        //
+        //                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                             var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                             finalArray7.push(ObjectToSaveInArray);
+        //
+        //                           }
+        //                         })
+        //
+        //
+        //                         var finalArray8=[];
+        //
+        //                         RNFS.readFile(path8)
+        //                             .then((contents) => {
+        //                               var contentString = contents.toString();
+        //                               var chaptersArray=[];
+        //                               // For Chapters Titles denoted by & Sign
+        //                               for (var i = 0; i < contentString.length; i++) {
+        //                                 var firstIndex=contentString.indexOf('&',i);
+        //                                 var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                                 if (secondIndex==-1 || firstIndex==-1) {
+        //                                   break;
+        //                                 }
+        //
+        //                                 var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                                 chaptersArray.push(tempString);
+        //                                 i=secondIndex;
+        //                               }
+        //
+        //                               var titlesArray=[];
+        //
+        //                               // For Main Titles denoted by @ Sign
+        //                               for (var i = 0; i < chaptersArray.length; i++) {
+        //                                 var stringAtIndex = chaptersArray[i];
+        //                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                 var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                 for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                   var firstIndex=stringAtIndex.indexOf('@',x);
+        //                                   var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                                   if (secondIndex==-1 || firstIndex==-1) {
+        //                                     break;
+        //                                   }
+        //
+        //                                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                                   // Save String and Heading Both in Array
+        //                                   var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                                   titlesArray.push(ObjectToSaveInArray);
+        //                                   x=secondIndex;
+        //
+        //                                 }
+        //
+        //                               }
+        //
+        //                               var tempArray=[];
+        //                               // For Nuskha Jaat denoted by $ Sign
+        //                               for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                                 var mainHeading = titlesArray[i].heading;
+        //                                 var stringAtIndex = titlesArray[i].data;
+        //
+        //                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                 var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                 for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                   var firstIndex=stringAtIndex.indexOf('$',x);
+        //                                   var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                                   if (secondIndex==-1 || firstIndex==-1) {
+        //                                     break;
+        //                                   }
+        //
+        //                                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                                   var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                                   tempArray.push(ObjectToSaveInArray);
+        //                                   x=secondIndex;
+        //
+        //                                 }
+        //                               }
+        //
+        //                               // Extract Headings from Sub Content From $ Sign.
+        //
+        //                               // For Nuskha Jaat denoted by $ Sign
+        //                               for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                                 var mainHeading = tempArray[i].mainheading;
+        //                                 var subHeading = tempArray[i].subheading;
+        //                                 var stringAtIndex = tempArray[i].data;
+        //
+        //                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                 var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                                 var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                                 finalArray8.push(ObjectToSaveInArray);
+        //
+        //                               }
+        //                             })
+        //
+        //
+        //
+        //                             var finalArray9=[];
+        //
+        //                             RNFS.readFile(path9)
+        //                                 .then((contents) => {
+        //                                   var contentString = contents.toString();
+        //                                   var chaptersArray=[];
+        //                                   // For Chapters Titles denoted by & Sign
+        //                                   for (var i = 0; i < contentString.length; i++) {
+        //                                     var firstIndex=contentString.indexOf('&',i);
+        //                                     var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                                     if (secondIndex==-1 || firstIndex==-1) {
+        //                                       break;
+        //                                     }
+        //
+        //                                     var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                                     chaptersArray.push(tempString);
+        //                                     i=secondIndex;
+        //                                   }
+        //
+        //                                   var titlesArray=[];
+        //
+        //                                   // For Main Titles denoted by @ Sign
+        //                                   for (var i = 0; i < chaptersArray.length; i++) {
+        //                                     var stringAtIndex = chaptersArray[i];
+        //                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                     var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                     for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                       var firstIndex=stringAtIndex.indexOf('@',x);
+        //                                       var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                                       if (secondIndex==-1 || firstIndex==-1) {
+        //                                         break;
+        //                                       }
+        //
+        //                                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                                       // Save String and Heading Both in Array
+        //                                       var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                                       titlesArray.push(ObjectToSaveInArray);
+        //                                       x=secondIndex;
+        //
+        //                                     }
+        //
+        //                                   }
+        //
+        //                                   var tempArray=[];
+        //                                   // For Nuskha Jaat denoted by $ Sign
+        //                                   for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                                     var mainHeading = titlesArray[i].heading;
+        //                                     var stringAtIndex = titlesArray[i].data;
+        //
+        //                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                     var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                     for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                       var firstIndex=stringAtIndex.indexOf('$',x);
+        //                                       var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                                       if (secondIndex==-1 || firstIndex==-1) {
+        //                                         break;
+        //                                       }
+        //
+        //                                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                                       var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                                       tempArray.push(ObjectToSaveInArray);
+        //                                       x=secondIndex;
+        //
+        //                                     }
+        //                                   }
+        //
+        //                                   // Extract Headings from Sub Content From $ Sign.
+        //
+        //                                   // For Nuskha Jaat denoted by $ Sign
+        //                                   for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                                     var mainHeading = tempArray[i].mainheading;
+        //                                     var subHeading = tempArray[i].subheading;
+        //                                     var stringAtIndex = tempArray[i].data;
+        //
+        //                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                     var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                                     var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                                     finalArray9.push(ObjectToSaveInArray);
+        //
+        //                                   }
+        //                                 })
+        //
+        //
+        //
+        //                                 var finalArray10=[];
+        //
+        //                                 RNFS.readFile(path10)
+        //                                     .then((contents) => {
+        //                                       var contentString = contents.toString();
+        //                                       var chaptersArray=[];
+        //                                       // For Chapters Titles denoted by & Sign
+        //                                       for (var i = 0; i < contentString.length; i++) {
+        //                                         var firstIndex=contentString.indexOf('&',i);
+        //                                         var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                                         if (secondIndex==-1 || firstIndex==-1) {
+        //                                           break;
+        //                                         }
+        //
+        //                                         var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                                         chaptersArray.push(tempString);
+        //                                         i=secondIndex;
+        //                                       }
+        //
+        //
+        //                                       var titlesArray=[];
+        //
+        //                                       // For Main Titles denoted by @ Sign
+        //                                       for (var i = 0; i < chaptersArray.length; i++) {
+        //                                         var stringAtIndex = chaptersArray[i];
+        //                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                         for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                           var firstIndex=stringAtIndex.indexOf('@',x);
+        //                                           var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                                           if (secondIndex==-1 || firstIndex==-1) {
+        //                                             break;
+        //                                           }
+        //
+        //                                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                                           // Save String and Heading Both in Array
+        //                                           var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                                           titlesArray.push(ObjectToSaveInArray);
+        //                                           x=secondIndex;
+        //
+        //                                         }
+        //
+        //                                       }
+        //
+        //
+        //                                       var tempArray=[];
+        //                                       // For Nuskha Jaat denoted by $ Sign
+        //                                       for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                                         var mainHeading = titlesArray[i].heading;
+        //                                         var stringAtIndex = titlesArray[i].data;
+        //
+        //                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                         for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                           var firstIndex=stringAtIndex.indexOf('$',x);
+        //                                           var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                                           if (secondIndex==-1 || firstIndex==-1) {
+        //                                             break;
+        //                                           }
+        //
+        //                                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                                           var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                                           tempArray.push(ObjectToSaveInArray);
+        //                                           x=secondIndex;
+        //
+        //                                         }
+        //                                       }
+        //
+        //                                       // Extract Headings from Sub Content From $ Sign.
+        //
+        //                                       // For Nuskha Jaat denoted by $ Sign
+        //                                       for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                                         var mainHeading = tempArray[i].mainheading;
+        //                                         var subHeading = tempArray[i].subheading;
+        //                                         var stringAtIndex = tempArray[i].data;
+        //
+        //                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                                         var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                                         finalArray10.push(ObjectToSaveInArray);
+        //
+        //                                       }
+        //                                     })
+        //
+        //                                     var finalArray11=[];
+        //
+        //                                     RNFS.readFile(path11)
+        //                                         .then((contents) => {
+        //                                           var contentString = contents.toString();
+        //                                           var chaptersArray=[];
+        //                                           // For Chapters Titles denoted by & Sign
+        //                                           for (var i = 0; i < contentString.length; i++) {
+        //                                             var firstIndex=contentString.indexOf('&',i);
+        //                                             var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                                             if (secondIndex==-1 || firstIndex==-1) {
+        //                                               break;
+        //                                             }
+        //
+        //                                             var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                                             chaptersArray.push(tempString);
+        //                                             i=secondIndex;
+        //                                           }
+        //
+        //                                           var titlesArray=[];
+        //
+        //                                           // For Main Titles denoted by @ Sign
+        //                                           for (var i = 0; i < chaptersArray.length; i++) {
+        //                                             var stringAtIndex = chaptersArray[i];
+        //                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                             for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                               var firstIndex=stringAtIndex.indexOf('@',x);
+        //                                               var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                                               if (secondIndex==-1 || firstIndex==-1) {
+        //                                                 break;
+        //                                               }
+        //
+        //                                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                                               // Save String and Heading Both in Array
+        //                                               var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                                               titlesArray.push(ObjectToSaveInArray);
+        //                                               x=secondIndex;
+        //
+        //                                             }
+        //
+        //                                           }
+        //
+        //                                           var tempArray=[];
+        //                                           // For Nuskha Jaat denoted by $ Sign
+        //                                           for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                                             var mainHeading = titlesArray[i].heading;
+        //                                             var stringAtIndex = titlesArray[i].data;
+        //
+        //                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                             for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                               var firstIndex=stringAtIndex.indexOf('$',x);
+        //                                               var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                                               if (secondIndex==-1 || firstIndex==-1) {
+        //                                                 break;
+        //                                               }
+        //
+        //                                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                                               var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                                               tempArray.push(ObjectToSaveInArray);
+        //                                               x=secondIndex;
+        //
+        //                                             }
+        //                                           }
+        //
+        //                                           // Extract Headings from Sub Content From $ Sign.
+        //
+        //                                           // For Nuskha Jaat denoted by $ Sign
+        //                                           for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                                             var mainHeading = tempArray[i].mainheading;
+        //                                             var subHeading = tempArray[i].subheading;
+        //                                             var stringAtIndex = tempArray[i].data;
+        //
+        //                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                                             var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                                             finalArray11.push(ObjectToSaveInArray);
+        //
+        //                                           }
+        //                                         })
+        //
+        //
+        //
+        //
+        //                                         var finalArray12=[];
+        //
+        //                                         RNFS.readFile(path12)
+        //                                             .then((contents) => {
+        //                                               var contentString = contents.toString();
+        //                                               var chaptersArray=[];
+        //                                               // For Chapters Titles denoted by & Sign
+        //                                               for (var i = 0; i < contentString.length; i++) {
+        //                                                 var firstIndex=contentString.indexOf('&',i);
+        //                                                 var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                                                 if (secondIndex==-1 || firstIndex==-1) {
+        //                                                   break;
+        //                                                 }
+        //
+        //                                                 var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                                                 chaptersArray.push(tempString);
+        //                                                 i=secondIndex;
+        //                                               }
+        //
+        //                                               var titlesArray=[];
+        //
+        //                                               // For Main Titles denoted by @ Sign
+        //                                               for (var i = 0; i < chaptersArray.length; i++) {
+        //                                                 var stringAtIndex = chaptersArray[i];
+        //                                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                 var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                                 for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                                   var firstIndex=stringAtIndex.indexOf('@',x);
+        //                                                   var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                                                   if (secondIndex==-1 || firstIndex==-1) {
+        //                                                     break;
+        //                                                   }
+        //
+        //                                                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                                                   // Save String and Heading Both in Array
+        //                                                   var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                                                   titlesArray.push(ObjectToSaveInArray);
+        //                                                   x=secondIndex;
+        //
+        //                                                 }
+        //
+        //                                               }
+        //
+        //
+        //                                               var tempArray=[];
+        //                                               // For Nuskha Jaat denoted by $ Sign
+        //                                               for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                                                 var mainHeading = titlesArray[i].heading;
+        //                                                 var stringAtIndex = titlesArray[i].data;
+        //
+        //                                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                 var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                                 for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                                   var firstIndex=stringAtIndex.indexOf('$',x);
+        //                                                   var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                                                   if (secondIndex==-1 || firstIndex==-1) {
+        //                                                     break;
+        //                                                   }
+        //
+        //                                                   var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                                                   var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                                                   tempArray.push(ObjectToSaveInArray);
+        //                                                   x=secondIndex;
+        //
+        //                                                 }
+        //                                               }
+        //
+        //                                               // Extract Headings from Sub Content From $ Sign.
+        //
+        //                                               // For Nuskha Jaat denoted by $ Sign
+        //                                               for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                                                 var mainHeading = tempArray[i].mainheading;
+        //                                                 var subHeading = tempArray[i].subheading;
+        //                                                 var stringAtIndex = tempArray[i].data;
+        //
+        //                                                 var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                 var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                                                 var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                                                 finalArray12.push(ObjectToSaveInArray);
+        //
+        //                                               }
+        //                                             })
+        //
+        //
+        //
+        //                                             var finalArray13=[];
+        //
+        //                                             RNFS.readFile(path13)
+        //                                                 .then((contents) => {
+        //                                                   var contentString = contents.toString();
+        //                                                   var chaptersArray=[];
+        //                                                   // For Chapters Titles denoted by & Sign
+        //                                                   for (var i = 0; i < contentString.length; i++) {
+        //                                                     var firstIndex=contentString.indexOf('&',i);
+        //                                                     var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                                                     if (secondIndex==-1 || firstIndex==-1) {
+        //                                                       break;
+        //                                                     }
+        //
+        //                                                     var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                                                     chaptersArray.push(tempString);
+        //                                                     i=secondIndex;
+        //                                                   }
+        //
+        //                                                   var titlesArray=[];
+        //
+        //                                                   // For Main Titles denoted by @ Sign
+        //                                                   for (var i = 0; i < chaptersArray.length; i++) {
+        //                                                     var stringAtIndex = chaptersArray[i];
+        //                                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                     var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                                     for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                                       var firstIndex=stringAtIndex.indexOf('@',x);
+        //                                                       var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                                                       if (secondIndex==-1 || firstIndex==-1) {
+        //                                                         break;
+        //                                                       }
+        //
+        //                                                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                                                       // Save String and Heading Both in Array
+        //                                                       var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                                                       titlesArray.push(ObjectToSaveInArray);
+        //                                                       x=secondIndex;
+        //
+        //                                                     }
+        //
+        //                                                   }
+        //
+        //
+        //                                                   var tempArray=[];
+        //                                                   // For Nuskha Jaat denoted by $ Sign
+        //                                                   for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                                                     var mainHeading = titlesArray[i].heading;
+        //                                                     var stringAtIndex = titlesArray[i].data;
+        //
+        //                                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                     var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                                     for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                                       var firstIndex=stringAtIndex.indexOf('$',x);
+        //                                                       var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                                                       if (secondIndex==-1 || firstIndex==-1) {
+        //                                                         break;
+        //                                                       }
+        //
+        //                                                       var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                                                       var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                                                       tempArray.push(ObjectToSaveInArray);
+        //                                                       x=secondIndex;
+        //
+        //                                                     }
+        //                                                   }
+        //
+        //                                                   // Extract Headings from Sub Content From $ Sign.
+        //
+        //                                                   // For Nuskha Jaat denoted by $ Sign
+        //                                                   for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                                                     var mainHeading = tempArray[i].mainheading;
+        //                                                     var subHeading = tempArray[i].subheading;
+        //                                                     var stringAtIndex = tempArray[i].data;
+        //
+        //                                                     var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                     var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                                                     var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                                                     finalArray13.push(ObjectToSaveInArray);
+        //
+        //                                                   }
+        //                                                 })
+        //
+        //
+        //
+        //
+        //                                                 var finalArray14=[];
+        //
+        //                                                 RNFS.readFile(path14)
+        //                                                     .then((contents) => {
+        //                                                       var contentString = contents.toString();
+        //                                                       var chaptersArray=[];
+        //                                                       // For Chapters Titles denoted by & Sign
+        //                                                       for (var i = 0; i < contentString.length; i++) {
+        //                                                         var firstIndex=contentString.indexOf('&',i);
+        //                                                         var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                                                         if (secondIndex==-1 || firstIndex==-1) {
+        //                                                           break;
+        //                                                         }
+        //
+        //                                                         var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                                                         chaptersArray.push(tempString);
+        //                                                         i=secondIndex;
+        //                                                       }
+        //
+        //                                                       var titlesArray=[];
+        //
+        //                                                       // For Main Titles denoted by @ Sign
+        //                                                       for (var i = 0; i < chaptersArray.length; i++) {
+        //                                                         var stringAtIndex = chaptersArray[i];
+        //                                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                                         for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                                           var firstIndex=stringAtIndex.indexOf('@',x);
+        //                                                           var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                                                           if (secondIndex==-1 || firstIndex==-1) {
+        //                                                             break;
+        //                                                           }
+        //
+        //                                                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                                                           // Save String and Heading Both in Array
+        //                                                           var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                                                           titlesArray.push(ObjectToSaveInArray);
+        //                                                           x=secondIndex;
+        //
+        //                                                         }
+        //
+        //                                                       }
+        //
+        //
+        //                                                       var tempArray=[];
+        //                                                       // For Nuskha Jaat denoted by $ Sign
+        //                                                       for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                                                         var mainHeading = titlesArray[i].heading;
+        //                                                         var stringAtIndex = titlesArray[i].data;
+        //
+        //                                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                                         for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                                           var firstIndex=stringAtIndex.indexOf('$',x);
+        //                                                           var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                                                           if (secondIndex==-1 || firstIndex==-1) {
+        //                                                             break;
+        //                                                           }
+        //
+        //                                                           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                                                           var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                                                           tempArray.push(ObjectToSaveInArray);
+        //                                                           x=secondIndex;
+        //
+        //                                                         }
+        //                                                       }
+        //
+        //                                                       // Extract Headings from Sub Content From $ Sign.
+        //
+        //                                                       // For Nuskha Jaat denoted by $ Sign
+        //                                                       for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                                                         var mainHeading = tempArray[i].mainheading;
+        //                                                         var subHeading = tempArray[i].subheading;
+        //                                                         var stringAtIndex = tempArray[i].data;
+        //
+        //                                                         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                         var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                                                         var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                                                         finalArray14.push(ObjectToSaveInArray);
+        //
+        //                                                       }
+        //                                                     })
+        //
+        //
+        //                                                     var finalArray15=[];
+        //
+        //                                                     RNFS.readFile(path15)
+        //                                                         .then((contents) => {
+        //                                                           var contentString = contents.toString();
+        //                                                           var chaptersArray=[];
+        //                                                           // For Chapters Titles denoted by & Sign
+        //                                                           for (var i = 0; i < contentString.length; i++) {
+        //                                                             var firstIndex=contentString.indexOf('&',i);
+        //                                                             var secondIndex=contentString.indexOf('&',firstIndex+1);
+        //                                                             if (secondIndex==-1 || firstIndex==-1) {
+        //                                                               break;
+        //                                                             }
+        //
+        //                                                             var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+        //                                                             chaptersArray.push(tempString);
+        //                                                             i=secondIndex;
+        //                                                           }
+        //
+        //
+        //                                                           var titlesArray=[];
+        //
+        //                                                           // For Main Titles denoted by @ Sign
+        //                                                           for (var i = 0; i < chaptersArray.length; i++) {
+        //                                                             var stringAtIndex = chaptersArray[i];
+        //                                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                                             for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                                               var firstIndex=stringAtIndex.indexOf('@',x);
+        //                                                               var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+        //                                                               if (secondIndex==-1 || firstIndex==-1) {
+        //                                                                 break;
+        //                                                               }
+        //
+        //                                                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //                                                               // Save String and Heading Both in Array
+        //                                                               var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+        //                                                               titlesArray.push(ObjectToSaveInArray);
+        //                                                               x=secondIndex;
+        //
+        //                                                             }
+        //
+        //                                                           }
+        //
+        //                                                           var tempArray=[];
+        //                                                           // For Nuskha Jaat denoted by $ Sign
+        //                                                           for (var i = 0; i < titlesArray.length; i++) {
+        //
+        //                                                             var mainHeading = titlesArray[i].heading;
+        //                                                             var stringAtIndex = titlesArray[i].data;
+        //
+        //                                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //
+        //                                                             for (var x = 0; x < stringAtIndex.length; x++) {
+        //
+        //                                                               var firstIndex=stringAtIndex.indexOf('$',x);
+        //                                                               var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+        //                                                               if (secondIndex==-1 || firstIndex==-1) {
+        //                                                                 break;
+        //                                                               }
+        //
+        //                                                               var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+        //
+        //                                                               var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+        //                                                               tempArray.push(ObjectToSaveInArray);
+        //                                                               x=secondIndex;
+        //
+        //                                                             }
+        //                                                           }
+        //
+        //                                                           // Extract Headings from Sub Content From $ Sign.
+        //
+        //                                                           // For Nuskha Jaat denoted by $ Sign
+        //                                                           for (var i = 0; i < tempArray.length; i++) {
+        //
+        //                                                             var mainHeading = tempArray[i].mainheading;
+        //                                                             var subHeading = tempArray[i].subheading;
+        //                                                             var stringAtIndex = tempArray[i].data;
+        //
+        //                                                             var headingEndIndex = stringAtIndex.indexOf('\r',1);
+        //                                                             var testString=stringAtIndex.slice(0,headingEndIndex);
+        //                                                             var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+        //                                                             finalArray15.push(ObjectToSaveInArray);
+        //
+        //                                                           }
+        //                                                         })
+
+
+                                                                // var finalArray16=[];
+                                                                //
+                                                                // RNFS.readFile(path16)
+                                                                //     .then((contents) => {
+                                                                //       var contentString = contents.toString();
+                                                                //       var chaptersArray=[];
+                                                                //       // For Chapters Titles denoted by & Sign
+                                                                //       for (var i = 0; i < contentString.length; i++) {
+                                                                //         var firstIndex=contentString.indexOf('&',i);
+                                                                //         var secondIndex=contentString.indexOf('&',firstIndex+1);
+                                                                //         if (secondIndex==-1 || firstIndex==-1) {
+                                                                //           break;
+                                                                //         }
+                                                                //
+                                                                //         var tempString=contentString.slice(firstIndex+1,secondIndex-1);
+                                                                //         chaptersArray.push(tempString);
+                                                                //         i=secondIndex;
+                                                                //       }
+                                                                //
+                                                                //
+                                                                //       var titlesArray=[];
+                                                                //
+                                                                //       // For Main Titles denoted by @ Sign
+                                                                //       for (var i = 0; i < chaptersArray.length; i++) {
+                                                                //         var stringAtIndex = chaptersArray[i];
+                                                                //         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+                                                                //         var testString=stringAtIndex.slice(0,headingEndIndex);
+                                                                //
+                                                                //         for (var x = 0; x < stringAtIndex.length; x++) {
+                                                                //
+                                                                //           var firstIndex=stringAtIndex.indexOf('@',x);
+                                                                //           var secondIndex=stringAtIndex.indexOf('@',firstIndex+1);
+                                                                //           if (secondIndex==-1 || firstIndex==-1) {
+                                                                //             break;
+                                                                //           }
+                                                                //
+                                                                //           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+                                                                //           // Save String and Heading Both in Array
+                                                                //           var ObjectToSaveInArray = {heading:testString,data:tempString.trim()};
+                                                                //           titlesArray.push(ObjectToSaveInArray);
+                                                                //           x=secondIndex;
+                                                                //
+                                                                //         }
+                                                                //
+                                                                //       }
+                                                                //
+                                                                //       var tempArray=[];
+                                                                //       // For Nuskha Jaat denoted by $ Sign
+                                                                //       for (var i = 0; i < titlesArray.length; i++) {
+                                                                //
+                                                                //         var mainHeading = titlesArray[i].heading;
+                                                                //         var stringAtIndex = titlesArray[i].data;
+                                                                //
+                                                                //         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+                                                                //         var testString=stringAtIndex.slice(0,headingEndIndex);
+                                                                //
+                                                                //         for (var x = 0; x < stringAtIndex.length; x++) {
+                                                                //
+                                                                //           var firstIndex=stringAtIndex.indexOf('$',x);
+                                                                //           var secondIndex=stringAtIndex.indexOf('$',firstIndex+1);
+                                                                //           if (secondIndex==-1 || firstIndex==-1) {
+                                                                //             break;
+                                                                //           }
+                                                                //
+                                                                //           var tempString=stringAtIndex.slice(firstIndex+1,secondIndex-1);
+                                                                //
+                                                                //           var ObjectToSaveInArray = {mainheading:mainHeading,subheading:testString,data:tempString.trim()};
+                                                                //           tempArray.push(ObjectToSaveInArray);
+                                                                //           x=secondIndex;
+                                                                //
+                                                                //         }
+                                                                //       }
+                                                                //
+                                                                //       // Extract Headings from Sub Content From $ Sign.
+                                                                //
+                                                                //       // For Nuskha Jaat denoted by $ Sign
+                                                                //       for (var i = 0; i < tempArray.length; i++) {
+                                                                //
+                                                                //         var mainHeading = tempArray[i].mainheading;
+                                                                //         var subHeading = tempArray[i].subheading;
+                                                                //         var stringAtIndex = tempArray[i].data;
+                                                                //
+                                                                //         var headingEndIndex = stringAtIndex.indexOf('\r',1);
+                                                                //         var testString=stringAtIndex.slice(0,headingEndIndex);
+                                                                //         var ObjectToSaveInArray = {mainheading:mainHeading,subheading:subHeading,subbestheading:testString,data:stringAtIndex.trim()};
+                                                                //         finalArray16.push(ObjectToSaveInArray);
+                                                                //
+                                                                //       }
+                                                                //
+                                                                //       this.setState({showProgress:false});
+                                                                //       AsyncStorage.setItem('booksData', JSON.stringify(this.state.bookArray));
+                                                                //       this.horizontalrowselected();
+                                                                //       this.dumpIntoDB();
+                                                                //     })
 
         var mainArray=[];
         // First Array is for Articles and Other is for Books
-        var Object0ToSaveInMainArray = {title:'مضامین',data:finalArray0};
+        // var Object0ToSaveInMainArray = {title:'مضامین',data:finalArray0};
         var Object1ToSaveInMainArray = {title:'آرنڈ',data:finalArray1};
-        var Object2ToSaveInMainArray = {title:'اندرائین',data:finalArray2};
-        var Object3ToSaveInMainArray = {title:'انگور',data:finalArray3};
-        var Object4ToSaveInMainArray = {title:'آم',data:finalArray4};
-        var Object5ToSaveInMainArray = {title:'خواص آک',data:finalArray5};
-        var Object6ToSaveInMainArray = {title:'بادام',data:finalArray6};
-        var Object7ToSaveInMainArray = {title:'برگد',data:finalArray7};
-        var Object8ToSaveInMainArray = {title:'دھتورہ',data:finalArray8};
-        var Object9ToSaveInMainArray = {title:'خواص شہد',data:finalArray9};
-        var Object10ToSaveInMainArray = {title:'دھنیہ',data:finalArray10};
-        var Object11ToSaveInMainArray = {title:'دودھ',data:finalArray11};
-        var Object12ToSaveInMainArray = {title:'گاجر',data:finalArray12};
-        var Object13ToSaveInMainArray = {title:'گھی کوار',data:finalArray13};
-        var Object14ToSaveInMainArray = {title:'گھی',data:finalArray14};
-        var Object15ToSaveInMainArray = {title:'دھی',data:finalArray15};
-        var Object16ToSaveInMainArray = {title:'گل سرک',data:finalArray16};
+        // var Object2ToSaveInMainArray = {title:'اندرائین',data:finalArray2};
+        // var Object3ToSaveInMainArray = {title:'انگور',data:finalArray3};
+        // var Object4ToSaveInMainArray = {title:'آم',data:finalArray4};
+        // var Object5ToSaveInMainArray = {title:'خواص آک',data:finalArray5};
+        // var Object6ToSaveInMainArray = {title:'بادام',data:finalArray6};
+        // var Object7ToSaveInMainArray = {title:'برگد',data:finalArray7};
+        // var Object8ToSaveInMainArray = {title:'دھتورہ',data:finalArray8};
+        // var Object9ToSaveInMainArray = {title:'خواص شہد',data:finalArray9};
+        // var Object10ToSaveInMainArray = {title:'دھنیہ',data:finalArray10};
+        // var Object11ToSaveInMainArray = {title:'دودھ',data:finalArray11};
+        // var Object12ToSaveInMainArray = {title:'گاجر',data:finalArray12};
+        // var Object13ToSaveInMainArray = {title:'گھی کوار',data:finalArray13};
+        // var Object14ToSaveInMainArray = {title:'گھی',data:finalArray14};
+        // var Object15ToSaveInMainArray = {title:'دھی',data:finalArray15};
+        // var Object16ToSaveInMainArray = {title:'گل سرک',data:finalArray16};
 
-        mainArray.push(Object0ToSaveInMainArray);
+        // mainArray.push(Object0ToSaveInMainArray);
         mainArray.push(Object1ToSaveInMainArray);
-        mainArray.push(Object2ToSaveInMainArray);
-        mainArray.push(Object3ToSaveInMainArray);
-        mainArray.push(Object4ToSaveInMainArray);
-        mainArray.push(Object5ToSaveInMainArray);
-        mainArray.push(Object6ToSaveInMainArray);
-        mainArray.push(Object7ToSaveInMainArray);
-        mainArray.push(Object8ToSaveInMainArray);
-        mainArray.push(Object9ToSaveInMainArray);
-        mainArray.push(Object10ToSaveInMainArray);
-        mainArray.push(Object11ToSaveInMainArray);
-        mainArray.push(Object12ToSaveInMainArray);
-        mainArray.push(Object13ToSaveInMainArray);
-        mainArray.push(Object14ToSaveInMainArray);
-        mainArray.push(Object15ToSaveInMainArray);
-        mainArray.push(Object16ToSaveInMainArray);
+        // mainArray.push(Object2ToSaveInMainArray);
+        // mainArray.push(Object3ToSaveInMainArray);
+        // mainArray.push(Object4ToSaveInMainArray);
+        // mainArray.push(Object5ToSaveInMainArray);
+        // mainArray.push(Object6ToSaveInMainArray);
+        // mainArray.push(Object7ToSaveInMainArray);
+        // mainArray.push(Object8ToSaveInMainArray);
+        // mainArray.push(Object9ToSaveInMainArray);
+        // mainArray.push(Object10ToSaveInMainArray);
+        // mainArray.push(Object11ToSaveInMainArray);
+        // mainArray.push(Object12ToSaveInMainArray);
+        // mainArray.push(Object13ToSaveInMainArray);
+        // mainArray.push(Object14ToSaveInMainArray);
+        // mainArray.push(Object15ToSaveInMainArray);
+        // mainArray.push(Object16ToSaveInMainArray);
 
         Constants.BookArray=mainArray;
         Constants.isBookLoaded=true;
@@ -4021,7 +4099,7 @@ console.log('insertDB Called');
 
  horizontalrowselected(){
 
-   console.log('Akhzar Nazir New Logic Shuru',this.state.bookArray);
+  //  console.log('Akhzar Nazir New Logic Shuru',this.state.bookArray);
 
    for (var u = 0; u < this.state.urduAlphabet.length; u++) {
    var letter=this.state.urduAlphabet[u].key;

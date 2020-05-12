@@ -29,6 +29,8 @@ var DEVICE_WIDTH=window.width;
 var DEVICE_HEIGHT=window.height;
 var Cell_Width=DEVICE_WIDTH/2
 
+var BookManager=require('./BookManager');
+
 class BooksListScreen extends Component{
 
     constructor(props){
@@ -145,10 +147,24 @@ class BooksListScreen extends Component{
 
     rowSelected(item){
 
-        var bookName = this.state.BookNameArray[item.key]
-        console.log('اسلام علیکم',bookName);
+        var bookName = BookManager.completeBookArray[item.key]
+        // console.log('Final Dict is = ',bookName);
+        // console.log('Final Array is = ',bookName.chapter_name);
 
-        this.fetchDataFromDB(bookName);
+        this.props.navigation.navigate('ChaptersListComponent',{
+          finalArray:BookManager.completeBookArray[item.key].data,
+          finalDict:BookManager.completeBookArray[item.key],
+        });
+
+
+
+        // this.fetchDataFromDB(bookName);
+
+
+
+
+
+
 
         // Old Logic
         // var bookNameWithoutExtension = bookName;
@@ -216,13 +232,13 @@ class BooksListScreen extends Component{
             <View style={{flex:1}}>
             <FlatList
                   style={{flex:1,marginBottom:20}}
-                  data={this.state.dataArray}
+                  data={BookManager.completeBookArray}
                   numColumns={2}
                   renderItem={({item}) =>
                   <TouchableOpacity style={{marginTop:10,backgroundColor:'white',width:Cell_Width}} onPress={()=>this.rowSelected(item)}>
                     <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
                     <Image source={item.cover} style={{width:100,height:140}}/>
-                    <Text style={{color:'#38803B',marginTop:3,textAlign:'center',fontSize:15,fontWeight:'bold'}}>{item.bookName}</Text>
+                    <Text style={{color:'#38803B',marginTop:3,textAlign:'center',fontSize:15,fontWeight:'bold'}}>{item.title}</Text>
                     </View>
                   </TouchableOpacity>
                 }
