@@ -54,7 +54,7 @@ class ListScreen extends Component{
       }
 
 componentDidMount(){
-
+  // Alert.alert('ListScreen');
   // For Test Akhzar Nazir
   if(Platform.OS === 'ios'){
   var path0='';
@@ -245,7 +245,6 @@ actionTextBlur(){
 
 rowSelected(item){
   var selectedItem={ArticlesId:item.key,heading:item.subbestheading,data:item.data};
-
   this.props.navigation.navigate('ArticlesReading',{
     selectedItem:selectedItem,
   });
@@ -263,9 +262,10 @@ rowSelected(item){
 
 actionButtonSearch(){
 
+  // Alert.alert('Search Button');
   // this.searchExactWord();
-  var stringToSearch=this.state.txtSearch.trim();
-   console.log('String to Search' + stringToSearch.length);
+  var stringToSearch = 'اٹھراہ' //this.state.txtSearch.trim();
+  console.log('String to Search' + stringToSearch.length);
    // stringToSearch=stringToSearch;
 
   if (stringToSearch.length <=0) {
@@ -290,15 +290,19 @@ actionButtonSearch(){
     var subbestheading=this.state.testArray[i].subbestheading;
     var tempString=this.state.testArray[i].data;
     var tempPara=tempString;
-
     var index = -1;
 
    if (index == -1)
     {
       console.log("findingggg");
       index=mainHeading.indexOf(stringToSearch);
+      console.log('i is = ', i);
+      console.log('main heading is = ', mainHeading);
+      console.log('sub heading is = ', subHeading);
+      console.log('index is = ', index);
       if (index==-1) {
         index=subHeading.indexOf(stringToSearch);
+        console.log('index is = ', index);
       }
       if (index==-1) {
         index=subbestheading.indexOf(stringToSearch);
@@ -306,18 +310,13 @@ actionButtonSearch(){
       if (index==-1) {
         index=tempPara.indexOf(stringToSearch);
       }
-
     }
-
-
-
 
     if (index != -1) {
       var object={key:counter,data:this.state.testArray[i]}
       searchedArray.push(object);
       counter++;
     }
-
   }
 
   var searchResult={'word':stringToSearch,'searchedArray':searchedArray,};
@@ -362,7 +361,6 @@ actionButtonSearch(){
   }
 
   backFunction(){
-
     this.props.navigation.pop()
       // finalArray:finalArray,
     // }
@@ -376,11 +374,7 @@ actionButtonSearch(){
     //   },
     // })
 
-  }
-
-
-
-
+}
 
   render(){
     return(

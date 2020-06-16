@@ -86,11 +86,12 @@ class BooksListScreen extends Component{
       // Alert.alert('BooksListScreen');
 
       AsyncStorage.getItem("booksData").then((value) => {
+      // console.log('value = ',value);
       var testVar = JSON.parse(value);
+      console.log('testVar = ',testVar);
       if (testVar == null) {
         // this.actionButtonLoadBook();
       }else{
-
       this.setState({
         bookArray:JSON.parse(value)
       });
@@ -147,13 +148,13 @@ class BooksListScreen extends Component{
 
     rowSelected(item){
 
-        var bookName = BookManager.completeBookArray[item.key]
+        var bookName = this.state.bookArray[item.key]
         // console.log('Final Dict is = ',bookName);
         // console.log('Final Array is = ',bookName.chapter_name);
 
         this.props.navigation.navigate('ChaptersListComponent',{
-          finalArray:BookManager.completeBookArray[item.key].data,
-          finalDict:BookManager.completeBookArray[item.key],
+          finalArray:this.state.bookArray[item.key].data,
+          finalDict:this.state.bookArray[item.key],
         });
 
 
@@ -232,7 +233,7 @@ class BooksListScreen extends Component{
             <View style={{flex:1}}>
             <FlatList
                   style={{flex:1,marginBottom:20}}
-                  data={BookManager.completeBookArray}
+                  data={this.state.bookArray}
                   numColumns={2}
                   renderItem={({item}) =>
                   <TouchableOpacity style={{marginTop:10,backgroundColor:'white',width:Cell_Width}} onPress={()=>this.rowSelected(item)}>

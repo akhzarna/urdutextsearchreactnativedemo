@@ -37,7 +37,7 @@ class ArticlesReading extends Component{
   }
 
 componentDidMount(){
-  // Alert.alert(this.state.mainData);
+  Alert.alert('Article Reading');
 }
 
   render(){

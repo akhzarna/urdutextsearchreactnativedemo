@@ -31,7 +31,6 @@
   class ChaptersListComponent extends Component{
     constructor(props){
       super(props);
-
         //     var finalArray=[];
         //     for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
         //     var arrayList=[];
@@ -69,15 +68,16 @@
         //       finalArray.push(arrayList);
         //
         // }
-
         this.state={
-          searchedData:this.props.navigation.state.params.finalArray,
+          mainArray:this.props.navigation.state.params.finalArray,
+          searchArray:this.props.navigation.state.params.finalArray,
           dataArray:[],
           // showSearchField:false,
           // finalArray:finalArray,
           // textSearch:'',
           // showData:[],
         }
+        console.log('Main Data is == ',this.state.mainArray);
   }
 
   componentDidMount(){
@@ -145,7 +145,7 @@
 //     console.log('Final tempArrayNew is = ',tempArray);
 //
 //     this.setState({
-//       searchedData:tempArray,
+//       mainArray:tempArray,
 //       dataArray:tempArray,
 //     });
 
@@ -179,7 +179,7 @@
   }
 
   //  componentDidMount(){     4 testing
-  //    if(this.state.searchedData.length){
+  //    if(this.state.mainArray.length){
   //    //  Alert.alert("calling");
   //   this.rowSelected();
   //  }
@@ -192,14 +192,14 @@
   // // // }
   // //   var tempArray=[];    4 testing
   // //   var count=0;
-  // //  // Alert.alert(this.state.searchedData[1].title,this.state.searchedData[1].data[0].data);
-  // //   // Alert.alert('0'+this.state.searchedData.length);
-  // //      //for(var i=0; i<this.state.searchedData.length; i++){
+  // //  // Alert.alert(this.state.mainArray[1].title,this.state.mainArray[1].data[0].data);
+  // //   // Alert.alert('0'+this.state.mainArray.length);
+  // //      //for(var i=0; i<this.state.mainArray.length; i++){
   // //       for(var i=0; i<15; i++){
-  // //     var title= this.state.searchedData[i].title;
+  // //     var title= this.state.mainArray[i].title;
 
   // //     for(var j=0; j<1; j++){
-  // //     var data= this.state.searchedData[i].data[j].data;
+  // //     var data= this.state.mainArray[i].data[j].data;
 
   // //     count = count+1;
   // //     var obj={data:data,title:title,key:count}
@@ -211,32 +211,27 @@
   // }
 
   rowSelected(item,section){
-
     if (item.key == -1) {
       return ;
     }
-
     console.log('Selected Row Section is = ' + section.key);
-    console.log('Selected Row item is = ' + item.key);
-    console.log('Final Data is = ' + this.state.searchedData[section.key].data[item.key].title);
+    // console.log('Selected Row item is = ' + item.key);
+    // console.log('Final Data is = ' + this.state.mainArray[section.key].data[item.key].title);
     var finalArrayClone = [];
-    finalArrayClone.push(this.state.searchedData[section.key].data[item.key]);
-
-    console.log('Final clone Data is = ' + finalArrayClone.length);
-    console.log('Final clone Data is = ' + finalArrayClone.data);
-
-    if (this.state.searchedData[section.key].data[item.key].data.length>1) {
+    finalArrayClone.push(this.state.mainArray[section.key].data[item.key]);
+    // console.log('Final clone Data is = ' + finalArrayClone.length);
+    // console.log('Final clone Data is = ' + finalArrayClone.data);
+    if (this.state.mainArray[section.key].data[item.key].data.length>1) {
       this.props.navigation.navigate('ChaptersListDetailComponent',{
         finalArray:finalArrayClone,
       });
     }else{
       this.props.navigation.navigate('ReadingComponentFromBooks',{
-        sectionArray:this.state.searchedData[section.key].data[item.key].data,
+        sectionArray:this.state.mainArray[section.key].data[item.key].data,
         selectedRow:0,
-        disease_name:this.state.searchedData[section.key].data[item.key].title
+        disease_name:this.state.mainArray[section.key].data[item.key].title
       });
     }
-
 
     // this.props.navigation.navigate('ReadingComponentFromBooks',{
     //   // selectedItem:selectedItem,
@@ -250,103 +245,117 @@
     // this.props.navigation.navigate('DescriptionScreen',{
     //   selectedItem:selectedItem,
     // });
-
   }
 
   actButtonSearch(){
+    this.state.showSearchField = !this.state.showSearchField;
     this.setState({
-      showSearchField:true,
+      showSearchField:this.state.showSearchField,
     })
-
-    // this.refs.SearchInput.focus();
-
   }
+
   actSearch(text){
-
-
+    console.log('Searching Started');
     var searchWord=text.trim();
-    var orignalData=this.state.dataArray;
-    this.setState({
-    textSearch:searchWord
-  })
-    if (searchWord == '') {
-      this.setState({
-        searchedData:orignalData,
-      })
-      return;
-    }
-    var finalArray=[];
-    for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
-    var arrayList=[];
-    for (var i = 0; i < this.props.navigation.state.params.finalArray[x].searchedArray.length; i++) {
-      var paragraph=''+this.props.navigation.state.params.finalArray[x].searchedArray[i].data.data;
 
+    // data = this.state.mainArray;
+    // console.log('Data Before is = ',data);
+    //
+    // data = data.filter(data=>{
+    //   data.title.match(text);
+    // });
+    //
+    // console.log('Data After is = ',data);
+
+    // var orignalData=this.state.mainArray;
+    // this.setState({
+    // textSearch:searchWord
+    // })
+    // if (searchWord == '') {
+    // this.setState({
+    // mainArray:orignalData,
+    // })
+    // return;
+    // }
+
+    // var finalArray=[];
+    var tempArray=[];
+    for (var x = 0; x < this.state.mainArray.length; x++) {
+      // var arrayList=[];
+      var paragraph=''+this.state.mainArray[x].title;
       var index=paragraph.indexOf(searchWord);
-      // // console.log('Index to HightLight is = '+index);
-      if (index == -1) {
-        continue;
-      }
-      var data='';
-      var firstIndex=-1;
-      var secondIndex=-1;
-      if (index-15>0) {
-        var tempIndex=index-15;
-        firstIndex=paragraph.indexOf(' ',tempIndex);
+      console.log('x is = ', x);
+      console.log('index is = ', index);
+      if (index !=-1){
+        tempArray.push(this.state.mainArray[x]);
       }else{
-        firstIndex=0;
+        for (var y = 0; y < this.state.mainArray[x].data.length; y++) {
+          var paragraph=''+this.state.mainArray[x].data[y].title;
+          var index=paragraph.indexOf(searchWord);
+          console.log('x is = ', x);
+          console.log('index is = ', index);
+        }
       }
-      secondIndex=paragraph.indexOf(' ',index+100);
-      if (secondIndex==-1) {
-        secondIndex==paragraph.length;
-      }
-      data=paragraph.slice(firstIndex,secondIndex);
-      data=data.replace(/\r|\n/g,' ');
-      data=data.replace(/#/g,' ');
-      // data=data.replace(searchWord,'<b>'+searchWord+'</b>');
-      // data='<p>'+data+'</p>';
-      var frequency=this.findFrequencyOfSearchWord(paragraph)
 
-      // // console.log('paragraph is = ' + paragraph);
-      // // console.log('data is = ' + data);
-      // // console.log('key is = ' + i);
-      // // console.log('frequency is = ' + frequency);
+      // if (index == -1) {
+      //   continue;
+      // }
 
-      var object={data:data,key:i,frequency:frequency};
-      arrayList.push(object)
-      arrayList.sort(function(a,b){
-        return parseInt(b.frequency)-parseInt(a.frequency);
-      })
+      // var data='';
+      // var firstIndex=-1;
+      // var secondIndex=-1;
+      // if (index-15>0) {
+      //   var tempIndex=index-15;
+      //   firstIndex=paragraph.indexOf(' ',tempIndex);
+      // }else{
+      //   firstIndex=0;
+      // }
+      // secondIndex=paragraph.indexOf(' ',index+100);
+      // if (secondIndex==-1) {
+      //   secondIndex==paragraph.length;
+      // }
+      // data=paragraph.slice(firstIndex,secondIndex);
+      // data=data.replace(/\r|\n/g,' ');
+      // data=data.replace(/#/g,' ');
 
-  }
-  if (arrayList.length == 0) {
-    var object={data:"نتیج نہیں ملا",key:-1,frequency:"1"};
-    arrayList.push(object);
-  }
-      finalArray.push(arrayList);
+      // // data=data.replace(searchWord,'<b>'+searchWord+'</b>');
+      // // data='<p>'+data+'</p>';
 
+      // var frequency=this.findFrequencyOfSearchWord(paragraph)
+      // var object={data:data,key:i,frequency:frequency};
+      // arrayList.push(object)
+      // arrayList.sort(function(a,b){
+      //   return parseInt(b.frequency)-parseInt(a.frequency);
+      // })
+
+  // if (arrayList.length == 0) {
+  //   Alert.alert('No Result Found');
+  //   var object={data:"نتیج نہیں ملا",key:-1,frequency:"1"};
+  //   arrayList.push(object);
+  // }
+    // finalArray.push(arrayList);
+
+    console.log('tempArray is = ',tempArray);
 }
 
-var tempArray=[];
-for (var i = 0; i < finalArray.length; i++) {
-  var data=finalArray[i];
-  var title=this.props.navigation.state.params.finalArray[i].bookname
-  var key=i;
-  var object={data:data,key:key,title:title};
-  tempArray.push(object);
-}
+this.setState({
+searchArray:tempArray,
+})
 
-
-    this.setState({
-      searchedData:tempArray,
-
-    })
-
-
+// var tempArray=[];
+// for (var i = 0; i < finalArray.length; i++) {
+//   var data=finalArray[i];
+//   var title=this.props.navigation.state.params.finalArray[i].bookname
+//   var key=i;
+//   var object={data:data,key:key,title:title};
+//   tempArray.push(object);
+// }
+//
+//     this.setState({
+//       mainArray:tempArray,
+//     })
 
   }
-
-
-
 
  actionTextBlur(){
 
@@ -362,9 +371,7 @@ for (var i = 0; i < finalArray.length; i++) {
     render(){
 
       return(
-
         <View style={styles.outerContainer}>
-
         <View style={{height:100}}>
         <ImageBackground resizeMode={'stretch'} style={{flex:1,}} source={headerImage}>
           <View style={{marginTop:30,flexDirection:'row'}}>
@@ -444,7 +451,7 @@ for (var i = 0; i < finalArray.length; i++) {
           </Text>
         </View>
         }
-        sections={this.state.searchedData}
+        sections={this.state.showSearchField?this.state.searchArray:this.state.mainArray}
         />
 
         {

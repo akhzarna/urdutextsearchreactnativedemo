@@ -23,7 +23,7 @@ class DisplayResultScreen extends Component{
     super(props);
 
           Alert.alert('DisplayResultScreen');
-          
+
           var finalArray=[];
           for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
           var arrayList=[];
@@ -85,12 +85,8 @@ class DisplayResultScreen extends Component{
 findFrequencyOfSearchWord(paragraph){
 
     var searchWord=this.props.navigation.state.params.finalArray[0].word;
-    // // console.log('Search Result For Frequency is = ' + searchWord);
     var freqCounter = 0;
     var headingEndIndex = paragraph.indexOf('\r',1);
-
-    // // console.log('Heading End Index is = ' + headingEndIndex);
-    // // console.log('Paragraph Length is = ' + paragraph.length);
 
     for (var j = 0; j <paragraph.length; j++) {
             var index=paragraph.indexOf(searchWord,j);
@@ -110,26 +106,14 @@ findFrequencyOfSearchWord(paragraph){
 
 rowSelected(item,section){
 
-// // console.log('Choosed Item is =' + item);
 var bookName= section.title;
-// console.log("book name dispatching===",bookName);
 var dataSelected=this.props.navigation.state.params.finalArray[section.key].searchedArray[item.key].data;
-
-// // console.log('DataSelected is =' + dataSelected);
 var searchWord=this.props.navigation.state.params.finalArray[0].word;
 var selectedItem={key:item.key,data:dataSelected,searchWord:searchWord,bookName:bookName};
 
   this.props.navigation.navigate('DescriptionScreen',{
     selectedItem:selectedItem,
   });
-
-  // this.props.navigator.push({
-  //   screen:'DescriptionScreen',
-  //   passProps:{selectedItem},
-  //   navigatorStyle:{
-  //     navBarHidden:true,
-  //   },
-  // })
 
 }
 
@@ -184,11 +168,10 @@ var selectedItem={key:item.key,data:dataSelected,searchWord:searchWord,bookName:
       //               </TouchableOpacity>
       //             }
       //             />
-}
+      }
       </View>
-
-    );}
-
+    );
+  }
 }
 
 const styles=StyleSheet.create({
