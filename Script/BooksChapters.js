@@ -4465,7 +4465,7 @@ callSomeFunction(index){
           <Text numberOfLines={1} style={{
             backgroundColor:'transparent',color:'white',textAlign:'right',
             marginRight:20,marginLeft:20,fontSize:20,
-            fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+            fontFamily:'Jameel-Noori-Nastaleeq',
           }}> {item.title} / {item.subbestheading} / {item.data} </Text>
           </View>
           </TouchableOpacity>
@@ -4525,8 +4525,7 @@ inputStyle:{
   paddingRight:15,
   borderColor:'#E0E3E7',
   color:'#AEAEAE',
-  // fontFamily:'Adobe Arabic',
-  fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+  fontFamily:'Jameel-Noori-Nastaleeq',
   fontSize:22,
   backgroundColor:'white',
   // backgroundColor:'green',
@@ -4558,20 +4557,20 @@ marginTop:15,
 
 textStyle:{
   color:'white',
-  fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+  fontFamily:'Jameel-Noori-Nastaleeq',
   fontSize:25,
   // fontWeight:'bold',
 },
 textStyleP:{
   color:'white',
-  fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+  fontFamily:'Jameel-Noori-Nastaleeq',
   fontSize:25,
   backgroundColor:'blue',
   // fontWeight:'bold',
 },
 textStyleNP:{
   color:'white',
-  fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+  fontFamily:'Jameel-Noori-Nastaleeq',
   fontSize:25,
   backgroundColor:'transparent',
   // fontWeight:'bold',

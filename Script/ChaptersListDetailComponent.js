@@ -11,7 +11,6 @@
     Image,
     Platform,
     SectionList,
-    ImageBackground,
     Dimensions,
     TextInput,
   } from 'react-native';
@@ -32,7 +31,7 @@
     constructor(props){
       super(props);
 
-            console.log('Final Array in ChaptersListDetailComponent = ' + this.props.navigation.state.params.finalArray);
+        // console.log('Final Array in ChaptersListDetailComponent = ' + this.props.navigation.state.params.finalArray);
 
         //     var finalArray=[];
         //     for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
@@ -81,9 +80,9 @@
           // showData:[],
         }
 
-        console.log('searchedData count is = ' + this.state.searchedData.length);
-        console.log('searchedData count is = ' + this.state.searchedData[0]);
-        console.log('searchedData count is = ' + this.state.searchedData[0].data);
+        // console.log('searchedData count is = ' + this.state.searchedData.length);
+        // console.log('searchedData count is = ' + this.state.searchedData[0]);
+        // console.log('searchedData count is = ' + this.state.searchedData[0].data);
 
         // console.log('Final Data Array for Section LIST is = ' + this.state.dataArray);
   }
@@ -198,10 +197,14 @@
     // selectedRow:0,
     // disease_name:this.state.searchedData[section.key].data[item.key].title
 
+    // console.log('selectedRow ===',this.state.searchedData[0]);
+
     this.props.navigation.navigate('ReadingComponentFromBooks',{
       sectionArray:this.state.searchedData[0].data,
       selectedRow:item.key,
-      disease_name:this.state.searchedData[0].title
+      title:this.state.searchedData[0].title,
+      // disease_name:this.state.searchedData[0].title,
+      // prescription_name:this.state.searchedData[0].title
     });
 
     // this.props.navigation.navigate('ReadingScreen',{
@@ -327,19 +330,16 @@
 
 
     render(){
-
       return(
-
         <View style={styles.outerContainer}>
+        <Header title={this.props.navigation.state.params.title} showMenu={false} navigator={this.props.navigator} navigation={this.props.navigation}/>
 
+        {/*
         <View style={{height:100}}>
-        <ImageBackground resizeMode={'stretch'} style={{flex:1,}} source={headerImage}>
           <View style={{marginTop:30,flexDirection:'row'}}>
-
                 <TouchableOpacity onPress={()=>this.actButtonSearch()} style={{marginLeft:10,marginRight:10,}}>
                   <Image style={{width:30,height:30}} source={searchIcon}/>
                 </TouchableOpacity>
-
                 <View style={{flex:1,marginLeft:10,marginRight:10}}>
                 {
                   this.state.showSearchField?(
@@ -368,25 +368,19 @@
                     <Text style={{
                       textAlign:'center',
                       backgroundColor:'transparent',
-                      fontFamily:'Aslam',
+                      fontFamily:'MehrNastaliqWeb',
                       color:'white',
                       fontSize:20,
-
-                    }}>{}</Text>
+                    }}>{this.props.navigation.state.params.title}</Text>
                   )
                 }
                 </View>
-
                 <TouchableOpacity onPress={()=>this.props.navigation.pop()} style={{marginRight:10}}>
                 <Image style={{width:30,height:22}} source={backArrow}/>
                 </TouchableOpacity>
-
-
           </View>
-
-        </ImageBackground>
         </View>
-
+        */}
 
         <SectionList
         renderItem={({item,section}) => <TouchableOpacity onPress={()=>this.rowSelected(item,section)}>
@@ -405,7 +399,7 @@
         <Text style={{color:'white',textAlign:'right',
         paddingLeft:15,paddingRight:15,
         fontSize:20,
-        fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+        fontFamily:'MehrNastaliqWeb',
           }}>
           {section.title}
           </Text>
@@ -462,7 +456,7 @@
     textStyle:{
       textAlign:'right',
       color:'#000000',
-      fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+      fontFamily:'MehrNastaliqWeb',
       fontSize:17,
     },
     iconDimention:{

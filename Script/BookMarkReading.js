@@ -237,7 +237,7 @@ const styles=StyleSheet.create({
     textStyle:{
       textAlign:'right',
       color:'#000000',
-      fontFamily:'Nafees Web Naskh',
+      fontFamily:'Jameel-Noori-Nastaleeq',
       fontSize:17,
       lineHeight:40,
     },
@@ -252,7 +252,7 @@ const styles=StyleSheet.create({
     },
     textStyle1:{
       color:'white',
-      fontFamily:'Nafees Web Naskh',
+      fontFamily:'Jameel-Noori-Nastaleeq',
       fontSize:25,
       fontWeight:'bold',
     },
@@ -294,7 +294,7 @@ const htmlstyles = StyleSheet.create({
   b:{
     fontWeight:'bold',
     color:'blue',
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'Jameel-Noori-Nastaleeq',
     fontSize:20,
   },
   wrapper: {
@@ -303,7 +303,7 @@ const htmlstyles = StyleSheet.create({
    p: {
      textAlign: "right",
      lineHeight:30,
-     fontFamily:'Nafees Web Naskh',
+     fontFamily:'Jameel-Noori-Nastaleeq',
      fontSize:18,
      color:'#606060',
     //  paddingTop:-40,
@@ -312,7 +312,7 @@ const htmlstyles = StyleSheet.create({
   h1:{
     fontSize:30,
     color:'red',
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'Jameel-Noori-Nastaleeq',
     textAlign: "right",
     // paddingTop:25,
     // lineHeight:20,

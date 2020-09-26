@@ -1,5 +1,5 @@
 completeBookArray:[
-                      {title:'Arind', cover:require('./Icons/Book1.jpg'), key:0,
+                      {title:'Arind', cover:require('./Icons/arind.jpg'), key:0,
                               data:[{key:0, title:'Arind se Sir ki Beemarian',
                                 data:[{key:0, title:'Arind Dard Sir Number 1',
                                   data:[{key:0, title:'Arind ka Dard Sir Waghaira Intihai Khatarnaak hai lekin paraishani ki zaroorat nahin hai (۹)'},

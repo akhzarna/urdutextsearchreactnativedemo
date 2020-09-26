@@ -33,7 +33,7 @@ class ReadingScreen extends Component{
     this.height = Dimensions.get('window').height;
 
     console.log('ReadingScreen ko kia chahiay = ', this.props.navigation.state.params.sectionArray);
-    
+
     for (var i = 0; i < this.props.navigation.state.params.sectionArray.length; i++) {
 
     var tempData = this.props.navigation.state.params.sectionArray[i].data.data;
@@ -265,7 +265,7 @@ seperateHeadingWord(data){
        const headingView=this.state.headingWords.map((item,index)=>{
          return(
            <View key={`item-${index}`} style={[styles.subViewStyle,{borderTopWidth:1,borderLeftWidth:1,borderBottomWidth:1,borderRightWidth:index==this.state.headingWords.length-1?1:0,backgroundColor:'#BFEBFF'}]} >
-           <Text style={{fontSize:27,color:'black',fontWeight:'bold' ,fontFamily:'Adobe Arabic',marginTop:10,marginBottom:10,marginLeft:5,marginRight:5,textAlign:'right'}}>{item} </Text>
+           <Text style={{fontSize:27,color:'black',fontWeight:'bold', fontFamily:'Jameel-Noori-Nastaleeq', marginTop:10,marginBottom:10,marginLeft:5,marginRight:5,textAlign:'right'}}>{item} </Text>
            </View>
          )
        });
@@ -351,7 +351,7 @@ const styles=StyleSheet.create({
     textStyle:{
       textAlign:'right',
       color:'#000000',
-      fontFamily:'Nafees Web Naskh',
+      fontFamily:'Jameel-Noori-Nastaleeq',
       fontSize:17,
       lineHeight:40,
     },
@@ -366,7 +366,7 @@ const styles=StyleSheet.create({
     },
     textStyle1:{
       color:'white',
-      fontFamily:'Nafees Web Naskh',
+      fontFamily:'Jameel-Noori-Nastaleeq',
       fontSize:25,
       // fontWeight:'bold',
     },
@@ -405,7 +405,7 @@ const htmlstyles = StyleSheet.create({
   b:{
     fontWeight:'bold',
     color:'blue',
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'Jameel-Noori-Nastaleeq',
     fontSize:20,
   },
   wrapper: {
@@ -414,7 +414,7 @@ const htmlstyles = StyleSheet.create({
    p: {
      textAlign: "right",
      lineHeight:35,
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'Jameel-Noori-Nastaleeq',
      fontSize:20,
      color:'#606060',
     //  paddingTop:-40,
@@ -423,7 +423,7 @@ const htmlstyles = StyleSheet.create({
   h1:{
     fontSize:30,
     color:'red',
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'Jameel-Noori-Nastaleeq',
     textAlign: "right",
     // paddingTop:25,
     // lineHeight:20,

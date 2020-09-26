@@ -23,7 +23,7 @@
 
   var isiPhone=Platform.OS === 'ios';
   var backArrow=require('./Icons/backArrow_2.png')
-  var headerImage=require('./Icons/header.png');
+  var headerImage=require('./Icons/headerstraight.png');
   var searchIcon =  require('./Icons/search_icon.png');
 
   const window = Dimensions.get('window');
@@ -77,13 +77,11 @@
           // textSearch:'',
           // showData:[],
         }
-        console.log('Main Data is == ',this.state.mainArray);
+        // console.log('Main Data is == ',this.state.mainArray);
   }
 
   componentDidMount(){
-
-    // Alert.alert('ChapterListComponent');
-
+  //  Alert.alert('ChapterListComponent');
 //     var tempArray=[];
 //     var flag = 0;
 //     var key = -1;
@@ -148,20 +146,15 @@
 //       mainArray:tempArray,
 //       dataArray:tempArray,
 //     });
-
-
-  }
+}
 
   findFrequencyOfSearchWord(paragraph){
-
       var searchWord=this.props.navigation.state.params.finalArray[0].word;
       // // console.log('Search Result For Frequency is = ' + searchWord);
       var freqCounter = 0;
       var headingEndIndex = paragraph.indexOf('\r',1);
-
       // // console.log('Heading End Index is = ' + headingEndIndex);
       // // console.log('Paragraph Length is = ' + paragraph.length);
-
       for (var j = 0; j <paragraph.length; j++) {
               var index=paragraph.indexOf(searchWord,j);
               if (index == -1) {
@@ -214,7 +207,12 @@
     if (item.key == -1) {
       return ;
     }
-    console.log('Selected Row Section is = ' + section.key);
+
+    console.log('section.key =',section.key);
+    console.log('item.key =',item.key);
+
+    console.log('selectedRow ===',this.state.mainArray[section.key].title);
+    // console.log('selectedRow ===',this.state.mainArray[section.key].data[item.key]);
     // console.log('Selected Row item is = ' + item.key);
     // console.log('Final Data is = ' + this.state.mainArray[section.key].data[item.key].title);
     var finalArrayClone = [];
@@ -224,12 +222,17 @@
     if (this.state.mainArray[section.key].data[item.key].data.length>1) {
       this.props.navigation.navigate('ChaptersListDetailComponent',{
         finalArray:finalArrayClone,
+        title:this.state.mainArray[section.key].title,
       });
     }else{
       this.props.navigation.navigate('ReadingComponentFromBooks',{
         sectionArray:this.state.mainArray[section.key].data[item.key].data,
         selectedRow:0,
-        disease_name:this.state.mainArray[section.key].data[item.key].title
+        title:this.state.mainArray[section.key].data[item.key].title,
+
+        // title:this.state.mainArray[section.key].title,
+        // disease_name:this.state.mainArray[section.key].data[item.key].title,
+        // prescription_name:this.state.mainArray[section.key].data[item.key].title
       });
     }
 
@@ -255,7 +258,7 @@
   }
 
   actSearch(text){
-    console.log('Searching Started');
+    // console.log('Searching Started');
     var searchWord=text.trim();
 
     // data = this.state.mainArray;
@@ -284,16 +287,16 @@
       // var arrayList=[];
       var paragraph=''+this.state.mainArray[x].title;
       var index=paragraph.indexOf(searchWord);
-      console.log('x is = ', x);
-      console.log('index is = ', index);
+      // console.log('x is = ', x);
+      // console.log('index is = ', index);
       if (index !=-1){
         tempArray.push(this.state.mainArray[x]);
       }else{
         for (var y = 0; y < this.state.mainArray[x].data.length; y++) {
           var paragraph=''+this.state.mainArray[x].data[y].title;
           var index=paragraph.indexOf(searchWord);
-          console.log('x is = ', x);
-          console.log('index is = ', index);
+          // console.log('x is = ', x);
+          // console.log('index is = ', index);
         }
       }
 
@@ -335,7 +338,8 @@
   // }
     // finalArray.push(arrayList);
 
-    console.log('tempArray is = ',tempArray);
+    // console.log('tempArray is = ',tempArray);
+
 }
 
 this.setState({
@@ -372,11 +376,12 @@ searchArray:tempArray,
 
       return(
         <View style={styles.outerContainer}>
-        <View style={{height:100}}>
-        <ImageBackground resizeMode={'stretch'} style={{flex:1,}} source={headerImage}>
-          <View style={{marginTop:30,flexDirection:'row'}}>
+        <Header title={this.props.navigation.state.params.finalDict.title} showMenu={false} navigator={this.props.navigator} navigation={this.props.navigation}/>
 
-                <TouchableOpacity onPress={()=>this.actButtonSearch()} style={{marginLeft:10,marginRight:10,}}>
+          {/*
+          <View style={{marginTop:0,flexDirection:'row'}}>
+
+              <TouchableOpacity onPress={()=>this.actButtonSearch()} style={{marginLeft:10,marginRight:10,}}>
                   <Image style={{width:30,height:30}} source={searchIcon}/>
                 </TouchableOpacity>
 
@@ -408,25 +413,21 @@ searchArray:tempArray,
                     <Text style={{
                       textAlign:'center',
                       backgroundColor:'transparent',
-                      fontFamily:'Aslam',
+                      fontFamily:'MehrNastaliqWeb',
                       color:'white',
                       fontSize:20,
 
                     }}>{this.props.navigation.state.params.finalDict.title}</Text>
                   )
                 }
-                </View>
+                  </View>
 
                 <TouchableOpacity onPress={()=>this.props.navigation.pop()} style={{marginRight:10}}>
                 <Image style={{width:30,height:22}} source={backArrow}/>
                 </TouchableOpacity>
 
-
-          </View>
-
-        </ImageBackground>
-        </View>
-
+            </View>
+            */}
 
         <SectionList
         renderItem={({item,section}) => <TouchableOpacity onPress={()=>this.rowSelected(item,section)}>
@@ -445,7 +446,7 @@ searchArray:tempArray,
         <Text style={{color:'white',textAlign:'right',
         paddingLeft:15,paddingRight:15,
         fontSize:20,
-        fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+        fontFamily:'MehrNastaliqWeb',
           }}>
           {section.title}
           </Text>
@@ -453,27 +454,6 @@ searchArray:tempArray,
         }
         sections={this.state.showSearchField?this.state.searchArray:this.state.mainArray}
         />
-
-        {
-
-        // <Header title='نتائج' navigator={this.props.navigator}/>
-        //         <FlatList
-        //               data={this.state.dataArray}
-        //               renderItem={({item}) =>
-        //               <TouchableOpacity onPress={()=>this.rowSelected(item)}>
-        //               <View style={styles.textView}>
-        //               <View style={{flex:1}}>
-        //               <Image source={arrow_left} style={styles.iconDimention}/>
-        //               </View>
-        //               <View style={{flex:8}}>
-        //               <Text numberOfLines={1} style={styles.textStyle}>{item.data}</Text>
-        //               </View>
-        //               </View>
-        //               <View style={styles.lineView}/>
-        //               </TouchableOpacity>
-        //             }
-        //             />
-  }
         </View>
 
       );
@@ -485,6 +465,8 @@ searchArray:tempArray,
     outerContainer:{
       flex:1,
       backgroundColor:'#F7FAFB',
+      // justifyContent: 'center',
+      // alignItems: 'center',
     },
     textView:{
       height:80,
@@ -503,7 +485,7 @@ searchArray:tempArray,
     textStyle:{
       textAlign:'right',
       color:'#000000',
-      fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+      fontFamily:'MehrNastaliqWeb',
       fontSize:17,
     },
     iconDimention:{

@@ -15,7 +15,7 @@ const {
 
 var menuIcon=require('./Icons/menu_icon.png');
 var backArrow=require('./Icons/backArrow_2.png')
-var headerImage=require('./Icons/header.png');
+var headerImage=require('./Icons/headerstraight.png');
 var searchIcon =  require('./Icons/search_icon.png');
 
 var isiPhone=Platform.OS === 'ios';
@@ -48,96 +48,81 @@ const Header = (props)=>{
  }
 
 	return (
-    <ImageBackground resizeMode={'stretch'} source={headerImage} style={{height:100,width:window.width,backgroundColor:'transparent'}}>
-       <View style={[styles.viewStyle,{backgroundColor:props.isHome?'transparent':'transparent'}]}>
-       <View style={[styles.textView,{}]}>
+    <ImageBackground resizeMode={'stretch'} source={headerImage} style={{height:60,width:window.width,backgroundColor:'transparent'}}>
+       <View style={[styles.container,{backgroundColor:props.isHome?'transparent':'transparent'}]}>
+
+        {/* In Header I have divided HeaderView 33% Each by dividing it into Left, Center and Right Views*/}
+        <View style={styles.leftView}>
+        </View>
+
+        <View style={styles.centerView}>
           <Text style={styles.titleStyle}> {props.title}
           </Text>
+        </View>
+
+        <View style={styles.rightView}>
+        <TouchableOpacity style={styles.buttonDimension}
+          onPress={actMenuClick}
+          >
+          {
+          props.showMenu? (<Image resizeMode={'contain'} style={styles.iconMenuDimension} source={menuIcon}/>
+          ):(<Image style={styles.iconStyle} source={backArrow}/>)
+          }
+        </TouchableOpacity>
+        </View>
+
        </View>
-       <View style={styles.notifyStyle}>
-       <TouchableOpacity style={styles.buttonDimension}
-       onPress={actMenuClick}
-       >
-       {
-         props.showMenu? (
-       <Image resizeMode={'contain'} style={styles.iconMenuDimension} source={menuIcon}/>
-           ):(
-            <Image style={styles.iconStyle} source={backArrow}/>
-             )
-       }
-       </TouchableOpacity>
-       </View>
-       </View>
-       </ImageBackground>
+    </ImageBackground>
 		);
 }
 
 const styles=StyleSheet.create({
-
-  headerStyle:{
-  justifyContent:'center',
-  width:window.width,
-	},
-
-  viewStyle:{
-    // height: 70,
-    // flex:1,
-    marginTop:10,
+  container: {
+    flex: 1,
     flexDirection:'row',
-    justifyContent:'center',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  leftView:{
+    flex: 1,
     alignItems:'center',
+    justifyContent:'center',
+  },
+  centerView:{
+    flex: 1,
+    alignItems:'center',
+    justifyContent:'center',
   },
   titleStyle:{
-  // textAlign:'right',
-  // fontWeight:'bold',
-  fontFamily:'Aslam',
-  marginLeft:40,
-  textAlign:'center',
-  color:'white',
-  fontSize:20,
+    fontFamily:'MehrNastaliqWeb',
+    color:'white',
+    fontSize:24,
   },
-  iconView:{
-    flex:1,
-    marginTop:10,
-    // backgroundColor:'green',
-  },
-  textView:{
-    flex:4,
-    marginTop:10,
-    // backgroundColor:'gray',
-    marginLeft:10,
-    // alignItems:'center',
-    // justifyContent:'center',
-    // backgroundColor:'red',
-  },
-  notifyStyle:{
-    flex:1,
-    height:40,
-    marginTop:10,
-    alignItems:'flex-end',
-    justifyContent:'center',
-    // backgroundColor:'yellow',
-  },
-  iconStyle:{
-    //31*46
-    width:30,
-     height:22,
-
-  },
-  buttonDimension:{
+  rightView:{
+    flex: 1,
     alignItems:'center',
     justifyContent:'center',
-    marginRight:8,
-    width:40,
-    height:40,
-    // marginLeft:15,
-    // backgroundColor:'gray',
+  },
+  buttonDimension:{
+    // flex: 1,
+    marginRight:0,
+    marginLeft:0,
+    width:75,
+    height:50,
+    alignItems:'flex-end',
+    justifyContent:'center',
+    // backgroundColor:'red',
+  },
+  iconStyle:{
+    // backgroundColor:'red',
+    // flex:5,
+    width:30,
+    height:22,
   },
   iconMenuDimension:{
     width:35,
-     height:23,
-     marginRight:15,
-
+    height:23,
+    marginRight:15,
   },
   buttonNotificationDimention:{
     alignItems:'center',
@@ -147,15 +132,10 @@ const styles=StyleSheet.create({
     height:40,
   },
   iconNotifyDimension:{
-     width:30,
-     height:25,
-     marginRight:15,
-     resizeMode: 'contain',
-  },
-  notifyheaderStyle:{
-  justifyContent:'center',
-  alignItems:'center',
-  height: 120,
+    width:30,
+    height:25,
+    marginRight:15,
+    resizeMode: 'contain',
   },
 });
 module.exports=Header;

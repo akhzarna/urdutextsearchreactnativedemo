@@ -434,7 +434,7 @@ actionButtonSearch(){
                     <Text style={{
                       textAlign:'center',
                       backgroundColor:'transparent',
-                      fontFamily:'Aslam',
+                      fontFamily:'Jameel-Noori-Nastaleeq',
                       color:'white',
                       fontSize:20,
                     }}> مضامین </Text>
@@ -506,7 +506,7 @@ const styles=StyleSheet.create({
     textStyle:{
       textAlign:'right',
       color:'#000000',
-      fontFamily:'Nafees Web Naskh',
+      fontFamily:'Jameel-Noori-Nastaleeq',
       fontSize:18,
     },
     iconDimention:{
@@ -524,7 +524,7 @@ const styles=StyleSheet.create({
       textAlign:'right',
       borderColor:'#E0E3E7',
       color:'#ACADAD',
-      fontFamily:'Adobe Arabic',
+      fontFamily:'Jameel-Noori-Nastaleeq',
       fontSize:22,
     },
     inputView:{

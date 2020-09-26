@@ -345,10 +345,9 @@ const styles=StyleSheet.create({
     textStyle:{
       textAlign:'right',
       paddingTop:20,
-      fontFamily:'Adobe Arabic',
+      fontFamily:'Jameel-Noori-Nastaleeq',
       color:'#606060',
       fontSize:23,
-      // fontFamily:'Nafees Web Naskh',
     },innerView:{
       flexDirection:'row',
       alignItems:'center',
@@ -362,7 +361,7 @@ const styles=StyleSheet.create({
     },
     textStyle1:{
       color:'white',
-      fontFamily:'Nafees Web Naskh',
+      fontFamily:'Jameel-Noori-Nastaleeq',
       fontSize:25,
       fontWeight:'bold',
     },
@@ -389,7 +388,7 @@ const htmlstyles = StyleSheet.create({
   b:{
     fontWeight:'bold',
     color:'blue',
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'Jameel-Noori-Nastaleeq',
     fontSize:20,
   },
   wrapper: {
@@ -398,8 +397,7 @@ const htmlstyles = StyleSheet.create({
    p: {
      textAlign: "right",
      lineHeight:35,
-     fontFamily:'Adobe Arabic',
-     // fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+     fontFamily:'Jameel-Noori-Nastaleeq',
      fontSize:25,
      color:'#606060',
     //  paddingTop:-40,
@@ -408,7 +406,7 @@ const htmlstyles = StyleSheet.create({
   h1:{
     fontSize:30,
     color:'red',
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'Jameel-Noori-Nastaleeq',
     textAlign: "right",
     // paddingTop:25,
     // lineHeight:20,

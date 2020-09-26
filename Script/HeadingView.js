@@ -12,11 +12,9 @@ const {
 } = require('react-native');
 
 const window = Dimensions.get('window');
-
 var isiPhone=Platform.OS === 'ios';
 
 const HeadingView = (props)=>{
-
   const heading=props.headingWords.map((item,index)=>{
     return(
       <View key={`item-${index}`} style={[styles.subViewStyle,{borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderBottomWidth:index==props.headingWords.length-1?1:0,backgroundColor:'#BFEBFF'}]} >
@@ -35,14 +33,11 @@ return(
 }
 
 
-
 const styles=StyleSheet.create({
   textStyle:{
     fontSize:25,
     color:'black',
-    // fontWeight:'bold',
-    // fontFamily:'',
-    fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+    fontFamily:'MehrNastaliqWeb',
     marginTop:10,
     marginBottom:10,
     textAlign:'center',

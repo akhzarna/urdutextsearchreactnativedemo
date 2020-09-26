@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 
 import {
@@ -32,26 +33,26 @@ class ReadingComponentFromBooks extends Component{
     this.width = Dimensions.get('window').width;
     this.height = Dimensions.get('window').height;
 
-    console.log('First time in ReadingComponentFromBooks data is = ', this.props.navigation.state.params.sectionArray);
-    console.log('First time in ReadingComponentFromBooks length is = ', this.props.navigation.state.params.sectionArray.length);
-    console.log('First time in ReadingComponentFromBooks selectedRow is = ', this.props.navigation.state.params.selectedRow);
-    console.log('Aik aur tarajba is = ', this.props.navigation.state.params.sectionArray[0].title);
-
+    // console.log('First time in ReadingComponentFromBooks data is = ', this.props.navigation.state.params.sectionArray);
+    // console.log('First time in ReadingComponentFromBooks length is = ', this.props.navigation.state.params.sectionArray.length);
+    // console.log('First time in ReadingComponentFromBooks selectedRow is = ', this.props.navigation.state.params.selectedRow);
+    // console.log('Aik aur tarajba is = ', this.props.navigation.state.params.sectionArray[0].title);
     // Alert.alert('Data is = ' + this.props.navigation.state.params.sectionArray.length);
 
     for (var i = 0; i < this.props.navigation.state.params.sectionArray.length; i++) {
 
     // var mainHeading = this.props.navigation.state.params.sectionArray[i].chapter_name;
     // var subHeading = this.props.navigation.state.params.sectionArray[i].disease_name;
-    var subbestHeading = this.props.navigation.state.params.disease_name;
+    // var subbestHeading = this.props.navigation.state.params.disease_name;
+    var subbestHeading = this.props.navigation.state.params.prescription_name;
     var tempData = this.props.navigation.state.params.sectionArray[i].title;
     var bookTitle = this.props.navigation.state.params.disease_name;
     // var headingWords = [mainHeading,subHeading,subbestHeading];
-    var headingWords = [subbestHeading];
     var index = tempData.indexOf('\r');
-    // var beforeHeading = tempData.slice(0,index);
+    var beforeHeading = tempData.slice(0,index);
     var afterHeading = tempData.slice(index+1,tempData.length);
     // var headingData = '<h1>'+beforeHeading+'</h1>';
+    var headingWords = [beforeHeading];
     afterHeading = afterHeading.replace('\n','');
     afterHeading = '<p>'+afterHeading+'</p>';
     if (Platform.OS === 'ios') {
@@ -80,7 +81,7 @@ class ReadingComponentFromBooks extends Component{
 
     AsyncStorage.getItem("bookMark").then((value) => {
               if (value!=null) {
-                    console.log("value bookmark",value,"LENGTH",value.length);
+                    // console.log("value bookmark",value,"LENGTH",value.length);
                   //  Alert.alert("bookmark"+value);
                     var savedValue=JSON.parse(value);
                     var array=savedValue.bookMark;
@@ -97,7 +98,7 @@ class ReadingComponentFromBooks extends Component{
 
                       if (str1 == str2) {
                          var tempArrat=[];
-                        console.log("alredy book mark");
+                        // console.log("alredy book mark");
                       //  Alert.alert('before compare asyn',str1,i,j);
                       //  Alert.alert("before compare local",str2,"  " ,i,j);
                         //console.log("before compare asyn",str1,"  " ,i,j);
@@ -171,22 +172,19 @@ seperateHeadingWord(data){
 
 
     if (item.bookmarkCheck == false) {
-
       item.bookmarkCheck = true;
-
-        console.log("book markk item length",item.length);
+      // console.log("book markk item length",item.length);
       AsyncStorage.getItem("bookMark").then((value) => {
-
-                if (value!=null) {
-                     console.log("data save in bookmark",item);
-                      var savedValue=JSON.parse(value);
-                     // savedValue.bookmarkCheck =
-                       var array=savedValue.bookMark;
-                      array.push(item.data);
-                      var bookMark={bookMark:array};
-                      AsyncStorage.setItem('bookMark', JSON.stringify(bookMark))
-                      this.setState({indexOfBookMark:array.length-1});
-                   //   this.state.item.bookmarkCheck = array.length-1;
+          if (value!=null) {
+                  // console.log("data save in bookmark",item);
+                  var savedValue=JSON.parse(value);
+                  // savedValue.bookmarkCheck =
+                  var array=savedValue.bookMark;
+                  array.push(item.data);
+                  var bookMark={bookMark:array};
+                  AsyncStorage.setItem('bookMark', JSON.stringify(bookMark))
+                  this.setState({indexOfBookMark:array.length-1});
+                  //   this.state.item.bookmarkCheck = array.length-1;
                 }else{
                   var tempArray=[];
                   tempArray.push(item.data);
@@ -197,17 +195,14 @@ seperateHeadingWord(data){
                 }
                 Alert.alert('Alert!','Book Mark Saved.')
              }).done();
-
    }else{
       item.bookmarkCheck = false;
-
       AsyncStorage.getItem("bookMark").then((value) => {
         if (value!=null) {
               var savedValue=JSON.parse(value);
               var array=savedValue.bookMark;
               var tempArray=[];
               var dummyArray = [];
-
               for(var i = 0; i < array.length; i++) {
              //   Alert.alert("here"+array[i]);
                 var paragraph= array[i];
@@ -226,7 +221,6 @@ seperateHeadingWord(data){
               this.setState({indexOfBookMark:-1});
               Alert.alert('Alert!','Book Mark removed.')
         }
-
      }).done();
      }
   }
@@ -237,7 +231,7 @@ seperateHeadingWord(data){
 
   componentDidMount() {
     // Alert.alert('ReadingComponentFromBooks');
-    console.log("key",this.props.navigation.state.params.selectedRow);
+    // console.log("key",this.props.navigation.state.params.selectedRow);
     if(this.props.navigation.state.params.selectedRow){
       scrollToIndex = () => {
         let randomIndex =  this.props.navigation.state.params.selectedRow;
@@ -274,18 +268,18 @@ seperateHeadingWord(data){
          subject: "Share Link" //  for email
        };
 
-       const headingView=this.state.headingWords.map((item,index)=>{
-         return(
-           <View key={`item-${index}`} style={[styles.subViewStyle,{borderTopWidth:1,borderLeftWidth:1,borderBottomWidth:1,borderRightWidth:index==this.state.headingWords.length-1?1:0,backgroundColor:'#BFEBFF'}]} >
-           <Text style={{fontSize:27,color:'black',fontWeight:'bold' ,fontFamily:'Adobe Arabic',marginTop:10,marginBottom:10,marginLeft:5,marginRight:5,textAlign:'right'}}>{item} </Text>
-           </View>
-         )
-       });
+      //  const headingView=this.state.headingWords.map((item,index)=>{
+      //    return(
+      //      <View key={`item-${index}`} style={[styles.subViewStyle,{borderTopWidth:1,borderLeftWidth:1,borderBottomWidth:1,borderRightWidth:index==this.state.headingWords.length-1?1:0,backgroundColor:'#BFEBFF'}]} >
+      //      <Text style={{fontSize:27,color:'black',fontWeight:'bold', fontFamily:'MehrNastaliqWeb', marginTop:10,marginBottom:10,marginLeft:5,marginRight:5,textAlign:'right'}}>{item} </Text>
+      //      </View>
+      //    )
+      //  });
 
     return(
 
       <View style={styles.outerContainer}>
-      <Header title={this.state.bookTitle} navigator={this.props.navigator} navigation={this.props.navigation} />
+      <Header title={this.props.navigation.state.params.title} navigator={this.props.navigator} navigation={this.props.navigation} />
 
       <FlatList
           ref={(ref) => { this.flatListRef = ref; }}
@@ -297,6 +291,7 @@ seperateHeadingWord(data){
           getItemLayout={this.getItemLayout}
           renderItem={({item,index})=>
         <View style={{marginTop:10}}>
+
           <HeadingView headingWords={item.heading}/>
 
             <HTMLView
@@ -357,7 +352,7 @@ const styles=StyleSheet.create({
     textStyle:{
       textAlign:'right',
       color:'#000000',
-      fontFamily:'Nafees Web Naskh',
+      fontFamily:'MehrNastaliqWeb',
       fontSize:17,
       lineHeight:40,
     },
@@ -372,7 +367,7 @@ const styles=StyleSheet.create({
     },
     textStyle1:{
       color:'white',
-      fontFamily:'Nafees Web Naskh',
+      fontFamily:'MehrNastaliqWeb',
       fontSize:25,
       // fontWeight:'bold',
     },
@@ -411,7 +406,7 @@ const htmlstyles = StyleSheet.create({
   b:{
     fontWeight:'bold',
     color:'blue',
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'MehrNastaliqWeb',
     fontSize:20,
   },
   wrapper: {
@@ -420,7 +415,7 @@ const htmlstyles = StyleSheet.create({
    p: {
      textAlign: "right",
      lineHeight:35,
-     fontFamily:'Nafees Web Naskh',
+     fontFamily:'MehrNastaliqWeb',
      fontSize:20,
      color:'#606060',
      marginTop:10,
@@ -429,7 +424,7 @@ const htmlstyles = StyleSheet.create({
   h1:{
     fontSize:30,
     color:'red',
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'MehrNastaliqWeb',
     textAlign: "right",
     // paddingTop:25,
     // lineHeight:20,

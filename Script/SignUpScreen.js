@@ -175,7 +175,7 @@ class SignUpScreen extends Component{
       <Text style={{
         fontWeight:'bold',
         color:'#38803B',
-        //fontFamily:'Aslam',
+        //fontFamily:'Jameel-Noori-Nastaleeq',
       }}> forget password? </Text>
       </TouchableOpacity>
       </View>
@@ -202,7 +202,7 @@ class SignUpScreen extends Component{
         marginLeft:30,
         marginRight:30,
         fontSize:16,
-        fontFamily:'Aslam',
+        fontFamily:'Jameel-Noori-Nastaleeq',
       }}>Creat           Account</Text>
       </TouchableOpacity>
       </View>

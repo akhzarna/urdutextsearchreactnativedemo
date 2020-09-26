@@ -2495,7 +2495,7 @@ const styles=StyleSheet.create({
     textAlign:'right',
     lineHeight:35,
     fontSize:20,
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'Jameel-Noori-Nastaleeq',
   }
 })
 

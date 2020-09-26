@@ -82,7 +82,7 @@ textStyle:{
   textAlign:'right',
   fontSize:20,
   lineHeight:35,
-  fontFamily:'Nafees Web Naskh',
+  fontFamily:'Jameel-Noori-Nastaleeq',
   marginBottom:40,
 }
 

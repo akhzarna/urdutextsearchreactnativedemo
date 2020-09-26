@@ -262,7 +262,7 @@ titleStyle:{
   color:'white',
   marginTop:5,
   backgroundColor:'transparent',
-  fontFamily:'Nafees Web Naskh',
+  fontFamily:'Jameel-Noori-Nastaleeq',
 },
 rowView:{
   width:buttonWidth,

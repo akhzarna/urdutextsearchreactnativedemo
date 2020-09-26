@@ -54,19 +54,19 @@ import {
  // authentication views
  import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 
- import  HomeScreen  from "./Script/HomeScreen";
+ import  Dashboard  from "./Script/Dashboard";
  import  RelatedWords  from "./Script/RelatedWords";
  import  ReadingScreen  from "./Script/ReadingScreen";
  import  ReadingComponentFromBooks from "./Script/ReadingComponentFromBooks";
- import  BooksListScreen  from "./Script/BooksListScreen";
+ import  Tasaneef  from "./Script/Tasaneef";
  import  DisplayResultScreen  from "./Script/DisplayResultScreen";
  import  DescriptionScreen  from "./Script/DescriptionScreen";
  import  SideMenu  from "./Script/SideMenu";
- import  BookCatagoryScreen  from "./Script/BookCatagoryScreen";
+ import  Tibbikutab  from "./Script/Tibbikutab";
  import  BookMarkScreen  from "./Script/BookMarkScreen";
  import  ListScreen  from "./Script/ListScreen";
  import  ForumScreen  from "./Script/ForumScreen";
- import  BookCatagoryScreen2  from "./Script/BookCatagoryScreen2";
+ import  Tibbikutabdetail from "./Script/Tibbikutabdetail";
  import  ArticlesReading  from "./Script/ArticlesReading";
  import  BookContents  from "./Script/BookContents";
  import  BookMarkReading  from "./Script/BookMarkReading";
@@ -81,19 +81,20 @@ import {
  import  IntroductionScreen2  from "./Script/IntroductionScreen2";
 
  const AuthNavigator = createStackNavigator({
-    HomeScreen: { screen: HomeScreen },
+    Dashboard: { screen: Dashboard },
+    // Tasaneef: { screen: Tasaneef },
     RelatedWords: { screen: RelatedWords },
     ReadingScreen: { screen: ReadingScreen },
     ReadingComponentFromBooks: { screen: ReadingComponentFromBooks },
-    BooksListScreen: { screen: BooksListScreen },
+    Tasaneef: { screen: Tasaneef },
     DisplayResultScreen: { screen: DisplayResultScreen },
     DescriptionScreen: { screen: DescriptionScreen },
     SideMenu: { screen: SideMenu },
-    BookCatagoryScreen: { screen: BookCatagoryScreen },
+    Tibbikutab: { screen: Tibbikutab },
     BookMarkScreen: { screen: BookMarkScreen },
     ListScreen: { screen: ListScreen },
     ForumScreen: { screen: ForumScreen },
-    BookCatagoryScreen2: { screen: BookCatagoryScreen2 },
+    Tibbikutabdetail: { screen: Tibbikutabdetail },
     ArticlesReading: { screen: ArticlesReading },
     BookContents: { screen: BookContents },
     BookMarkReading: { screen: BookMarkReading },

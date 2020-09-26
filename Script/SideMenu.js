@@ -50,9 +50,9 @@ rowSelected(selectedItem){
 
             var screenName='';
             if (selectedItem.key==0) {
-              screenName='HomeScreen';
+              screenName='Dashboard';
             }else if (selectedItem.key==1) {
-              screenName='BookCatagoryScreen';
+              screenName='Tibbikutab';
             }else if(selectedItem.key==3){
               screenName='BookMarkScreen';
             }else if(selectedItem.key==5){
@@ -132,7 +132,7 @@ const styles=StyleSheet.create({
   textStyle:{
     textAlign:'right',
     color:'#231F20',
-    fontFamily:'Nafees Web Naskh',
+    fontFamily:'Jameel-Noori-Nastaleeq',
     fontSize:20,
   },
   iconStyle:{

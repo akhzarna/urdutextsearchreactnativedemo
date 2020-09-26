@@ -344,7 +344,7 @@ for (var i = 0; i < finalArray.length; i++) {
                     <Text style={{
                       textAlign:'center',
                       backgroundColor:'transparent',
-                      fontFamily:'Aslam',
+                      fontFamily:'Jameel-Noori-Nastaleeq',
                       color:'white',
                       fontSize:20,
 
@@ -383,7 +383,7 @@ for (var i = 0; i < finalArray.length; i++) {
         <Text style={{color:'white',textAlign:'right',
         paddingLeft:15,paddingRight:15,
         fontSize:20,
-        fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+        fontFamily:'Jameel-Noori-Nastaleeq',
           }}>
           {section.title}
           </Text>
@@ -440,7 +440,7 @@ for (var i = 0; i < finalArray.length; i++) {
     textStyle:{
       textAlign:'right',
       color:'#000000',
-      fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+      fontFamily:'Jameel-Noori-Nastaleeq',
       fontSize:17,
     },
     iconDimention:{

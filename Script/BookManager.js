@@ -1,7 +1,7 @@
 module.exports={
 
   completeBookArray:[
-                        {title:'Arind', cover:require('./Icons/Book1.jpg'), key:0,
+                        {title:'Arind', cover:require('./Icons/arind.jpg'), key:0,
                                 data:[{key:0, title:'Arind se Sir ki Beemarian',
                                   data:[{key:0, title:'Arind Dard Sir Number 1',
                                     data:[{key:0, title:'Arind ka Dard Sir Waghaira Intihai Khatarnaak hai lekin paraishani ki zaroorat nahin hai (۹)'},
@@ -30,7 +30,7 @@ module.exports={
                                                     ]},
                                             ]},
 
-                                            {title:'Indrain', cover:require('./Icons/Book3.jpg'), key:1,
+                                            {title:'Indrain', cover:require('./Icons/indrain.jpg'), key:1,
                                                 data:[{key:0, title:'Arind Sir ki Beemarian',
                                                   data:[{key:0, title:'Arind Dard Sir',
                                                     data:[{key:0, title:'Arind ka Dard Sir Waghaira (۹)'},
@@ -61,7 +61,7 @@ module.exports={
 
 
 
-                                                            {title:'khawas Angoor', cover:require('./Icons/Book4.jpg'), key:2,
+                                                            {title:'khawas Angoor', cover:require('./Icons/arind.jpg'), key:2,
                                                                 data:[{key:0, title:'Arind Sir ki Beemarian',
                                                                   data:[{key:0, title:'Arind Dard Sir',
                                                                     data:[{key:0, title:'Arind ka Dard Sir Waghaira (۹)'},

@@ -140,7 +140,7 @@ var selectedItem={key:item.key,data:dataSelected,searchWord:searchWord,bookName:
       <Text style={{color:'white',textAlign:'right',
       paddingLeft:15,paddingRight:15,
       fontSize:20,
-      fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+      fontFamily:'Jameel-Noori-Nastaleeq',
         }}>
         {section.title}
         </Text>
@@ -196,7 +196,7 @@ const styles=StyleSheet.create({
   textStyle:{
     textAlign:'right',
     color:'#000000',
-    fontFamily:isiPhone?'Nafees Web Naskh':'nafeeswebnaskh',
+    fontFamily:'Jameel-Noori-Nastaleeq',
     fontSize:17,
   },
   iconDimention:{
