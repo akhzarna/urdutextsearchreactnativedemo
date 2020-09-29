@@ -52,7 +52,9 @@ rowSelected(selectedItem){
             if (selectedItem.key==0) {
               screenName='Dashboard';
             }else if (selectedItem.key==1) {
-              screenName='Tibbikutab';
+              // screenName='Tibbikutab';
+              // For Testing Akhzar Nazir
+              screenName='Tasaneef';
             }else if(selectedItem.key==3){
               screenName='BookMarkScreen';
             }else if(selectedItem.key==5){

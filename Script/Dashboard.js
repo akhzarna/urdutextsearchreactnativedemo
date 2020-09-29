@@ -158,7 +158,8 @@ class Dashboard extends Component{
     });
     this.setState({showProgress:false});
     // Alert.alert(this.state.bookArray[0].data[0].subbestheading);
-    this.horizontalrowselected();
+
+    // this.horizontalrowselected();
     }
   }
     ).done();
@@ -169,6 +170,8 @@ class Dashboard extends Component{
   }
 
   booksLoadAction(){
+
+    console.log('Book Load Action Always Call or Not');
 
     // console.log('BookManager.completeBookArray=',BookManager.completeBookArray);
 

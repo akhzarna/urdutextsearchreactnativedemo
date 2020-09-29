@@ -56,7 +56,7 @@ const Header = (props)=>{
         </View>
 
         <View style={styles.centerView}>
-          <Text style={styles.titleStyle}> {props.title}
+          <Text adjustsFontSizeToFit numberOfLines={1} style={styles.titleStyle}> {props.title}
           </Text>
         </View>
 
