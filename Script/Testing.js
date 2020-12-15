@@ -40,7 +40,7 @@ class Testing extends Component{
 
   }
 
-     componentWillMount(){
+     UNSAFE_componentWillMount(){
      //  console.log("hello! :)",this.props.fullData[0],this.props.fullData.length,
     //   this.props.fullData[0].data.length);
 

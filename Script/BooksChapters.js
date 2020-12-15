@@ -134,7 +134,7 @@ class HomeScreen extends Component{
 // }
 
   componentDidMount() {
-
+    Alert.alert('Books Chapter');
     AsyncStorage.getItem("booksData").then((value) => {
     var testVar = JSON.parse(value);
     if (testVar == null) {

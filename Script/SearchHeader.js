@@ -32,7 +32,4 @@ class SearchHeader extends Component{
 }
 
 
-
-
-
 module.exports = SearchHeader;

@@ -246,7 +246,7 @@ seperateHeadingWord(data){
     }
 }
 
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
 
     }
 

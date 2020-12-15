@@ -72,16 +72,12 @@
           mainArray:this.props.navigation.state.params.finalArray,
           searchArray:this.props.navigation.state.params.finalArray,
           dataArray:[],
-          // showSearchField:false,
-          // finalArray:finalArray,
-          // textSearch:'',
-          // showData:[],
+
         }
-        // console.log('Main Data is == ',this.state.mainArray);
   }
 
   componentDidMount(){
-  //  Alert.alert('ChapterListComponent');
+
 //     var tempArray=[];
 //     var flag = 0;
 //     var key = -1;
@@ -251,183 +247,96 @@
   }
 
   actButtonSearch(){
-    this.state.showSearchField = !this.state.showSearchField;
-    this.setState({
-      showSearchField:this.state.showSearchField,
-    })
+    Alert.alert('actButtonSearch');
   }
 
   actSearch(text){
-    // console.log('Searching Started');
+
+    this.state.showSearchField = true;
+
+    this.setState({
+      showSearchField:this.state.showSearchField,
+    })
+
     var searchWord=text.trim();
 
-    // data = this.state.mainArray;
-    // console.log('Data Before is = ',data);
-    //
-    // data = data.filter(data=>{
-    //   data.title.match(text);
-    // });
-    //
-    // console.log('Data After is = ',data);
-
-    // var orignalData=this.state.mainArray;
-    // this.setState({
-    // textSearch:searchWord
-    // })
-    // if (searchWord == '') {
-    // this.setState({
-    // mainArray:orignalData,
-    // })
-    // return;
-    // }
-
-    // var finalArray=[];
-    var tempArray=[];
-    for (var x = 0; x < this.state.mainArray.length; x++) {
-      // var arrayList=[];
-      var paragraph=''+this.state.mainArray[x].title;
-      var index=paragraph.indexOf(searchWord);
-      // console.log('x is = ', x);
-      // console.log('index is = ', index);
-      if (index !=-1){
-        tempArray.push(this.state.mainArray[x]);
-      }else{
-        for (var y = 0; y < this.state.mainArray[x].data.length; y++) {
-          var paragraph=''+this.state.mainArray[x].data[y].title;
-          var index=paragraph.indexOf(searchWord);
-          // console.log('x is = ', x);
-          // console.log('index is = ', index);
+    if (searchWord) {
+      // Alert.alert('text is = ',searchWord);
+      var tempArray=[];
+      for (var x = 0; x < this.state.mainArray.length; x++) {
+        var paragraph=''+this.state.mainArray[x].title;
+        var index=paragraph.indexOf(searchWord);
+        if (index !=-1){
+          console.log('Testing Log');
+          tempArray.push(this.state.mainArray[x]);
+        }else{
+          // for (var y = 0; y < this.state.mainArray[x].data.length; y++) {
+          //   var paragraph=''+this.state.mainArray[x].data[y].title;
+          //   var index=paragraph.indexOf(searchWord);
+          //   // console.log('x is = ', x);
+          //   // console.log('index is = ', index);
+          //   if (index !=-1){
+          //     tempArray.push(this.state.mainArray[x]);
+          //   }
+          // }
         }
       }
+    }else{
+      tempArray=this.state.mainArray;
+    }
 
-      // if (index == -1) {
-      //   continue;
-      // }
-
-      // var data='';
-      // var firstIndex=-1;
-      // var secondIndex=-1;
-      // if (index-15>0) {
-      //   var tempIndex=index-15;
-      //   firstIndex=paragraph.indexOf(' ',tempIndex);
-      // }else{
-      //   firstIndex=0;
-      // }
-      // secondIndex=paragraph.indexOf(' ',index+100);
-      // if (secondIndex==-1) {
-      //   secondIndex==paragraph.length;
-      // }
-      // data=paragraph.slice(firstIndex,secondIndex);
-      // data=data.replace(/\r|\n/g,' ');
-      // data=data.replace(/#/g,' ');
-
-      // // data=data.replace(searchWord,'<b>'+searchWord+'</b>');
-      // // data='<p>'+data+'</p>';
-
-      // var frequency=this.findFrequencyOfSearchWord(paragraph)
-      // var object={data:data,key:i,frequency:frequency};
-      // arrayList.push(object)
-      // arrayList.sort(function(a,b){
-      //   return parseInt(b.frequency)-parseInt(a.frequency);
-      // })
-
-  // if (arrayList.length == 0) {
-  //   Alert.alert('No Result Found');
-  //   var object={data:"نتیج نہیں ملا",key:-1,frequency:"1"};
-  //   arrayList.push(object);
-  // }
-    // finalArray.push(arrayList);
-
-    // console.log('tempArray is = ',tempArray);
-
-}
+console.log('After Searching Array temp Array is =',tempArray);
 
 this.setState({
 searchArray:tempArray,
 })
 
-// var tempArray=[];
-// for (var i = 0; i < finalArray.length; i++) {
-//   var data=finalArray[i];
-//   var title=this.props.navigation.state.params.finalArray[i].bookname
-//   var key=i;
-//   var object={data:data,key:key,title:title};
-//   tempArray.push(object);
-// }
-//
-//     this.setState({
-//       mainArray:tempArray,
-//     })
-
-  }
-
- actionTextBlur(){
-
-  if (this.state.textSearch == '') {
-    this.setState({
-      showSearchField:false,
-    })
-  }
-
 }
 
+ actionTextBlur(){
+  // Alert.alert('false');
+  // if (this.state.textSearch == '') {
+  //   this.setState({
+  //     showSearchField:false,
+  //   })
+  // }
+}
 
     render(){
-
       return(
         <View style={styles.outerContainer}>
         <Header title={this.props.navigation.state.params.finalDict.title} showMenu={false} navigator={this.props.navigator} navigation={this.props.navigation}/>
-
-          {/*
-          <View style={{marginTop:0,flexDirection:'row'}}>
-
-              <TouchableOpacity onPress={()=>this.actButtonSearch()} style={{marginLeft:10,marginRight:10,}}>
-                  <Image style={{width:30,height:30}} source={searchIcon}/>
+          <View style={{marginTop:5,marginBottom:5,backgroundColor:'grey',flexDirection:'row'}}>
+              <TouchableOpacity onPress={()=>this.actButtonSearch()} style={{marginLeft:10,marginRight:10,marginTop:5,marginBottom:5,}}>
+                  <Image style={{width:24,height:24}} source={searchIcon}/>
                 </TouchableOpacity>
+                <View style={{flex:1,marginLeft:10,marginRight:0,}}>
 
-                <View style={{flex:1,marginLeft:10,marginRight:10}}>
-                {
-                  this.state.showSearchField?(
-                    <View>
-                    <TextInput
-                    autoFocus={true}
-                    selectionColor='black'
+                  <TextInput
+                    autoFocus={false}
+                    selectionColor='white'
                     underlineColorAndroid='transparent'
+
                     onChangeText={(text) => this.actSearch(text)}
+
                     onBlur={()=>this.actionTextBlur()}
                     placeholder="تلاش کریں۔۔۔"
+
                     style={{
                       borderWidth:1,
-                      borderColor:'white',
+                      borderColor:'grey',
                       height:35,
-                      marginRight:30,
+                      marginRight:0,
                       textAlign:'right',
                       paddingRight:15,
                       paddingLeft:10,
-                      borderRadius:20,
+                      borderRadius:200,
                       color:'white'
                     }}
-                    />
-                    </View>
-                  ):(
-                    <Text style={{
-                      textAlign:'center',
-                      backgroundColor:'transparent',
-                      fontFamily:'MehrNastaliqWeb',
-                      color:'white',
-                      fontSize:20,
 
-                    }}>{this.props.navigation.state.params.finalDict.title}</Text>
-                  )
-                }
-                  </View>
-
-                <TouchableOpacity onPress={()=>this.props.navigation.pop()} style={{marginRight:10}}>
-                <Image style={{width:30,height:22}} source={backArrow}/>
-                </TouchableOpacity>
-
+                  />
+                </View>
             </View>
-            */}
 
         <SectionList
         renderItem={({item,section}) => <TouchableOpacity onPress={()=>this.rowSelected(item,section)}>
@@ -458,7 +367,6 @@ searchArray:tempArray,
 
       );
     }
-
   }
 
   const styles=StyleSheet.create({

@@ -55,12 +55,18 @@ rowSelected(selectedItem){
               // screenName='Tibbikutab';
               // For Testing Akhzar Nazir
               screenName='Tasaneef';
+            }else if (selectedItem.key==2) {
+              screenName='Dashboard';
             }else if(selectedItem.key==3){
-              screenName='BookMarkScreen';
+              // screenName='BookMarkScreen';
+            }else if (selectedItem.key==4) {
+              screenName='Dashboard';
             }else if(selectedItem.key==5){
               screenName='IntroductionScreen';
             }else if(selectedItem.key==6){
-              screenName='ListScreen';
+              // screenName='BookMarkScreen';
+            }else if (selectedItem.key==7) {
+              screenName='Dashboard';
             }else if(selectedItem.key==8){
               screenName='ForumScreen';
             }else{

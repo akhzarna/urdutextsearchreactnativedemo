@@ -21,73 +21,57 @@ var isiPhone=Platform.OS === 'ios';
 class DisplayResultScreen extends Component{
   constructor(props){
     super(props);
-
-          Alert.alert('DisplayResultScreen');
-
           var finalArray=[];
           for (var x = 0; x < this.props.navigation.state.params.finalArray.length; x++) {
-          var arrayList=[];
-          for (var i = 0; i < this.props.navigation.state.params.finalArray[x].searchedArray.length; i++) {
-            var paragraph=''+this.props.navigation.state.params.finalArray[x].searchedArray[i].data.data;
-            var searchWord=this.props.navigation.state.params.finalArray[x].word;
+            var arrayList=[];
+            for (var y = 0; y < this.props.navigation.state.params.finalArray[x].data.length; y++) {
+            var paragraph=''+this.props.navigation.state.params.finalArray[x].data[y];
+            var searchWord=this.props.navigation.state.params.word;
             var index=paragraph.indexOf(searchWord);
-            // // console.log('Index to HightLight is = '+index);
             var data='';
             var firstIndex=-1;
             var secondIndex=-1;
             if (index-15>0) {
+              // Alert.alert('test');
               var tempIndex=index-15;
               firstIndex=paragraph.indexOf(' ',tempIndex);
             }else{
+              // Alert.alert('Else test');
               firstIndex=0;
             }
+
+            // If space not found
             secondIndex=paragraph.indexOf(' ',index+100);
+            // Alert.alert('2nd'+secondIndex);
+
             if (secondIndex==-1) {
-              secondIndex==paragraph.length;
+              secondIndex=paragraph.length;
             }
+
             data=paragraph.slice(firstIndex,secondIndex);
             data=data.replace(/\r|\n/g,' ');
+            // Alert.alert(''+secondIndex);
             data=data.replace(/#/g,' ');
-            // data=data.replace(searchWord,'<b>'+searchWord+'</b>');
-            // data='<p>'+data+'</p>';
             var frequency=this.findFrequencyOfSearchWord(paragraph)
-
-            // // console.log('paragraph is = ' + paragraph);
-            // // console.log('data is = ' + data);
-            // // console.log('key is = ' + i);
-            // // console.log('frequency is = ' + frequency);
-
-            var object={data:data,key:i,frequency:frequency};
+            var object={data:data,completedata:paragraph,key:y,frequency:frequency};
             arrayList.push(object)
-            arrayList.sort(function(a,b){
-              return parseInt(b.frequency)-parseInt(a.frequency);
-            })
-
         }
-
-            finalArray.push(arrayList);
-
+        arrayList.sort(function(a,b){
+          return parseInt(b.frequency)-parseInt(a.frequency);
+        })
+        var obj={title:this.props.navigation.state.params.finalArray[x].title,
+                  data:arrayList,key:x};
+        finalArray.push(obj);
       }
-
-      var tempNewArray=[];
-      for (var i = 0; i < finalArray.length; i++) {
-        var data=finalArray[i];
-        var title=this.props.navigation.state.params.finalArray[i].bookname
-        var key=i;
-        var object={data:data,key:key,title:title};
-        tempNewArray.push(object);
-      }
-
-      this.state={dataArray:tempNewArray}
-      // console.log('Final Data Array for Section LIST is = ' + this.state.dataArray);
+      this.state={
+        dataArray:finalArray
+      };
 }
 
 findFrequencyOfSearchWord(paragraph){
-
     var searchWord=this.props.navigation.state.params.finalArray[0].word;
     var freqCounter = 0;
     var headingEndIndex = paragraph.indexOf('\r',1);
-
     for (var j = 0; j <paragraph.length; j++) {
             var index=paragraph.indexOf(searchWord,j);
             if (index == -1) {
@@ -105,16 +89,13 @@ findFrequencyOfSearchWord(paragraph){
 }
 
 rowSelected(item,section){
-
-var bookName= section.title;
-var dataSelected=this.props.navigation.state.params.finalArray[section.key].searchedArray[item.key].data;
-var searchWord=this.props.navigation.state.params.finalArray[0].word;
-var selectedItem={key:item.key,data:dataSelected,searchWord:searchWord,bookName:bookName};
-
+  var bookName = section.title;
+  var dataSelected=this.state.dataArray[section.key].data[item.key].completedata;
+  var searchWord=this.props.navigation.state.params.word;
+  var selectedItem={key:item.key,data:dataSelected,searchWord:searchWord,bookName:bookName};
   this.props.navigation.navigate('DescriptionScreen',{
-    selectedItem:selectedItem,
+      selectedItem:selectedItem,
   });
-
 }
 
   render(){

@@ -40,6 +40,7 @@ class BooksScreen extends Component{
   // }
 
   componentDidMount() {
+    Alert.alert('Book Screen');
     if (Platform.OS === 'ios') {
           this.loadBooksFromDocuments();
     }else{

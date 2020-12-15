@@ -38,7 +38,7 @@
         }
   }
 
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     Alert.alert('RelatedWords');
     this.function();
   }

@@ -27,27 +27,31 @@ class DescriptionScreen extends Component{
 
   constructor(props){
     super(props);
+    // Alert.alert('Description Screen');
     var bookName=this.props.navigation.state.params.selectedItem.bookName;
-    var tempData=this.props.navigation.state.params.selectedItem.data.data;
+    var tempValue=this.props.navigation.state.params.selectedItem.data;
    // Alert.alert("hello"+this.props.navigation.state.params.selectedItem.data);
-    var mainHeading = this.props.navigation.state.params.selectedItem.data.mainheading;
-    var subHeading = this.props.navigation.state.params.selectedItem.data.subheading;
-    var subbestHeading = this.props.navigation.state.params.selectedItem.data.subbestheading;
-    var mainArray = [mainHeading,subHeading,subbestHeading];
-    mainHeading=this.seperateHeadingWord(mainHeading);
+    var mainHeading = this.props.navigation.state.params.selectedItem.data;
+    // var subHeading = this.props.navigation.state.params.selectedItem.data;
+    // var subbestHeading = this.props.navigation.state.params.selectedItem.completedata;
+    // Alert.alert("mainheading"+mainHeading);
 
-    var orignalData=tempData;
-    var searchWord=this.props.navigation.state.params.selectedItem.searchWord;
+    mainHeading=this.seperateHeadingWord(mainHeading);
+    var mainArray = [mainHeading];
+
+    var orignalData=tempValue;
     var headingWords=this.seperateHeadingWord(orignalData);
 
+    var searchWord=this.props.navigation.state.params.selectedItem.searchWord;
+
     // var stringTOreplace='/'+searchWord+'/g';
-    // tempData=tempData.replaceAll(searchWord,'<b>'+searchWord+'</b>');
+    // tempValue=tempValue.replaceAll(searchWord,'<b>'+searchWord+'</b>');
 
     var newwrod='<b>'+searchWord+'</b>'
-    var index=tempData.indexOf('\r');
+    var index=tempValue.indexOf('\r');
 
-    var beforeHeading=tempData.slice(0,index);
-    var afterHeading=tempData.slice(index+1,tempData.length);
+    var beforeHeading=tempValue.slice(0,index);
+    var afterHeading=tempValue.slice(index+1,tempValue.length);
     var headingData='<h1>'+beforeHeading+'</h1>';
     var str2='<p>'+afterHeading+'</p>';
 
@@ -57,20 +61,21 @@ class DescriptionScreen extends Component{
 
     str2=this.tagSearchWord(str2);
     var newStr=str2;
-    tempData=newStr;
+    tempValue=newStr;
 
-    // tempData='<html>'+tempData+'</html>';
-    // tempData='<div>'+tempData+'</div>';
+    // tempValue='<html>'+tempValue+'</html>';
+    // tempValue='<div>'+tempValue+'</div>';
+
     this.state = {
       visible: false,
-      data:tempData,
+      data:tempValue,
       orignalData:orignalData,
       isAlreadyBookMarked:false,
       indexOfBookMark:-1,
       headingWords:headingWords,
       mainHeading:mainHeading,
-      subHeading:subHeading,
-      subbestHeading:subbestHeading,
+      // subHeading:subHeading,
+      // subbestHeading:subbestHeading,
       mainArray:mainArray,
       bookName:bookName,
       forABMdata:this.props.navigation.state.params.selectedItem.data,
@@ -80,16 +85,16 @@ class DescriptionScreen extends Component{
     this.tagSearchWord(afterHeading);
   }
 
-     componentWillMount(){
+     UNSAFE_componentWillMount(){
       // Alert.alert("hello! :)");
      }
 
-
 seperateHeadingWord(data){
-  // data='پاکستان\r';
+
+// Alert.data(data);
+
 var index1=data.indexOf('#');
 var array=[];
-
 if (index1!=-1) {
   var urduWord=data.slice(0,index1);
   urduWord=urduWord.trim();
@@ -114,13 +119,10 @@ if (index1!=-1) {
     var word=data.slice(0,index3);
     word=word.trim();
     array.push(word);
-
   }
-
 // console.log(array);
 array.reverse();
 return array;
-
 }
 
 tagSearchWord(data){
@@ -128,7 +130,6 @@ tagSearchWord(data){
   var tempString=data;
   var index=0;
   for (var i = 0; i <tempString.length; i++){
-
       index=tempString.indexOf(searchWord,index);
       if (index==-1) {
         break;
@@ -143,7 +144,6 @@ tagSearchWord(data){
           tempString=str1+newWord+str2;
           index=spaceAfterIndex;
         }
-
       }else{
           if (tempString[index-1]==' ') {
               var spaceAfterIndex=tempString.indexOf(' ',index+1);
@@ -158,20 +158,15 @@ tagSearchWord(data){
                   tempString=this.tagSimiliarword(tempString, spaceAfterIndex, index);
                   index=spaceAfterIndex;
                 }
-
           }else{
             var spaceAfterIndex=tempString.indexOf(' ',index+1);
             tempString=this.tagSimiliarword(tempString, spaceAfterIndex, index);
             index=spaceAfterIndex;
           }
-
       }
       index=index+1;
-
   }
-
 return tempString;
-
 }
 
 tagSimiliarword(data,spaceAfterIndex,index){
@@ -183,7 +178,6 @@ tagSimiliarword(data,spaceAfterIndex,index){
               break;
             }
         }
-
     var word=data.slice(spaceBeforeIndex,spaceAfterIndex);
     var str1=data.slice(0,spaceBeforeIndex);
     var str2=data.slice(spaceAfterIndex,data.length);
@@ -191,8 +185,6 @@ tagSimiliarword(data,spaceAfterIndex,index){
     var  tempString=str1+newWord+str2;
     // console.log(word);
     return tempString;
-
-
 }
 
   onCancel() {
@@ -234,14 +226,14 @@ tagSimiliarword(data,spaceAfterIndex,index){
                       var savedValue=JSON.parse(value);
                       var array=savedValue.bookMark;
                     //  array.push(this.state.orignalData);
-                    array.push(this.props.navigation.state.params.selectedItem.data.data);
+                    array.push(this.props.navigation.state.params.selectedItem.data);
                       var bookMark={bookMark:array};
                       AsyncStorage.setItem('bookMark', JSON.stringify(bookMark))
                       this.setState({indexOfBookMark:array.length-1});
 
                 }else{
                   var tempArray=[];
-                  tempArray.push(this.props.navigation.state.params.selectedItem.data.data);
+                  tempArray.push(this.props.navigation.state.params.selectedItem.data);
                   var bookMark={bookMark:tempArray};
                   AsyncStorage.setItem('bookMark', JSON.stringify(bookMark))
                   this.setState({indexOfBookMark:tempArray.length-1});
@@ -285,7 +277,7 @@ checkForAlreadyBookMark(){
 
     let shareOptions = {
          title: "کتاب الرویا",
-         message:this.props.navigation.state.params.selectedItem.data.data,
+         message:this.props.navigation.state.params.selectedItem.data,
         //  url: "",
          subject: "Share Link" //  for email
        };
@@ -293,7 +285,6 @@ checkForAlreadyBookMark(){
       return(
 
             <View style={styles.outerContainer}>
-            <Header title='نسخہ ' navigator={this.props.navigator} navigation={this.props.navigation}/>
 
             <ScrollView style={styles.textView}>
               <View style={{marginBottom:15}}>
