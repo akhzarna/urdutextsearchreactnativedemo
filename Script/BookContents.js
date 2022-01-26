@@ -163,9 +163,11 @@ return array;
 
 
 filterData(txtSearch){
+
   this.setState({
     txtSearch:txtSearch
   })
+
       var newData=this.state.orignalArray.filter(function(item){
         var selectedItem=''+item.data;
         selectedItem=selectedItem.toLowerCase();
@@ -182,11 +184,6 @@ filterData(txtSearch){
       }
 
 }
-
-
-
-
-
 
   render(){
     return(

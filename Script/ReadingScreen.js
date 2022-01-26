@@ -246,13 +246,13 @@ seperateHeadingWord(data){
     }
 }
 
+  getItemLayout = (data, index) => (
+    { length: 0, offset: 900 * index, index }
+  );
+
   UNSAFE_componentWillMount(){
 
     }
-
-    getItemLayout = (data, index) => (
-      { length: 0, offset: 900 * index, index }
-    );
 
   render(route){
 

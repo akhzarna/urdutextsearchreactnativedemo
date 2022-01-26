@@ -143,10 +143,6 @@ class Dashboard extends Component{
     }
 }
 
-  componentWillUnmount() {
-
-  }
-
   booksLoadAction(){
     console.log('Book Load Action Always Call or Not');
     var allBooksInOne = '';
@@ -966,7 +962,9 @@ render(){
        keyExtractor={(item, index) => index}
        horizontal={true}
        inverted={true}
-       renderItem={({item,index}) =>
+       renderItem=
+       
+       {({item,index}) =>
         <TouchableOpacity
          style={{ height:60,
           width:60,

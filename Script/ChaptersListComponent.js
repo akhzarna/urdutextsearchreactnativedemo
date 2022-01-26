@@ -72,11 +72,11 @@
           mainArray:this.props.navigation.state.params.finalArray,
           searchArray:this.props.navigation.state.params.finalArray,
           dataArray:[],
-
         }
   }
 
   componentDidMount(){
+    Alert.alert('Chapter');
 
 //     var tempArray=[];
 //     var flag = 0;
@@ -251,15 +251,12 @@
   }
 
   actSearch(text){
-
     this.state.showSearchField = true;
-
     this.setState({
       showSearchField:this.state.showSearchField,
     })
 
     var searchWord=text.trim();
-
     if (searchWord) {
       // Alert.alert('text is = ',searchWord);
       var tempArray=[];
@@ -290,7 +287,6 @@ console.log('After Searching Array temp Array is =',tempArray);
 this.setState({
 searchArray:tempArray,
 })
-
 }
 
  actionTextBlur(){
@@ -302,6 +298,10 @@ searchArray:tempArray,
   // }
 }
 
+  componentWillUnmount(){
+    console.warn('componentWillUnmount()');
+  }
+
     render(){
       return(
         <View style={styles.outerContainer}>
@@ -311,17 +311,13 @@ searchArray:tempArray,
                   <Image style={{width:24,height:24}} source={searchIcon}/>
                 </TouchableOpacity>
                 <View style={{flex:1,marginLeft:10,marginRight:0,}}>
-
                   <TextInput
                     autoFocus={false}
                     selectionColor='white'
                     underlineColorAndroid='transparent'
-
                     onChangeText={(text) => this.actSearch(text)}
-
                     onBlur={()=>this.actionTextBlur()}
                     placeholder="تلاش کریں۔۔۔"
-
                     style={{
                       borderWidth:1,
                       borderColor:'grey',
@@ -333,9 +329,9 @@ searchArray:tempArray,
                       borderRadius:200,
                       color:'white'
                     }}
-
                   />
                 </View>
+
             </View>
 
         <SectionList

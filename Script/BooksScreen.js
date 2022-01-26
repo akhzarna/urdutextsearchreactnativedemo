@@ -53,10 +53,6 @@ class BooksScreen extends Component{
 
    }
 
-
-
-
-
    loadBooksFromDocumentsAndroid(){
    // Alert.alert('title')
    RNFS.readDirAssets('') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)

@@ -56,11 +56,11 @@ import {
 
  const AuthNavigator = createStackNavigator({
     Dashboard: { screen: Dashboard },
+    Tasaneef: { screen: Tasaneef },
     DisplayResultScreen: { screen: DisplayResultScreen },
     RelatedWords: { screen: RelatedWords },
     ReadingScreen: { screen: ReadingScreen },
     ReadingComponentFromBooks: { screen: ReadingComponentFromBooks },
-    Tasaneef: { screen: Tasaneef },
     DescriptionScreen: { screen: DescriptionScreen },
     SideMenu: { screen: SideMenu },
     Tibbikutab: { screen: Tibbikutab },
